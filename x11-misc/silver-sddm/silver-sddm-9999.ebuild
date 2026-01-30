@@ -19,6 +19,5 @@ RDEPEND="x11-misc/sddm"
 
 src_install() {
 	insinto /usr/share/sddm/themes/
-	doins "${s}/Sonic-Silver"
-	doins "${s}/Sonic-Silver-Light"
+	doins -r Sonic-Silver Sonic-Silver-Light
 }
