@@ -11,7 +11,9 @@ HOMEPAGE="https://github.com/Sonic-DE/silver-sddm"
 EGIT_REPO_URI="https://github.com/Sonic-DE/silver-sddm.git"
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS=""
+if [[ ${PV} != 9999* ]]; then
+	KEYWORDS="~amd64"
+fi
 IUSE=""
 RDEPEND="x11-misc/sddm"
 
