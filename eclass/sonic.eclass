@@ -199,7 +199,7 @@ esac
 # Intended for use in the KDE overlay. If this package matches something in
 # KDE_UNRELEASED, display a giant warning that the package has not yet been
 # released upstream and should not be used.
-kde.org_pkg_nofetch() {
+sonic_pkg_nofetch() {
 	[[ ${KDE_ORG_UNRELEASED} == true ]] || return
 	eerror " _   _ _   _ ____  _____ _     _____    _    ____  _____ ____  "
 	eerror "| | | | \ | |  _ \| ____| |   | ____|  / \  / ___|| ____|  _ \ "
@@ -226,7 +226,7 @@ kde.org_pkg_nofetch() {
 # @FUNCTION: kde.org_src_unpack
 # @DESCRIPTION:
 # Unpack the sources, automatically handling both release and live ebuilds.
-kde.org_src_unpack() {
+sonic_src_unpack() {
 	debug-print-function ${FUNCNAME} "$@"
 
 	case ${KDE_BUILD_TYPE} in
@@ -235,7 +235,7 @@ kde.org_src_unpack() {
 	esac
 }
 
-kde.org_pkg_info() {
+sonic_pkg_info() {
 	if [[ ${KDE_BUILD_TYPE} = live ]]; then
 		echo "WARNING! This is an experimental live ebuild of ${CATEGORY}/${PN}"
 		echo "Use it at your own risk."

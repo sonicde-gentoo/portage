@@ -38,7 +38,7 @@ readonly KDE_CATV
 # For proper description see kde.org.eclass manpage.
 KDE_PV_UNRELEASED=( )
 
-inherit kde.org
+inherit sonic
 
 HOMEPAGE="https://github.com/sonic-de/"
 

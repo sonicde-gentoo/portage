@@ -4,7 +4,7 @@
 EAPI=8
 
 QTMIN=6.10.1
-inherit ecm frameworks.kde.org
+inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing access to properties and features of the window manager"
 
