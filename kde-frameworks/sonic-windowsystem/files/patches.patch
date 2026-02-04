@@ -1,0 +1,18 @@
+--- a/CMakeLists.txt	2026-02-04 22:51:29.378102117 +1100
++++ b/CMakeLists.txt	2026-02-04 22:59:17.875787839 +1100
+@@ -1,6 +1,6 @@
+ cmake_minimum_required(VERSION 3.16)
+ 
+-set(KF_VERSION "6.2.0") # handled by release scripts
++set(KF_VERSION "6.22.0") # handled by release scripts
+ project(KWindowSystem VERSION ${KF_VERSION})
+ 
+ # ECM setup
+@@ -42,6 +42,7 @@
+ # Dependencies
+ set(REQUIRED_QT_VERSION 6.5.0)
+ find_package(Qt6Gui ${REQUIRED_QT_VERSION} CONFIG REQUIRED)
++find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} CONFIG REQUIRED)
+ 
+ option(KWINDOWSYSTEM_QML "Build QML bindings" ON)
+ 

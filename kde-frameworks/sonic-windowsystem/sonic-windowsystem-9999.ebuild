@@ -48,7 +48,7 @@ BDEPEND="
 
 DOCS=( docs/README.kstartupinfo )
 
-PATCHES=( ${FILESDIR}/qt6-gui-private.patch )
+PATCHES=( ${FILESDIR}/patches.patch )
 
 src_configure() {
 	local mycmakeargs=(
