@@ -21,6 +21,8 @@ RESTRICT="test"
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
+	!kde-frameworks/kwindowsystem:6/6.22
+	!kde-frameworks/kwindowsystem:6/6.23
 	wayland? ( >=dev-qt/qtbase-${QTMIN}:6=[wayland] )
 	X? (
 		>=dev-qt/qtbase-${QTMIN}:6=[gui,X]
