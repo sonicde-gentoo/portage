@@ -1,10 +1,10 @@
-# Copyright 1999-2026 Gentoo Authors
+# Copyright 2026 Bryan Gardiner
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-DESCRIPTION="Dummy package pulling in sonic-globalacceld"
-HOMEPAGE="https://github.com/Sonic-DE/sonic-globalacceld"
+DESCRIPTION="Dummy package to pull in sonic-globalaccel"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-globalaccel"
 SRC_URI=""
 
 LICENSE="metapackage"
@@ -14,6 +14,6 @@ if [[ "${PV}" != *9999 ]]; then
 fi
 IUSE="X"
 
-RDEPEND="~kde-plasma/sonic-globalacceld-${PV}[X=]"
+RDEPEND="~kde-frameworks/sonic-globalaccel-${PV}[X=]"
 DEPEND="${RDEPEND}"
 BDEPEND=""
