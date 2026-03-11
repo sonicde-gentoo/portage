@@ -50,8 +50,6 @@ BDEPEND="
 
 DOCS=( docs/README.kstartupinfo )
 
-PATCHES=( ${FILESDIR}/patches.patch )
-
 src_configure() {
 	local mycmakeargs=(
 		-DKWINDOWSYSTEM_WAYLAND=$(usex wayland)
