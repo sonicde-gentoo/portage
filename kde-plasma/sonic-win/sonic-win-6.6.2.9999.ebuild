@@ -15,7 +15,7 @@ DESCRIPTION="Flexible, composited X window manager"
 
 LICENSE="GPL-2+"
 SLOT="6"
-if [[ ${PV} != 9999 ]]; then
+if [[ ${PV} != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
