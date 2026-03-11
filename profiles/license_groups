@@ -1,0 +1,11 @@
+# These LicenseRef-KDE-Accepted-* licenses are used where future versions of the
+# GPL and LGPL may be accepted by the KDE e.V.  Group memberships here match
+# memberships for the GPL and LGPL in the Gentoo repository.
+#
+# See: https://community.kde.org/Policies/Licensing_Policy
+
+GPL-COMPATIBLE LicenseRef-KDE-Accepted-GPL LicenseRef-KDE-Accepted-LGPL
+
+OSI-APPROVED-FREE LicenseRef-KDE-Accepted-GPL LicenseRef-KDE-Accepted-LGPL
+
+FSF-APPROVED-OTHER LicenseRef-KDE-Accepted-GPL
