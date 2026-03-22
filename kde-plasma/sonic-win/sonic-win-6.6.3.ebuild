@@ -79,9 +79,11 @@ COMMON_DEPEND="
 	shortcuts? ( >=kde-plasma/kglobalacceld-${KDE_CATV}:6 )
 	systemd? ( sys-apps/systemd:= )
 "
+# Sonic: Block on kwin:6/6, Portage must switch to kwin:6/6-sonicde.
 RDEPEND="${COMMON_DEPEND}
 	!kde-plasma/kdeplasma-addons:5
 	!<kde-plasma/kwin-6.3.80
+	!kde-plasma/kwin:6/6
 	!kde-plasma/kwin-x11
 	>=kde-frameworks/kirigami-${KFMIN}:6
 	>=kde-frameworks/kitemmodels-${KFMIN}:6
@@ -105,6 +107,7 @@ BDEPEND="
 	dev-util/wayland-scanner
 	>=kde-frameworks/kcmutils-${KFMIN}:6
 "
+PDEPEND="~kde-plasma/kwin-${PV}:6/6-sonicde"
 
 # https://bugs.gentoo.org/941628
 # -m 0755 to avoid suid with USE="-filecaps"

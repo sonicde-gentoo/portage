@@ -10,7 +10,7 @@ QTMIN=6.10.1
 KDE_ORG_NAME=sonic-desktop-interface
 inherit ecm plasma.sonic optfeature xdg
 
-DESCRIPTION="KDE Plasma desktop"
+DESCRIPTION="Sonic desktop"
 XORGHDRS="plasma-desktop-override-include-dirs-5"
 SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${XORGHDRS}.tar.xz"
 
@@ -72,7 +72,6 @@ COMMON_DEPEND="
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
-	!kde-plasma/plasma-desktop
 	>=kde-plasma/plasma5support-${KDE_CATV}:6
 	>=kde-plasma/sonic-workspace-${KDE_CATV}:6[screencast?,X]
 	media-libs/libcanberra
@@ -110,6 +109,7 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 RDEPEND="${COMMON_DEPEND}
+	!kde-plasma/plasma-desktop
 	!<kde-plasma/plasma-workspace-6.0.80
 	dev-libs/kirigami-addons:6
 	>=kde-frameworks/kirigami-${KFMIN}:6

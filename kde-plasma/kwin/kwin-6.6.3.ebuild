@@ -8,7 +8,7 @@ HOMEPAGE="https://github.com/Sonic-DE/"
 SRC_URI=""
 
 LICENSE="metapackage"
-SLOT="6"
+SLOT="6/6-sonicde"
 if [[ ${PV} != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
