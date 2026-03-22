@@ -61,14 +61,14 @@ esac
 # For proper description see kde.org.eclass manpage.
 KDE_ORG_SCHEDULE_URI+="/Frameworks"
 
-# @ECLASS_VARIABLE: _KDE_SRC_URI
+# @ECLASS_VARIABLE: _SONIC_SRC_URI
 # @INTERNAL
 # @DESCRIPTION:
 # Helper variable to construct release group specific SRC_URI.
-_KDE_SRC_URI="mirror://kde/stable/frameworks/${KDE_CATV}/"
+_SONIC_SRC_URI="https://github.com/Sonic-DE/"
 
 if [[ ${KDE_BUILD_TYPE} != live && -z ${KDE_ORG_COMMIT} ]]; then
-	SRC_URI="${_KDE_SRC_URI}${KDE_ORG_TAR_PN}-${PV}.tar.xz"
+	SRC_URI="${_SONIC_SRC_URI}${KDE_ORG_TAR_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 fi
