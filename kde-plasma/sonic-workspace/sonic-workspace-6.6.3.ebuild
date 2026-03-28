@@ -25,12 +25,10 @@ RESTRICT="test"
 
 # kde-frameworks/kwindowsystem[X]: Uses KX11Extras
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
-# slot op: various private QtWaylandClient headers
 COMMON_DEPEND="
 	dev-libs/icu:=
-	>=dev-libs/wayland-1.15
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,libinput,network,opengl,sql,sqlite,wayland,widgets,xml]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,libinput,network,opengl,sql,sqlite,widgets,xml]
 	>=dev-qt/qtdeclarative-${QTMIN}:6[widgets]
 	>=dev-qt/qtlocation-${QTMIN}:6
 	>=dev-qt/qtpositioning-${QTMIN}:6
@@ -78,7 +76,6 @@ COMMON_DEPEND="
 	>=kde-frameworks/solid-${KFMIN}:6
 	>=kde-plasma/breeze-${KDE_CATV}:6
 	>=kde-plasma/knighttime-${KDE_CATV}:6
-	>=kde-plasma/layer-shell-qt-${KDE_CATV}:6
 	>=kde-plasma/libkscreen-${KDE_CATV}:6
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
@@ -118,7 +115,6 @@ COMMON_DEPEND="
 	)
 "
 DEPEND="${COMMON_DEPEND}
-	>=dev-libs/plasma-wayland-protocols-1.19.0
 	dev-libs/qcoro
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
 	test? ( screencast? ( >=media-video/pipewire-0.3:* ) )
@@ -127,11 +123,14 @@ DEPEND="${COMMON_DEPEND}
 		x11-base/xorg-proto
 	)
 "
-# Sonic: Block on conflicting Plasma packages.
+# Sonic: Block on conflicting Plasma packages, and in particular
+# plasma-workspace:6/6, because need Portage to switch to
+# plasma-workspace:6/6-sonicde.
 RDEPEND="${COMMON_DEPEND}
 	!kde-plasma/libkworkspace:5
 	!<kde-plasma/plasma-desktop-6.3.80
 	!kde-plasma/plasma-login-sessions:6
+	!kde-plasma/plasma-workspace:6/6
 	!<kde-plasma/xdg-desktop-portal-kde-6.1.90
 	!kde-plasma/xembed-sni-proxy:*
 	app-text/iso-codes
@@ -152,15 +151,13 @@ RDEPEND="${COMMON_DEPEND}
 	screencast? ( >=media-video/pipewire-0.3:* )
 "
 BDEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6[wayland]
-	>=dev-util/wayland-scanner-1.19.0
 	>=kde-frameworks/kcmutils-${KFMIN}:6
 	virtual/pkgconfig
 	test? (
-		>=dev-qt/qtwayland-${QTMIN}:6[compositor(+)]
 		X? ( x11-misc/xdotool )
 	)
 "
+PDEPEND="~kde-plasma/plasma-workspace-${PV}:6/6-sonicde"
 
 PATCHES=(
 	"${FILESDIR}/plasma-workspace-5.22.5-krunner-cwd-at-home.patch" # TODO upstream: KDE-bug 432975, bug 767478
@@ -191,8 +188,6 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DWITH_X11=$(usex X) # remember to submit patches with bugs
-		-DWITH_X11_SESSION=$(usex X)
 		-DCMAKE_DISABLE_FIND_PACKAGE_PackageKitQt6=ON # not packaged
 		-DGLIBC_LOCALE_GEN=OFF
 		-DGLIBC_LOCALE_PREGENERATED=$(usex elibc_glibc)

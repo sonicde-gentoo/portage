@@ -58,26 +58,15 @@ HOMEPAGE="https://github.com/Sonic-DE"
 # For proper description see kde.org.eclass manpage.
 KDE_ORG_SCHEDULE_URI+="/Plasma_${_PSLOT}"
 
-# @ECLASS_VARIABLE: _KDE_SRC_URI
+# @ECLASS_VARIABLE: _SONIC_SRC_URI
 # @INTERNAL
 # @DESCRIPTION:
 # Helper variable to construct release group specific SRC_URI.
-_KDE_SRC_URI="mirror://kde/"
+_SONIC_SRC_URI="https://github.com/Sonic-DE/"
 
-if [[ ${KDE_BUILD_TYPE} == live ]]; then
-	if [[ ${PV} != 9999 ]]; then
-		EGIT_BRANCH="Plasma/$(ver_cut 1-2)"
-	fi
-elif [[ -z ${KDE_ORG_COMMIT} ]]; then
-	case ${PV} in
-		6.?.[6-9][0-5]* )
-			_KDE_SRC_URI+="unstable/plasma/${KDE_CATV}/"
-			RESTRICT+=" mirror"
-			;;
-		*) _KDE_SRC_URI+="stable/plasma/${KDE_CATV}/" ;;
-	esac
-
-	SRC_URI="${_KDE_SRC_URI}${KDE_ORG_TAR_PN}-${PV}.tar.xz"
+# Sonic: Simplified logic here compared to plasma.kde.org.eclass.
+if [[ ${KDE_BUILD_TYPE} != live ]] && [[ -z ${KDE_ORG_COMMIT} ]]; then
+	SRC_URI="${_SONIC_SRC_URI}${KDE_ORG_TAR_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 if [[ ${_PSLOT} == 6 ]]; then
