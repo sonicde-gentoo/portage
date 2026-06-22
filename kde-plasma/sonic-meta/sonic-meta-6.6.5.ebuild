@@ -60,7 +60,7 @@ RDEPEND="
 	>=kde-plasma/powerdevil-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/qqc2-breeze-style-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/systemsettings-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}
+	>=sonicde-base/sonic-desktop-${PLASMA_MIN}:${SLOT}
 	>=sonicde-base/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
 	>=sonicde-base/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
 	>=kde-plasma/xdg-desktop-portal-kde-${PLASMA_MIN}:${SLOT}
@@ -120,7 +120,7 @@ RDEPEND="
 	thunderbolt? ( >=kde-plasma/plasma-thunderbolt-${PLASMA_MIN}:${SLOT} )
 	!unsupported? ( !gui-apps/qt6ct )
 	virtualkeyboard? ( >=kde-plasma/plasma-keyboard-${PV}:${SLOT} )
-	wacom? ( >=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}[input_devices_wacom] )
+	wacom? ( >=sonicde-base/sonic-desktop-${PLASMA_MIN}:${SLOT}[input_devices_wacom] )
 	wallpapers? ( >=kde-plasma/plasma-workspace-wallpapers-${PLASMA_MIN}:${SLOT} )
 	webengine? ( kde-apps/khelpcenter:6 )
 	X? (
@@ -139,7 +139,7 @@ case ${PV} in
 		"
 		;;
 esac
-# Optional runtime deps: kde-plasma/sonic-desktop, kde-plasma/spectacle
+# Optional runtime deps: sonicde-base/sonic-desktop, kde-plasma/spectacle
 RDEPEND="${RDEPEND}
 	accessibility? ( app-accessibility/orca )
 	ocr? ( app-text/tesseract )
