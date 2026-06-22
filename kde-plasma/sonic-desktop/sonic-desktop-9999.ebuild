@@ -73,7 +73,7 @@ COMMON_DEPEND="
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
 	>=kde-plasma/plasma5support-${KDE_CATV}:6
-	>=kde-plasma/sonic-workspace-${KDE_CATV}:6[screencast?,X]
+	>=sonicde-base/sonic-workspace-${KDE_CATV}:6[screencast?,X]
 	media-libs/libcanberra
 	virtual/libudev:=
 	x11-libs/libX11

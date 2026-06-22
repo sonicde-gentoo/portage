@@ -62,7 +62,7 @@ RDEPEND="
 	>=kde-plasma/systemsettings-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}
 	>=sonicde-base/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
-	>=kde-plasma/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
+	>=sonicde-base/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
 	>=kde-plasma/xdg-desktop-portal-kde-${PLASMA_MIN}:${SLOT}
 	sys-apps/dbus[elogind?,systemd?]
 	sys-auth/polkit[systemd?]
