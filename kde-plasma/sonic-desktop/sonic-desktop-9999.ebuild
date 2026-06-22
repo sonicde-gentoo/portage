@@ -67,7 +67,7 @@ COMMON_DEPEND="
 	>=kde-frameworks/kxmlgui-${KFMIN}:6
 	>=kde-frameworks/solid-${KFMIN}:6
 	>=kde-frameworks/sonnet-${KFMIN}:6
-	>=kde-plasma/sonic-win-${KDE_CATV}:6
+	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	>=kde-plasma/libksysguard-${KDE_CATV}:6
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=

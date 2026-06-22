@@ -80,7 +80,7 @@ COMMON_DEPEND="
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
-	>=kde-plasma/sonic-win-${KDE_CATV}:6
+	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	media-libs/libcanberra
 	sci-libs/libqalculate:=
 	sys-apps/dbus

@@ -61,7 +61,7 @@ RDEPEND="
 	>=kde-plasma/qqc2-breeze-style-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/systemsettings-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
+	>=sonicde-base/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
 	>=kde-plasma/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
 	>=kde-plasma/xdg-desktop-portal-kde-${PLASMA_MIN}:${SLOT}
 	sys-apps/dbus[elogind?,systemd?]

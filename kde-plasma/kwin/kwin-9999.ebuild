@@ -14,6 +14,6 @@ if [[ ${PV} != *9999 ]]; then
 fi
 IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
 
-RDEPEND="~kde-plasma/sonic-win-${PV}[accessibility=,gamepad=,gles2-only=,lock=,screencast=,shortcuts=,systemd=]"
+RDEPEND="~sonicde-base/sonic-win-${PV}[accessibility=,gamepad=,gles2-only=,lock=,screencast=,shortcuts=,systemd=]"
 DEPEND="${RDEPEND}"
 BDEPEND=""
