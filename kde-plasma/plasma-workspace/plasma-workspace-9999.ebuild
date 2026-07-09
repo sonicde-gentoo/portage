@@ -15,6 +15,6 @@ fi
 IUSE="appstream +fontconfig +ksysguard networkmanager +policykit
 screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
 
-RDEPEND="~kde-plasma/sonic-workspace-${PV}[appstream=,fontconfig=,ksysguard=,networkmanager=,policykit=,screencast=,semantic-desktop=,systemd=,telemetry=,wallpaper-metadata=,X=]"
+RDEPEND="~sonicde-base/sonic-workspace-${PV}[appstream=,fontconfig=,ksysguard=,networkmanager=,policykit=,screencast=,semantic-desktop=,systemd=,telemetry=,wallpaper-metadata=,X=]"
 DEPEND="${RDEPEND}"
 BDEPEND=""

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<catmetadata>
+  <longdescription lang="en">
+    The sonicde-frameworks category contains core libraries that support
+    the development of the Sonic Desktop Environment.
+  </longdescription>
+</catmetadata>

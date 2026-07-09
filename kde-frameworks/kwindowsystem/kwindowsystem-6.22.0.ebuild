@@ -11,4 +11,4 @@ if [[ ${PV} != 9999* ]]; then
 	KEYWORDS="~amd64"
 fi
 IUSE="X wayland debug test"
-RDEPEND="kde-frameworks/sonic-windowsystem"
+RDEPEND="sonicde-frameworks/sonic-windowsystem"

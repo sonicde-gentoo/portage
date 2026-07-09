@@ -1,7 +1,7 @@
 # Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+EAPI=9
 
 inherit toolchain-funcs
 
@@ -21,7 +21,7 @@ discover +display-manager +elogind +firewall flatpak grub gtk +kwallet
 +networkmanager ocr oxygen-theme plymouth pulseaudio rdp +sddm sdk +smart
 systemd thunderbolt unsupported virtualkeyboard wacom +wallpapers webengine X"
 
-REQUIRED_USE="^^ ( elogind systemd ) firewall? ( systemd ) rdp? ( systemd )"
+REQUIRED_USE="^^ ( elogind systemd ) firewall? ( systemd )"
 
 RDEPEND="
 	!${CATEGORY}/${PN}:5
@@ -60,9 +60,9 @@ RDEPEND="
 	>=kde-plasma/powerdevil-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/qqc2-breeze-style-${PLASMA_MIN}:${SLOT}
 	>=kde-plasma/systemsettings-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
-	>=kde-plasma/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
+	>=sonicde-base/sonic-desktop-${PLASMA_MIN}:${SLOT}
+	>=sonicde-base/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
+	>=sonicde-base/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
 	>=kde-plasma/xdg-desktop-portal-kde-${PLASMA_MIN}:${SLOT}
 	sys-apps/dbus[elogind?,systemd?]
 	sys-auth/polkit[systemd?]
@@ -110,17 +110,17 @@ RDEPEND="
 		>=kde-plasma/plymouth-kcm-${PLASMA_MIN}:${SLOT}
 	)
 	pulseaudio? ( >=kde-plasma/plasma-pa-${PLASMA_MIN}:${SLOT} )
+	rdp? ( >=kde-plasma/krdp-${PLASMA_MIN}:${SLOT} )
 	sdk? ( >=kde-plasma/plasma-sdk-${PLASMA_MIN}:${SLOT} )
 	smart? ( >=kde-plasma/plasma-disks-${PLASMA_MIN}:${SLOT} )
 	systemd? (
 		>=sys-apps/systemd-257[pam]
 		firewall? ( >=kde-plasma/plasma-firewall-${PLASMA_MIN}:${SLOT} )
-		rdp? ( >=kde-plasma/krdp-${PLASMA_MIN}:${SLOT} )
 	)
 	thunderbolt? ( >=kde-plasma/plasma-thunderbolt-${PLASMA_MIN}:${SLOT} )
 	!unsupported? ( !gui-apps/qt6ct )
 	virtualkeyboard? ( >=kde-plasma/plasma-keyboard-${PV}:${SLOT} )
-	wacom? ( >=kde-plasma/sonic-desktop-${PLASMA_MIN}:${SLOT}[input_devices_wacom] )
+	wacom? ( >=sonicde-base/sonic-desktop-${PLASMA_MIN}:${SLOT}[input_devices_wacom] )
 	wallpapers? ( >=kde-plasma/plasma-workspace-wallpapers-${PLASMA_MIN}:${SLOT} )
 	webengine? ( kde-apps/khelpcenter:6 )
 	X? (
@@ -139,7 +139,7 @@ case ${PV} in
 		"
 		;;
 esac
-# Optional runtime deps: kde-plasma/sonic-desktop, kde-plasma/spectacle
+# Optional runtime deps: sonicde-base/sonic-desktop, kde-plasma/spectacle
 RDEPEND="${RDEPEND}
 	accessibility? ( app-accessibility/orca )
 	ocr? ( app-text/tesseract )

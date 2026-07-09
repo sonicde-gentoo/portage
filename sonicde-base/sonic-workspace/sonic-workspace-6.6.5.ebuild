@@ -80,7 +80,7 @@ COMMON_DEPEND="
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
-	>=kde-plasma/sonic-win-${KDE_CATV}:6
+	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	media-libs/libcanberra
 	sci-libs/libqalculate:=
 	sys-apps/dbus
@@ -124,7 +124,7 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 # Sonic: Block on conflicting Plasma packages, and in particular
-# plasma-workspace:6/6, because need Portage to switch to
+# plasma-workspace:6/6, because Portage needs to switch to
 # plasma-workspace:6/6-sonicde.
 RDEPEND="${COMMON_DEPEND}
 	!kde-plasma/libkworkspace:5

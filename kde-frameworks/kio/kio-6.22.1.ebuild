@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	=kde-frameworks/kservice-${KDE_CATV}*:6
 	=kde-frameworks/ktextwidgets-${KDE_CATV}*:6
 	=kde-frameworks/kwidgetsaddons-${KDE_CATV}*:6
-	=kde-frameworks/sonic-windowsystem-9999*:6[wayland?,X?]
+	=sonicde-frameworks/sonic-windowsystem-9999*:6[wayland?,X?]
 	=kde-frameworks/solid-${KDE_CATV}*:6
 	sys-apps/util-linux
 	acl? (

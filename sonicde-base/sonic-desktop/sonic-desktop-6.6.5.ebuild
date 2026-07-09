@@ -67,13 +67,13 @@ COMMON_DEPEND="
 	>=kde-frameworks/kxmlgui-${KFMIN}:6
 	>=kde-frameworks/solid-${KFMIN}:6
 	>=kde-frameworks/sonnet-${KFMIN}:6
-	>=kde-plasma/sonic-win-${KDE_CATV}:6
+	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	>=kde-plasma/libksysguard-${KDE_CATV}:6
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
 	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
 	>=kde-plasma/plasma5support-${KDE_CATV}:6
-	>=kde-plasma/sonic-workspace-${KDE_CATV}:6[screencast?,X]
+	>=sonicde-base/sonic-workspace-${KDE_CATV}:6[screencast?,X]
 	media-libs/libcanberra
 	virtual/libudev:=
 	x11-libs/libX11
