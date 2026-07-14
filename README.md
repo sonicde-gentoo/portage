@@ -19,8 +19,11 @@ Then sync:
 # emaint sync -r sonicde
 ```
 
-Now, allow all packages in the `sonicde` overlay to use live ebuilds. In `/etc/portage/package.accept_keywords/00-sonicde`:
+Now, accept unstable keywords for all packages in the `sonicde`
+overlay. In `/etc/portage/package.accept_keywords/00-sonicde`:
 
 ```
-*/*::sonicde **
+*/*::sonicde
 ```
+
+Then you can emerge `sonicde-base/sonic-meta` to install the desktop.
