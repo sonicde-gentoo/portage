@@ -26,4 +26,16 @@ overlay. In `/etc/portage/package.accept_keywords/00-sonicde`:
 */*::sonicde
 ```
 
-Then you can emerge `sonicde-base/sonic-meta` to install the desktop.
+Then emerge `sonicde-base/sonic-meta` to install the desktop.
+
+## Using newer Plasma
+
+The latest Plasma with unstable keywords can also be used with SonicDE.
+The KDE overlay provides a package.accept_keywords file to unmask the
+necessary KDE packages:
+
+https://gitweb.gentoo.org/proj/kde.git/tree/Documentation/package.accept_keywords
+
+Copy or symlink the `kde-plasma-6.7.keywords` file into
+`/etc/portage/package.accept_keywords`.  It's not necessary to use any
+ebuilds from the KDE overlay.
