@@ -1,0 +1,16 @@
+ data/pam/gentoo/soniclogin-greeter | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/pam/gentoo/soniclogin-greeter b/data/pam/gentoo/soniclogin-greeter
+index e9a1adc4..df4a934c 100644
+--- a/data/pam/gentoo/soniclogin-greeter
++++ b/data/pam/gentoo/soniclogin-greeter
+@@ -15,6 +15,6 @@ account     required    pam_permit.so
+ # The greeter cannot change passwords.
+ password    required    pam_deny.so
+ 
+-# Establish the local account and elogind session used on this machine.
++# Establish the local account and systemd session used on this machine.
+ session     required    pam_unix.so
+-session     required    pam_elogind.so
++session     required    pam_systemd.so
