@@ -1,0 +1,15 @@
+Add a missing dependency on libinput to the mouse KCM.
+
+See: https://github.com/sonicde-gentoo/portage/issues/15
+
+diff --git a/kcms/mouse/backends/CMakeLists.txt b/kcms/mouse/backends/CMakeLists.txt
+--- a/kcms/mouse/backends/CMakeLists.txt
++++ b/kcms/mouse/backends/CMakeLists.txt
+@@ -16,4 +16,7 @@ if (BUILD_KCM_MOUSE_X11)
+     if (TARGET XOrg::Evdev)
+         target_link_libraries(kcm_mouse PRIVATE XOrg::Evdev)
+     endif()
++    if (XORGLIBINPUT_FOUND)
++        target_link_libraries(kcm_mouse PRIVATE PkgConfig::XORGLIBINPUT)
++    endif()
+ endif()

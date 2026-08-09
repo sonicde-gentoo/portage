@@ -138,6 +138,10 @@ BDEPEND="
 	input_devices_wacom? ( dev-util/wayland-scanner )
 "
 
+PATCHES=(
+	"${FILESDIR}/${PN}-6.7.3.2-kcm-mouse-libinput.patch"
+)
+
 src_prepare() {
 	ecm_src_prepare
 
