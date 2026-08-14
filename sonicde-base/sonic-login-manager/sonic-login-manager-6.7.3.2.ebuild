@@ -11,10 +11,9 @@ DESCRIPTION="Sonic Login Manager"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-login-manager"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
-SLOT="0"
+SLOT="6"
 KEYWORDS="~amd64"
-IUSE="elogind test systemd"
-REQUIRED_USE="^^ ( elogind systemd )"
+IUSE="test"
 RESTRICT="!test? ( test )"
 
 DEPEND="
@@ -32,7 +31,6 @@ DEPEND="
 	>=kde-plasma/kscreen-${KDE_CATV}:6
 	>=kde-plasma/libplasma-${KDE_CATV}:6=
 	>=sonicde-base/sonic-workspace-${KDE_CATV}:6
-	sys-apps/systemd:=[pam]
 	sys-libs/pam
 	x11-libs/libXau
 "
@@ -40,7 +38,9 @@ RDEPEND="
 	${DEPEND}
 	!kde-plasma/plasma-login-manager
 	acct-user/soniclogin
+	=sonicde-base/sonic-login-manager-pam-${PV}*
 	sonicde-base/sonic-win[lock]
+	|| ( sys-auth/elogind sys-apps/systemd )
 "
 BDEPEND="
 	dev-python/docutils
@@ -56,10 +56,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	if use systemd; then
-		eapply "${FILESDIR}/${PN}-6.7.3.2-pam-systemd.patch"
-	fi
-
 	touch 01gentoo.conf || die
 
 	cat <<-EOF >> 01gentoo.conf
@@ -80,8 +76,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DRUNTIME_DIR=/run/soniclogin
 
-		# Sonic: PAM files are upstreamed, but pam.eclass applies some
-		# additional logic to the installed PAM files.
+		# PAM config is installed by sonic-login-manager-pam.ebuild.
 		-DINSTALL_PAM_CONFIGURATION=OFF
 		# If non-systemd compat ever arrives, we can try 7
 		# again to be in sync with CHECKVT from display-manager,
@@ -101,10 +96,6 @@ src_install() {
 
 	insinto /etc/soniclogin.conf.d/
 	doins "${S}"/01gentoo.conf
-
-	dopamd "${S}"/data/pam/gentoo/soniclogin
-	dopamd "${S}"/data/pam/gentoo/soniclogin-autologin
-	dopamd "${S}"/data/pam/gentoo/soniclogin-greeter
 }
 
 # Sonic: pkg_postinst call to 'tmpfiles_process soniclogin.conf' dropped,
