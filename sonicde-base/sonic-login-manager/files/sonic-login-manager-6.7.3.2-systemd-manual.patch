@@ -1,0 +1,15 @@
+Don't let the build autodetect systemd, so that we can force this flag on from
+the ebuild.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -55,7 +55,7 @@ find_package(PkgConfig)
+ pkg_check_modules(LIBXAU REQUIRED "xau" IMPORTED_TARGET)
+ 
+ # Check for systemd to get unit file install directories (runtime detection is used in code)
+-pkg_check_modules(SYSTEMD "systemd")
++#pkg_check_modules(SYSTEMD "systemd")
+ if(SYSTEMD_FOUND)
+     if (NOT DEFINED SYSTEMD_SYSTEM_UNIT_DIR)
+         pkg_get_variable(SYSTEMD_SYSTEM_UNIT_DIR systemd systemdsystemunitdir)

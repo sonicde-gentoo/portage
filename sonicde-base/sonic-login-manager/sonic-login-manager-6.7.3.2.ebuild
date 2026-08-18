@@ -5,7 +5,7 @@ EAPI=8
 
 KFMIN=6.22.0
 QTMIN=6.10.0
-inherit ecm plasma.sonic linux-info pam
+inherit ecm plasma.sonic linux-info pam systemd
 
 DESCRIPTION="Sonic Login Manager"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-login-manager"
@@ -50,6 +50,10 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
+PATCHES=(
+	"${FILESDIR}/${PN}-6.7.3.2-systemd-manual.patch"
+)
+
 pkg_setup() {
 	local CONFIG_CHECK="~DRM"
 	use kernel_linux && linux-info_pkg_setup
@@ -86,6 +90,10 @@ src_configure() {
 		# lightdm also installs an org.freedesktop.DisplayManager.conf,
 		# see: https://bugs.gentoo.org/980039
 		-DDBUS_CONFIG_FILENAME=sonicde-org.freedesktop.DisplayManager.conf
+
+		# Install systemd units unconditionally.
+		-DSYSTEMD_FOUND:BOOL=ON
+		-DKDE_INSTALL_SYSTEMDUNITDIR="$(systemd_get_systemunitdir)"
 	)
 
 	cmake_src_configure
