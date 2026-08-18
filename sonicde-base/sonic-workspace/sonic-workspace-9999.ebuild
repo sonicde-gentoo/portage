@@ -5,11 +5,14 @@ EAPI=8
 
 ECM_HANDBOOK="optional"
 ECM_TEST="forceoptional"
-KFMIN=6.22.0
+KFMIN=6.26.0
 QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
+EGIT_REPO_URI="https://github.com/Sonic-DE/sonic-workspace.git"
+
 DESCRIPTION="Sonic Workspace"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-workspace"
 
 # LICENSE is based on Debian's plasma-workspace 4:6.5.4-3 d/copyright file.
 LICENSE="GPL-2+ GPL-2 GPL-3+ || ( GPL-2 GPL-3 ) || ( GPL-2 LicenseRef-KDE-Accepted-GPL ) LicenseRef-KDE-Accepted-GPL LGPL-2 LGPL-2+ LGPL-2.1+ LGPL-3+ || ( LGPL-2 GPL-2 LicenseRef-KDE-Accepted-GPL ) || ( LGPL-2.1 LicenseRef-KDE-Accepted-LGPL ) || ( public-domain MIT ) BSD BSD-2 CC0-1.0 MIT FDL-1.2+"
@@ -17,13 +20,12 @@ SLOT="6"
 if [[ ${PV} != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
-IUSE="appstream +fontconfig +ksysguard networkmanager +policykit
-screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
+IUSE="appstream flatpak +fontconfig +ksysguard networkmanager +policykit screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
 
 REQUIRED_USE="fontconfig? ( X )"
 RESTRICT="test"
 
-# kde-frameworks/kwindowsystem[X]: Uses KX11Extras
+# sonicde-frameworks/sonic-frameworks-windowsystem[X]: Uses KX11Extras
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
 	dev-libs/icu:=
@@ -34,52 +36,52 @@ COMMON_DEPEND="
 	>=dev-qt/qtpositioning-${QTMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6
-	>=kde-frameworks/karchive-${KFMIN}:6
-	>=kde-frameworks/kauth-${KFMIN}:6
-	>=kde-frameworks/kbookmarks-${KFMIN}:6
-	>=kde-frameworks/kcmutils-${KFMIN}:6
-	>=kde-frameworks/kcolorscheme-${KFMIN}:6
-	>=kde-frameworks/kcompletion-${KFMIN}:6
-	>=kde-frameworks/kconfig-${KFMIN}:6
-	>=kde-frameworks/kconfigwidgets-${KFMIN}:6
-	>=kde-frameworks/kcoreaddons-${KFMIN}:6
-	>=kde-frameworks/kcrash-${KFMIN}:6
-	>=kde-frameworks/kdbusaddons-${KFMIN}:6
-	>=kde-frameworks/kdeclarative-${KFMIN}:6
-	>=kde-frameworks/kded-${KFMIN}:6
-	>=kde-frameworks/kglobalaccel-${KFMIN}:6
-	>=kde-frameworks/kguiaddons-${KFMIN}:6
-	>=kde-frameworks/kholidays-${KFMIN}:6
-	>=kde-frameworks/ki18n-${KFMIN}:6
-	>=kde-frameworks/kiconthemes-${KFMIN}:6
-	>=kde-frameworks/kidletime-${KFMIN}:6
-	>=kde-frameworks/kio-6.22.1:6
-	>=kde-frameworks/kitemmodels-${KFMIN}:6
-	>=kde-frameworks/kitemviews-${KFMIN}:6
-	>=kde-frameworks/kjobwidgets-${KFMIN}:6
-	>=kde-frameworks/knewstuff-${KFMIN}:6
-	>=kde-frameworks/knotifications-${KFMIN}:6
-	>=kde-frameworks/knotifyconfig-${KFMIN}:6
-	>=kde-frameworks/kpackage-${KFMIN}:6
-	>=kde-frameworks/kparts-${KFMIN}:6
-	>=kde-frameworks/krunner-${KFMIN}:6
-	>=kde-frameworks/kservice-${KFMIN}:6
-	>=kde-frameworks/kstatusnotifieritem-${KFMIN}:6
-	>=kde-frameworks/ksvg-${KFMIN}:6
-	>=kde-frameworks/ktexteditor-${KFMIN}:6
-	>=kde-frameworks/ktextwidgets-${KFMIN}:6
-	>=kde-frameworks/kwallet-${KFMIN}:6
-	>=kde-frameworks/kwidgetsaddons-${KFMIN}:6
-	>=kde-frameworks/kwindowsystem-${KFMIN}:6[X?]
-	>=kde-frameworks/kxmlgui-${KFMIN}:6
-	>=kde-frameworks/prison-${KFMIN}:6[qml]
-	>=kde-frameworks/solid-${KFMIN}:6
-	>=kde-plasma/breeze-${KDE_CATV}:6
-	>=kde-plasma/knighttime-${KDE_CATV}:6
-	>=kde-plasma/libkscreen-${KDE_CATV}:6
-	>=kde-plasma/libplasma-${KDE_CATV}:6=
-	>=kde-plasma/plasma-activities-${KDE_CATV}:6=
-	>=kde-plasma/plasma-activities-stats-${KDE_CATV}:6
+	>=sonicde-frameworks/sonic-frameworks-archive-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-auth-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-bookmarks-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-color-scheme-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-autocomplete-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-ui-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-crash-handler-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-dbus-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-qml-bridge-${KFMIN}:6
+	>=sonicde-base/sonic-daemon-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-keybind-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-gui-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-holidays-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-idle-tracker-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-io-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-data-models-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-data-views-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-progress-ui-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-addons-downloader-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-notifications-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-notification-settings-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-package-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-ui-components-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-runner-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-status-notification-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-svg-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-text-editor-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-text-widgets-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-keyring-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X?]
+	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-barcode-${KFMIN}:6[qml]
+	>=sonicde-frameworks/sonic-frameworks-device-integration-${KFMIN}:6
+	>=sonicde-base/sonic-silver-${KDE_CATV}:6
+	>=sonicde-base/sonic-night-light-${KDE_CATV}:6
+	>=sonicde-base/sonic-screen-library-${KDE_CATV}:6
+	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6=
+	>=sonicde-base/sonic-activities-${KDE_CATV}:6=
+	>=sonicde-base/sonic-activities-stats-${KDE_CATV}:6
 	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	media-libs/libcanberra
 	sci-libs/libqalculate:=
@@ -87,16 +89,17 @@ COMMON_DEPEND="
 	virtual/zlib:=
 	virtual/libudev:=
 	appstream? ( >=dev-libs/appstream-1[qt6] )
-	ksysguard? ( >=kde-plasma/libksysguard-${KDE_CATV}:6 )
+	flatpak? ( sys-apps/flatpak )
+	ksysguard? ( >=sonicde-base/sonic-system-monitor-library-${KDE_CATV}:6 )
+	networkmanager? ( >=sonicde-frameworks/sonic-frameworks-networkmanager-${KFMIN}:6 )
 	policykit? ( virtual/libcrypt:= )
-	networkmanager? ( >=kde-frameworks/networkmanager-qt-${KFMIN}:6 )
-	semantic-desktop? ( >=kde-frameworks/baloo-${KFMIN}:6 )
+	semantic-desktop? ( >=sonicde-frameworks/sonic-frameworks-file-search-${KFMIN}:6 )
 	systemd? ( sys-apps/systemd:= )
-	telemetry? ( >=kde-frameworks/kuserfeedback-${KFMIN}:6 )
-	wallpaper-metadata? ( kde-apps/libkexiv2:6 )
+	telemetry? ( >=sonicde-frameworks/sonic-frameworks-user-feedback-${KFMIN}:6 )
+	wallpaper-metadata? ( sonicde-base/sonic-exiv2-library:6 )
 	X? (
 		>=dev-qt/qtbase-${QTMIN}:6=[X]
-		>=kde-plasma/kscreenlocker-${KDE_CATV}:6
+		>=sonicde-base/sonic-screenlocker-${KDE_CATV}:6
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libX11
@@ -124,43 +127,45 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 # Sonic: Block on conflicting Plasma packages, and in particular
-# plasma-workspace:6/6, because need Portage to switch to
+# plasma-workspace:6/6, because Portage needs to switch to
 # plasma-workspace:6/6-sonicde.
+#
+# Sonic: Block <sonic-desktop-6.7.2 because file moved to here:
+#     $(get_libdir)/qt6/plugins/plasma/applets/org.kde.plasma.marginsseparator.so
 RDEPEND="${COMMON_DEPEND}
-	!kde-plasma/libkworkspace:5
-	!<kde-plasma/plasma-desktop-6.3.80
+	!<sonicde-base/sonic-desktop-interface-6.6.90
 	!kde-plasma/plasma-login-sessions:6
-	!kde-plasma/plasma-workspace:6/6
-	!<kde-plasma/xdg-desktop-portal-kde-6.1.90
-	!kde-plasma/xembed-sni-proxy:*
+	!<sonicde-base/xdg-desktop-portal-sonicde-6.1.90
+	!<sonicde-base/sonic-desktop-6.7.2
 	app-text/iso-codes
-	dev-libs/kirigami-addons:6
+	sonicde-frameworks/sonic-frameworks-quick-ui-addons:6
 	>=dev-qt/qttools-${QTMIN}:*[qdbus]
-	kde-apps/kio-extras:6
-	>=kde-frameworks/kirigami-${KFMIN}:6
-	>=kde-frameworks/kquickcharts-${KFMIN}:6
-	>=kde-plasma/kactivitymanagerd-${KDE_CATV}:6
-	>=kde-plasma/kdesu-gui-${KDE_CATV}:*
-	>=kde-plasma/milou-${KDE_CATV}:6
-	>=kde-plasma/plasma-integration-${KDE_CATV}:6
+	sonicde-frameworks/sonic-frameworks-io-extras:6
+	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-quick-charts-${KFMIN}:6
+	>=sonicde-base/sonic-activity-manager-daemon-${KDE_CATV}:6
+	>=sonicde-frameworks/sonic-frameworks-root-shell-${KDE_CATV}:*
+	>=sonicde-base/sonic-file-search-ui-${KDE_CATV}:6
+	>=sonicde-base/sonic-qt-theme-bridge-${KDE_CATV}:6
 	sys-apps/dbus
 	x11-apps/xmessage
 	x11-apps/xprop
 	x11-apps/xrdb
 	policykit? ( sys-apps/accountsservice )
 	screencast? ( >=media-video/pipewire-0.3:* )
+	sonicde-base/sonic-polkit
 "
 BDEPEND="
-	>=kde-frameworks/kcmutils-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	virtual/pkgconfig
 	test? (
 		X? ( x11-misc/xdotool )
 	)
 "
-PDEPEND="~kde-plasma/plasma-workspace-${PV}:6/6-sonicde"
 
 PATCHES=(
 	"${FILESDIR}/plasma-workspace-5.22.5-krunner-cwd-at-home.patch" # TODO upstream: KDE-bug 432975, bug 767478
+	"${FILESDIR}/plasma-workspace-6.7.3-optional-nm.patch" # in git master
 )
 
 src_prepare() {
@@ -180,7 +185,10 @@ src_prepare() {
 		sed -e "s/check_X11_lib(Xft)/#&/" -i CMakeLists.txt || die
 	fi
 
-	# TODO: try to get a build switch upstreamed
+	# TODO: try to get build switches upstreamed
+	if ! use flatpak; then
+		sed -e "s/^pkg_check_modules.*Flatpak/#&/" -i CMakeLists.txt || die
+	fi
 	if ! use systemd; then
 		sed -e "s/^pkg_check_modules.*SYSTEMD/#&/" -i CMakeLists.txt || die
 	fi
@@ -195,7 +203,7 @@ src_configure() {
 		$(cmake_use_find_package fontconfig Fontconfig)
 		$(cmake_use_find_package fontconfig Freetype)
 		$(cmake_use_find_package ksysguard KSysGuard)
-		$(cmake_use_find_package networkmanager KF6NetworkManagerQt)
+		-DBUILD_GEOTIMEZONED=$(usex networkmanager)
 		-DBUILD_CAMERAINDICATOR=$(usex screencast)
 		$(cmake_use_find_package semantic-desktop KF6Baloo)
 		$(cmake_use_find_package telemetry KF6UserFeedback)
