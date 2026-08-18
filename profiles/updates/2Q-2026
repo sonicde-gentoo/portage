@@ -1,5 +1,6 @@
 move kde-frameworks/sonic-windowsystem sonicde-frameworks/sonic-windowsystem
 move kde-plasma/sonic-desktop sonicde-base/sonic-desktop
+move sonicde-base/sonic-desktop sonicde-base/sonic-desktop-interface
 move kde-plasma/sonic-meta sonicde-base/sonic-meta
 move kde-plasma/sonic-win sonicde-base/sonic-win
 move kde-plasma/sonic-workspace sonicde-base/sonic-workspace
