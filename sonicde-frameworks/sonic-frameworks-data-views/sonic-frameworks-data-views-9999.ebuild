@@ -1,0 +1,16 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_DESIGNERPLUGIN="true"
+QTMIN=6.10.1
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Framework providing additional widgets for item models"
+
+LICENSE="LGPL-2+"
+
+DEPEND=">=dev-qt/qtbase-${QTMIN}:6[gui,widgets]"
+RDEPEND="${DEPEND}"
+BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"

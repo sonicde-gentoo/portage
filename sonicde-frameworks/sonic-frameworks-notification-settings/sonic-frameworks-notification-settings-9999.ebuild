@@ -1,0 +1,29 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_TEST="false"
+QTMIN=6.10.1
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Framework for configuring desktop notifications"
+
+LICENSE="LGPL-2+"
+
+DEPEND="
+	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
+	>=dev-qt/qtmultimedia-${QTMIN}:6
+	=sonicde-frameworks/sonic-frameworks-autocomplete-${KDE_CATV}*:6
+	=sonicde-frameworks/sonic-frameworks-settings-${KDE_CATV}*:6
+	=sonicde-frameworks/sonic-frameworks-internationalization-${KDE_CATV}*:6
+	=sonicde-frameworks/sonic-frameworks-io-${KDE_CATV}*:6
+"
+RDEPEND="${DEPEND}"
+
+src_configure() {
+	local mycmakeargs=(
+		-DCMAKE_DISABLE_FIND_PACKAGE_Canberra=ON
+	)
+	ecm_src_configure
+}
