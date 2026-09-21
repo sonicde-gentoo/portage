@@ -5,7 +5,7 @@ EAPI=8
 
 KFMIN=6.22.0
 QTMIN=6.10.0
-inherit ecm plasma.sonic linux-info pam systemd
+inherit ecm plasma.sonic linux-info systemd
 
 DESCRIPTION="Sonic Login Manager"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-login-manager"
@@ -13,7 +13,8 @@ HOMEPAGE="https://github.com/Sonic-DE/sonic-login-manager"
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="6"
 KEYWORDS="~amd64"
-IUSE="test"
+IUSE="s6 systemd test"
+REQUIRED_USE="?? ( s6 systemd )"
 RESTRICT="!test? ( test )"
 
 DEPEND="
@@ -38,9 +39,10 @@ RDEPEND="
 	${DEPEND}
 	!kde-plasma/plasma-login-manager
 	acct-user/soniclogin
-	=sonicde-base/sonic-login-manager-pam-${PV}*
 	sonicde-base/sonic-win[lock]
-	|| ( sys-auth/elogind sys-apps/systemd )
+	s6? ( sys-auth/elogind )
+	systemd? ( sys-apps/systemd )
+	!s6? ( !systemd? ( sys-auth/elogind ) )
 "
 BDEPEND="
 	dev-python/docutils
@@ -49,10 +51,6 @@ BDEPEND="
 	kde-frameworks/extra-cmake-modules:0
 	virtual/pkgconfig
 "
-
-PATCHES=(
-	"${FILESDIR}/${PN}-6.7.3.2-systemd-manual.patch"
-)
 
 pkg_setup() {
 	local CONFIG_CHECK="~DRM"
@@ -80,8 +78,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DRUNTIME_DIR=/run/soniclogin
 
-		# PAM config is installed by sonic-login-manager-pam.ebuild.
-		-DINSTALL_PAM_CONFIGURATION=OFF
 		# If non-systemd compat ever arrives, we can try 7
 		# again to be in sync with CHECKVT from display-manager,
 		# but until then, stick with upstream default of 1.
@@ -91,8 +87,11 @@ src_configure() {
 		# see: https://bugs.gentoo.org/980039
 		-DDBUS_CONFIG_FILENAME=sonicde-org.freedesktop.DisplayManager.conf
 
-		# Install systemd units unconditionally.
-		-DSYSTEMD_FOUND:BOOL=ON
+		# Install init units selected by USE flags.
+		-DMANUAL_INITS=ON
+		-DOPENRC_FOUND:BOOL=$(usex s6 OFF "$(usex systemd OFF ON)")
+		-DS6_FOUND:BOOL=$(usex s6 ON OFF)
+		-DSYSTEMD_FOUND:BOOL=$(usex systemd ON OFF)
 		-DKDE_INSTALL_SYSTEMDUNITDIR="$(systemd_get_systemunitdir)"
 	)
 
