@@ -53,7 +53,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6[qml]
 	sonicde-frameworks/sonic-frameworks-data-models
-	sonicde-frameworks/sonic-frameworks-silver-icons
+	sonicde-base/sonic-silver-icons
 "
 BDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6

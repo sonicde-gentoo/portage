@@ -21,7 +21,7 @@ IUSE="breeze-theme accessibility bluetooth +browser-integration +crash-handler c
 
 RDEPEND="
 	sonicde-base/sonic-silver
-	sonicde-frameworks/sonic-frameworks-silver-icons
+	sonicde-base/sonic-silver-icons
 	breeze-theme? ( sonicde-base/sonic-breeze )
 	!${CATEGORY}/${PN}:5
 	!kde-plasma/khotkeys:5

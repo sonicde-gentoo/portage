@@ -5,11 +5,11 @@ EAPI=8
 
 inherit ecm sonic
 
-DESCRIPTION="SonicDE component silver-sddm"
-HOMEPAGE="https://github.com/Sonic-DE/silver-sddm"
+DESCRIPTION="SonicDE Silver SDDM theme"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-silver-sddm"
 if [[ ${PV} != *9999* ]]; then
-	SRC_URI="https://github.com/Sonic-DE/silver-sddm/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/silver-sddm-${PV}"
+	SRC_URI="https://github.com/Sonic-DE/sonic-silver-sddm/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+	S="${WORKDIR}/sonic-silver-sddm-${PV}"
 fi
 
 LICENSE="GPL-2+"

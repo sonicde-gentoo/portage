@@ -36,7 +36,7 @@ RDEPEND="${DEPEND}
 	sonicde-base/sonic-silver
 "
 BDEPEND=">=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6"
-PDEPEND=">=sonicde-frameworks/sonic-frameworks-silver-icons-${KFMIN}:*"
+PDEPEND=">=sonicde-base/sonic-silver-icons-${KFMIN}:*"
 
 src_configure() {
 	local mycmakeargs=(

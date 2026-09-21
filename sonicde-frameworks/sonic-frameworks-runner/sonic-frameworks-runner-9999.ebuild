@@ -19,7 +19,7 @@ DEPEND="
 	=sonicde-frameworks/sonic-frameworks-windowsystem-${KDE_CATV}*:6
 "
 RDEPEND="${DEPEND}
-	sonicde-frameworks/sonic-frameworks-silver-icons
+	sonicde-base/sonic-silver-icons
 "
 
 CMAKE_SKIP_TESTS=(
