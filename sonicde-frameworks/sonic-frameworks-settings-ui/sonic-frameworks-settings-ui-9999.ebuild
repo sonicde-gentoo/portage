@@ -28,6 +28,4 @@ RDEPEND="
 	=sonicde-frameworks/sonic-frameworks-internationalization-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-widgets-addons-${KDE_CATV}*:6
 "
-DEPEND="${RDEPEND}
-	test? ( =sonicde-frameworks/sonic-frameworks-settings-${KDE_CATV}*:6[dbus] )
-"
+DEPEND="${RDEPEND}"
