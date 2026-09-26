@@ -26,7 +26,7 @@ overlay. In `/etc/portage/package.accept_keywords/00-sonicde`:
 */*::sonicde
 ```
 
-Then emerge `sonicde-base/sonic-meta` to install the desktop.
+Then emerge `sonicde-base/sonicde-meta` to install the desktop.
 
 ## Using newer Plasma
 
