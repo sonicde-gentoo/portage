@@ -10,17 +10,16 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic toolchain-funcs
 
 DESCRIPTION="Plasma screen management library"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6/8"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # requires running session
 RESTRICT="test"
 
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 RDEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
 	x11-libs/libxcb:=
 "
@@ -30,6 +29,8 @@ BDEPEND="
 	>=dev-qt/qttools-${QTMIN}:6[linguist]
 	>=dev-qt/qtbase-${QTMIN}:6
 "
+RDEPEND+=" !<kde-plasma/libkscreen-6.7.3 !kde-plasma/libkscreen:6/8"
+PDEPEND+=" ~kde-plasma/libkscreen-6.7.3:6/8-sonicde"
 
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && tc-check-min_ver gcc 13.4

@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for providing spell-checking through abstraction of popular backends"
-
 LICENSE="LGPL-2+ LGPL-2.1+"
 IUSE="aspell +hunspell qml"
 

@@ -10,10 +10,10 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic python-single-r1 xdg
 
 DESCRIPTION="Plasma crash handler, gives the user feedback if a program crashed"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 
+IUSE+=" systemd"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 COMMON_DEPEND="${PYTHON_DEPS}
@@ -33,8 +33,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-syntax-highlighting-${KFMIN}:6
-	>=sys-apps/systemd-254:=
-	>=sys-auth/polkit-qt-0.175.0[qt6(+)]
+	systemd? ( >=sys-apps/systemd-254:= )
+	sonicde-base/sonic-polkit:0
 "
 DEPEND="${COMMON_DEPEND}
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
@@ -58,6 +58,7 @@ RDEPEND="${COMMON_DEPEND}
 
 src_configure() {
 	local mycmakeargs=(
+		-DENABLE_SYSTEMD_COREDUMP=$(usex systemd ON OFF)
 		-DWITH_PYTHON_VENDORING=OFF
 	)
 	ecm_src_configure

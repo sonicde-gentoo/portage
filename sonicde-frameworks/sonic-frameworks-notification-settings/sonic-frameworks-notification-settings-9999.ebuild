@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for configuring desktop notifications"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

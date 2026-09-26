@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake sonic out-of-source-utils qmake-utils
+inherit cmake sonic out-of-source-utils qt-utils
 
 if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
@@ -52,6 +52,8 @@ PATCHES=( "${FILESDIR}/${PN}-disable-pgp-test.patch" )
 qca_plugin_use() {
 	echo -DWITH_${2:-$1}_PLUGIN=$(usex "$1")
 }
+RDEPEND+=" !<app-crypt/qca-9999 !app-crypt/qca:2/2"
+PDEPEND+=" ~app-crypt/qca-9999:2/2-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

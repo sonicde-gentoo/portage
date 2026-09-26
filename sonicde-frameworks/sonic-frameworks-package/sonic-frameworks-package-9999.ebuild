@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to install and load packages of non binary content"
-
 LICENSE="LGPL-2+"
 IUSE="man"
 

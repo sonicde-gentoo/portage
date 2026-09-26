@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="NetworkManager bindings for Qt"
-
 LICENSE="LGPL-2"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="teamd"
@@ -33,3 +32,5 @@ CMAKE_SKIP_TESTS=(
 	settingstest
 	activeconnectiontest
 )
+RDEPEND+=" !<kde-frameworks/networkmanager-qt-6.28.0 !kde-frameworks/networkmanager-qt:6/6.28"
+PDEPEND+=" ~kde-frameworks/networkmanager-qt-6.28.0:6/6.28-sonicde"

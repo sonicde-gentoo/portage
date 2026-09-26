@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="QtQuick plugin providing high-performance charts"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

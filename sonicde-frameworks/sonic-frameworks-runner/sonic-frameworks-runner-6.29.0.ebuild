@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for providing different actions given a string query"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -33,3 +32,5 @@ CMAKE_SKIP_TESTS=(
 	# bug 926502, needs dbus
 	threadingtest
 )
+RDEPEND+=" !<kde-frameworks/krunner-6.29.0 !kde-frameworks/krunner:6/6.29"
+PDEPEND+=" ~kde-frameworks/krunner-6.29.0:6/6.29-sonicde"

@@ -3,27 +3,24 @@
 
 EAPI=8
 
-inherit ecm sonic
+inherit cmake sonic
 
-DESCRIPTION="SonicDE component sonic-polkit"
+DESCRIPTION="SonicDE Qt wrapper around polkit-1"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-polkit"
 if [[ ${PV} != *9999* ]]; then
 	SRC_URI="https://github.com/Sonic-DE/sonic-polkit/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/sonic-polkit-${PV}"
 fi
 
-LICENSE="GPL-2+"
+LICENSE="LGPL-2"
 SLOT="0"
-IUSE="X"
 
 RDEPEND="
-	>=dev-qt/qtbase-6.8:6[dbus,gui,widgets,X]
-	>=dev-qt/qtdeclarative-6.8:6
-
+	dev-libs/glib:2
+	>=dev-qt/qtbase-6.8:6[dbus,gui,widgets]
+	>=sys-auth/polkit-0.103
 "
 DEPEND="${RDEPEND}"
-
-src_configure() {
-	local mycmakeargs=( -DWITH_WAYLAND=OFF -DWITH_X11=ON )
-	ecm_src_configure
-}
+BDEPEND="virtual/pkgconfig"
+RDEPEND+=" !<sys-auth/polkit-qt-9999 !sys-auth/polkit-qt:0/0"
+PDEPEND+=" ~sys-auth/polkit-qt-9999:0/0-sonicde"

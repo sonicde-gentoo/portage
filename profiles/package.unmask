@@ -1,0 +1,4 @@
+# Gentoo's non-systemd masks also match these file-free SonicDE compatibility stubs.
+# Unmask only the SonicDE subslots, not Gentoo's original packages.
+kde-plasma/drkonqi:6/6-sonicde
+kde-plasma/plasma-login-manager:0/0-sonicde

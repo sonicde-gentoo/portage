@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
 inherit ecm frameworks.sonic python-single-r1
 
 DESCRIPTION="Framework based on Gettext for internationalizing user interface text"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -35,6 +34,8 @@ CMAKE_SKIP_TESTS=(
 	# flaky, bug 948895
 	ki18n-klocalizedstringtest
 )
+RDEPEND+=" !<kde-frameworks/ki18n-6.30.0 !kde-frameworks/ki18n:6/6.30"
+PDEPEND+=" ~kde-frameworks/ki18n-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

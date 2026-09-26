@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Central daemon of KDE workspaces"
-
 LICENSE="LGPL-2+"
 IUSE="+man"
 

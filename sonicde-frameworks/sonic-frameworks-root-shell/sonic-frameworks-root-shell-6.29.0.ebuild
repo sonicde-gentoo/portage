@@ -7,26 +7,18 @@ ECM_TEST="true"
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to handle super user actions"
-
 LICENSE="LGPL-2"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-IUSE="X"
 
 RDEPEND="
 	=sonicde-frameworks/sonic-frameworks-settings-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-core-addons-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-internationalization-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-pseudo-terminal-${KDE_CATV}*:6
-	X? ( x11-libs/libX11 )
+	x11-libs/libX11
 "
 DEPEND="${RDEPEND}
-	X? ( x11-base/xorg-proto )
+	x11-base/xorg-proto
 "
-
-src_configure() {
-	local mycmakeargs=(
-		$(cmake_use_find_package X X11)
-	)
-
-	ecm_src_configure
-}
+RDEPEND+=" !<kde-frameworks/kdesu-6.29.0 !kde-frameworks/kdesu:6/6.29"
+PDEPEND+=" ~kde-frameworks/kdesu-6.29.0:6/6.29-sonicde"

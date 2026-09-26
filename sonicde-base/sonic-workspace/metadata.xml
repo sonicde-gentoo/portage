@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="appstream">Enable AppStream metadata and integration</flag>
+		<flag name="flatpak">Enable Flatpak integration</flag>
+		<flag name="ksysguard">Enable system monitor integration</flag>
+		<flag name="wallpaper-metadata">Enable wallpaper metadata integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-workspace</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -17,7 +17,7 @@ SLOT="6"
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
 RDEPEND="
 	>=dev-libs/libwacom-0.30:=
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6

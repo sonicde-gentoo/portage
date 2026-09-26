@@ -14,16 +14,10 @@ fi
 
 LICENSE="GPL-2+"
 SLOT="6/6.28"
-IUSE="X"
 
 RDEPEND="
-	>=dev-qt/qtbase-6.8:6[dbus,gui,widgets,X]
+	>=dev-qt/qtbase-6.8:6[dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-6.8:6
 	sonicde-frameworks/sonic-frameworks-cmake-modules
 "
 DEPEND="${RDEPEND}"
-
-src_configure() {
-	local mycmakeargs=( -DWITH_WAYLAND=OFF -DWITH_X11=ON )
-	ecm_src_configure
-}

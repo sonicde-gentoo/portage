@@ -9,15 +9,14 @@ PVCUT=$(ver_cut 1-3)
 QTMIN=6.10.1
 inherit ecm sonic xdg
 
-SRC_URI="https://github.com/Sonic-DE/sonic-partition-manager/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-partition-manager-${PV}"
-
 DESCRIPTION="Utility for management of disks, partitions and file systems"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-partition-manager"
+SRC_URI="https://github.com/Sonic-DE/sonic-partition-manager/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-partition-manager-${PV}"
 LICENSE="GPL-3"
 SLOT="6"
-KEYWORDS="amd64 arm64 ~loong ~ppc64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui,widgets]
@@ -32,9 +31,12 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
-	>=sys-auth/polkit-qt-0.175.0[qt6(+)]
+	sonicde-base/sonic-polkit:0
 	sys-libs/kpmcore:6=
 "
 RDEPEND="${DEPEND}
+
 	sonicde-base/sonic-polkit
 "
+RDEPEND+=" !<sys-block/partitionmanager-26.04.3 !sys-block/partitionmanager:6/6"
+PDEPEND+=" ~sys-block/partitionmanager-26.04.3:6/6-sonicde"

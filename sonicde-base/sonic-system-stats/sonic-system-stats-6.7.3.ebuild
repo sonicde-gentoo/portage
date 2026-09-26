@@ -10,10 +10,9 @@ QTMIN=6.10.1
 inherit ecm fcaps plasma.sonic
 
 DESCRIPTION="Plugin-based system monitoring daemon"
-
 LICENSE="GPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="networkmanager"
 
 DEPEND="
@@ -38,6 +37,8 @@ RDEPEND="${DEPEND}"
 FILECAPS=( -m 0755 cap_perfmon=ep usr/libexec/ksystemstats_intel_helper )
 
 PATCHES=( "${FILESDIR}/${PN}-6.7.3-optional-nm.patch" ) # in git master
+RDEPEND+=" !<kde-plasma/ksystemstats-6.7.3 !kde-plasma/ksystemstats:6/6"
+PDEPEND+=" ~kde-plasma/ksystemstats-6.7.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

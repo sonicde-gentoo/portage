@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for searching and managing metadata"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -31,3 +30,5 @@ DEPEND="
 RDEPEND="${DEPEND}
 	!${CATEGORY}/${PN}:5[-kf6compat(-)]
 "
+RDEPEND+=" !<kde-frameworks/baloo-6.30.0 !kde-frameworks/baloo:6/6.30"
+PDEPEND+=" ~kde-frameworks/baloo-6.30.0:6/6.30-sonicde"

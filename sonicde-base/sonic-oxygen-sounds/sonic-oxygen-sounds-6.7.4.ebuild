@@ -8,7 +8,8 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Oxygen sound theme for the Plasma desktop"
-
 LICENSE="GPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+RDEPEND+=" !<kde-plasma/oxygen-sounds-6.7.4 !kde-plasma/oxygen-sounds:6/6"
+PDEPEND+=" ~kde-plasma/oxygen-sounds-6.7.4:6/6-sonicde"

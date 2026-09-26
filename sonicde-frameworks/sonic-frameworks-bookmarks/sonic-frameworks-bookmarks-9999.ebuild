@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for managing bookmarks stored in XBEL format"
-
 LICENSE="LGPL-2+"
 
 RDEPEND="

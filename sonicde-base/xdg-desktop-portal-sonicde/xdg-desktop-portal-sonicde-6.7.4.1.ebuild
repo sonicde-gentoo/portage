@@ -9,20 +9,19 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Backend implementation for xdg-desktop-portal that is using Qt/KDE Frameworks"
-
 LICENSE="LGPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # dev-qt/qtbase:= slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 # dev-qt/qtbase:=[cups]: includes specifically the cups private header
-# dev-qt/qtgui: QtXkbCommonSupport is provided by either IUSE libinput or X
+# dev-qt/qtgui: QtXkbCommonSupport is provided by IUSE libinput
 COMMON_DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6=[cups,dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	|| (
 		>=dev-qt/qtbase-${QTMIN}:6[libinput]
-		>=dev-qt/qtbase-${QTMIN}:6[X]
+		>=dev-qt/qtbase-${QTMIN}:6
 	)
 	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6[dbus]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
@@ -66,3 +65,5 @@ CMAKE_SKIP_TESTS=(
 	# bugs: 926483, wants dbus/X11
 	colorschemetest
 )
+RDEPEND+=" !<kde-plasma/xdg-desktop-portal-kde-6.7.4 !kde-plasma/xdg-desktop-portal-kde:6/6"
+PDEPEND+=" ~kde-plasma/xdg-desktop-portal-kde-6.7.4:6/6-sonicde"

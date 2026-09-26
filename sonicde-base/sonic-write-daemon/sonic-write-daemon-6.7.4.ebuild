@@ -8,10 +8,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="KDE Plasma daemon listening for wall and write messages"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui]
@@ -22,3 +21,5 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-pseudo-terminal-${KFMIN}:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-plasma/kwrited-6.7.4 !kde-plasma/kwrited:6/6"
+PDEPEND+=" ~kde-plasma/kwrited-6.7.4:6/6-sonicde"

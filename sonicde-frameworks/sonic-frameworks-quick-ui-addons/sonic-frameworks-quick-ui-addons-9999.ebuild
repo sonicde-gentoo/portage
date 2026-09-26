@@ -42,9 +42,12 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 "
 RDEPEND="${COMMON_DEPEND}
+
 	>=dev-qt/qtmultimedia-${QTMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-quick-desktop-style-${KFMIN}:6
 	sonicde-base/sonic-interface-libraries:6=
 "
 DEPEND="${COMMON_DEPEND}
 "
+RDEPEND+=" !<dev-libs/kirigami-addons-9999 !dev-libs/kirigami-addons:6/6"
+PDEPEND+=" ~dev-libs/kirigami-addons-9999:6/6-sonicde"

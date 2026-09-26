@@ -5,7 +5,6 @@ EAPI=8
 
 ECM_HANDBOOK="optional"
 ECM_TEST="true"
-PVCUT=$(ver_cut 1-3)
 KFMIN=6.23.0
 QTMIN=6.10.1
 inherit ecm xdg
@@ -28,15 +27,14 @@ IUSE="semantic-desktop telemetry"
 
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 DEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets,X,xml]
+	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets,xml]
 	>=dev-qt/qtmultimedia-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-bookmarks-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-ui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-text-codec-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-color-scheme-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-autocomplete-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-config-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-config-widgets-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-crash-handler-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-dbus-${KFMIN}:6
@@ -45,26 +43,26 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-io-${KFMIN}:6=
-	>=sonicde-frameworks/sonic-frameworks-item-views-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-job-widgets-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-new-stuff-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-data-views-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-progress-ui-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-addons-downloader-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-notifications-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-parts-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-service-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-ui-components-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-text-widgets-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-solid-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-device-integration-${KFMIN}:6
 	semantic-desktop? (
-		>=sonicde-base/sonic-frameworks-baloo-widgets-${PVCUT}:6
-		>=sonicde-frameworks/sonic-frameworks-baloo-${KFMIN}:6
+		kde-apps/baloo-widgets:6
+		>=sonicde-frameworks/sonic-frameworks-file-search-${KFMIN}:6
 	)
 	telemetry? ( >=sonicde-frameworks/sonic-frameworks-user-feedback-${KFMIN}:6 )
 "
 RDEPEND="${DEPEND}
-	>=sonicde-base/sonic-frameworks-io-extras-${PVCUT}:6
-	>=sonicde-base/sonic-frameworks-thumbnailers-${PVCUT}:6
+
+	sonicde-frameworks/sonic-frameworks-io-extras:6
 "
 
 CMAKE_SKIP_TESTS=(
@@ -75,6 +73,8 @@ CMAKE_SKIP_TESTS=(
 	kitemlistcontrollerexpandtest
 	placesitemmodeltest
 )
+RDEPEND+=" !<kde-apps/dolphin-26.08.0 !kde-apps/dolphin:6/6"
+PDEPEND+=" ~kde-apps/dolphin-26.08.0:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

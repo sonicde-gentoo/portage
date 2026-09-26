@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing additional format plugins for Qt's image I/O system"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="avif eps heif jpeg2k jpegxl openexr raw"
@@ -28,6 +27,8 @@ DEPEND="${RDEPEND}
 "
 
 DOCS=( src/imageformats/AUTHORS )
+RDEPEND+=" !<kde-frameworks/kimageformats-6.30.0 !kde-frameworks/kimageformats:6/6.30"
+PDEPEND+=" ~kde-frameworks/kimageformats-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

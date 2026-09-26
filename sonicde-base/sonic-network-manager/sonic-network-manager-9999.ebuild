@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="KDE Plasma applet for NetworkManager"
-
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="6"
 IUSE="openconnect teamd"

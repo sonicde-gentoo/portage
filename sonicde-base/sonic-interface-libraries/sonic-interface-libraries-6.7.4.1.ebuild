@@ -10,18 +10,17 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Plasma library and runtime components based upon KF6 and Qt6"
-
 LICENSE="LGPL-2+"
 SLOT="6/7"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
-IUSE="activities gles2-only"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="gles2-only"
 
 RESTRICT="test"
 
 # dev-qt/qtbase slot op: includes qpa/qplatformwindow_p.h, qpa/qplatformwindow.h
-# sonicde-frameworks/sonic-frameworks-windowsystem[X]: Unconditional use of KX11Extras
+# sonicde-frameworks/sonic-frameworks-windowsystem: Unconditional use of KX11Extras
 COMMON_DEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gles2-only=,gui,opengl,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gles2-only=,gui,opengl,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-color-scheme-${KFMIN}:6
@@ -37,12 +36,12 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-package-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-svg-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	media-libs/libglvnd
 	x11-libs/libX11
 	x11-libs/libxcb
-	activities? ( =sonicde-base/sonic-activities-${KDE_CATV}*:6= )
-	!gles2-only? ( media-libs/libglvnd[X] )
+	=sonicde-base/sonic-activities-${KDE_CATV}*:6=
+	!gles2-only? ( media-libs/libglvnd )
 "
 DEPEND="${COMMON_DEPEND}
 	x11-base/xorg-proto
@@ -57,12 +56,11 @@ RDEPEND="${COMMON_DEPEND}
 BDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6
 "
-
-PATCHES=( "${FILESDIR}/${PN}-6.6.91-activities-optional.patch" )
+RDEPEND+=" !<kde-plasma/libplasma-6.7.4 !kde-plasma/libplasma:6/7"
+PDEPEND+=" ~kde-plasma/libplasma-6.7.4:6/7-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
-		-DENABLE_ACTIVITIES=$(usex activities)
 		$(cmake_use_find_package !gles2-only OpenGL)
 	)
 

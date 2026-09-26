@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Components relating to Flatpak pipewire use in Plasma"
-
 LICENSE="LGPL-2.1+"
 SLOT="6"
 

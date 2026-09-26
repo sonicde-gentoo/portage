@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Dedicated search application built on top of Baloo"
-
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="6"
 

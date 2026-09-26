@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Dedicated search application built on top of Baloo"
-
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui,widgets]
@@ -24,3 +23,5 @@ DEPEND="
 	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6=
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-plasma/milou-6.7.5 !kde-plasma/milou:6/6"
+PDEPEND+=" ~kde-plasma/milou-6.7.5:6/6-sonicde"

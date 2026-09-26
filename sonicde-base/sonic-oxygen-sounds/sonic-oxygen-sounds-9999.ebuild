@@ -8,6 +8,5 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Oxygen sound theme for the Plasma desktop"
-
 LICENSE="GPL-2+"
 SLOT="6"

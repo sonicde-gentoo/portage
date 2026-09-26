@@ -8,11 +8,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Oxygen visual style for the Plasma desktop"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
-IUSE="X"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
@@ -30,10 +28,8 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-base/sonic-decoration-${KDE_CATV}:6
 	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6=
-	X? (
-		>=dev-qt/qtbase-${QTMIN}:6=[gui,X]
-		x11-libs/libxcb
-	)
+	>=dev-qt/qtbase-${QTMIN}:6=[gui]
+	x11-libs/libxcb
 "
 DEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
@@ -43,12 +39,13 @@ RDEPEND="${COMMON_DEPEND}
 	!<${CATEGORY}/${PN}-6.5.0:5
 	>=dev-qt/qtsvg-${QTMIN}:6
 "
+RDEPEND+=" !<kde-plasma/oxygen-6.7.4 !kde-plasma/oxygen:6/6"
+PDEPEND+=" ~kde-plasma/oxygen-6.7.4:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_QT6=ON
 		-DBUILD_QT5=OFF
-		$(cmake_use_find_package X XCB)
 	)
 	ecm_src_configure
 }

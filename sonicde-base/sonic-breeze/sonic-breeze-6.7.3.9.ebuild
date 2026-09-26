@@ -8,12 +8,11 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Breeze visual style for the Plasma desktop"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
-# sonicde-frameworks/sonic-frameworks-windowsystem[X]: Unconditional use of KX11Extras
+# sonicde-frameworks/sonic-frameworks-windowsystem: Unconditional use of KX11Extras
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
@@ -28,7 +27,7 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-base/sonic-decoration-${KDE_CATV}:6
 "
 RDEPEND="${DEPEND}

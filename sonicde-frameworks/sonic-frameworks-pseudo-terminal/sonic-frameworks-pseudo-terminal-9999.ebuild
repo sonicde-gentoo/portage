@@ -6,7 +6,6 @@ EAPI=8
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for pseudo terminal devices and running child processes"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

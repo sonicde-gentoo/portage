@@ -10,10 +10,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Library for accessing usage data collected by the activities system"
-
 LICENSE="LGPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,sql]
@@ -26,3 +25,5 @@ DEPEND="${RDEPEND}
 CMAKE_SKIP_TESTS=(
 	PlasmaActivitiesStatsTest # permission denied; bug 970321
 )
+RDEPEND+=" !<kde-plasma/plasma-activities-stats-6.7.3 !kde-plasma/plasma-activities-stats:6/6"
+PDEPEND+=" ~kde-plasma/plasma-activities-stats-6.7.3:6/6-sonicde"

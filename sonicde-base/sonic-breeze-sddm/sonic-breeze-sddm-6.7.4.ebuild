@@ -5,14 +5,14 @@ EAPI=8
 
 KFMIN=6.26.0
 QTMIN=6.10.1
+KDE_CATV=$(ver_cut 1-3)
 inherit ecm sonic
-
-SRC_URI="https://github.com/Sonic-DE/sonic-breeze-sddm/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-breeze-sddm-${PV}"
 
 DESCRIPTION="Sonic Breeze SDDM theme"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-breeze-sddm"
+SRC_URI="https://github.com/Sonic-DE/sonic-breeze-sddm/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-breeze-sddm-${PV}"
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
@@ -26,8 +26,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	|| (
-		>=x11-misc/sddm-0.21.0[qt6]
-		>=gui-libs/display-manager-init
+		>=x11-misc/sddm-0.21.0[qt6(+)]
+		gui-libs/display-manager-init
 	)
 "
 

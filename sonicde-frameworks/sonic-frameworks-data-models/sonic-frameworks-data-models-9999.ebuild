@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing data models to help with tasks such as sorting and filtering"
-
 LICENSE="LGPL-2+"
 
 RDEPEND="

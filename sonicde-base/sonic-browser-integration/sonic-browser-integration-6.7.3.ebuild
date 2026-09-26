@@ -12,7 +12,7 @@ HOMEPAGE+=" https://community.kde.org/Plasma/Browser_Integration"
 
 LICENSE="GPL-3+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
@@ -34,6 +34,8 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	>=sonicde-frameworks/sonic-frameworks-runner-${KFMIN}:6
 "
+RDEPEND+=" !<kde-plasma/plasma-browser-integration-6.7.3 !kde-plasma/plasma-browser-integration:6/6"
+PDEPEND+=" ~kde-plasma/plasma-browser-integration-6.7.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

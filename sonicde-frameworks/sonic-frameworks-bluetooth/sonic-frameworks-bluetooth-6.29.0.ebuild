@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Qt wrapper for Bluez 5 DBus API"
-
 LICENSE="LGPL-2"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -18,6 +17,8 @@ DEPEND="
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/bluez-qt-6.29.0 !kde-frameworks/bluez-qt:6/6.29"
+PDEPEND+=" ~kde-frameworks/bluez-qt-6.29.0:6/6.29-sonicde"
 
 src_test() {
 	# parallel tests fail, bug 609248

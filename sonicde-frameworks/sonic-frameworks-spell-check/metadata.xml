@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="aspell">Enable spell checking with Aspell</flag>
+		<flag name="hunspell">Enable spell checking with Hunspell</flag>
+		<flag name="qml">Build QML integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-frameworks-spell-check</remote-id>
+	</upstream>
+</pkgmetadata>

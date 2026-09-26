@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
-inherit ecm frameworks.sonic optfeature python-any-r1
+inherit ecm frameworks.sonic optfeature
 
 DESCRIPTION="Library for extracting file metadata"
-
 LICENSE="LGPL-2+"
 IUSE="epub exif ffmpeg mobi pdf taglib"
 
@@ -35,10 +34,6 @@ CMAKE_SKIP_TESTS=(
 	# FIXME: bug 644650, fails on tmpfs (but not for everyone)
 	usermetadatawritertest
 )
-
-pkg_setup() {
-	use test && python-any-r1_pkg_setup
-}
 
 src_configure() {
 	local mycmakeargs=(

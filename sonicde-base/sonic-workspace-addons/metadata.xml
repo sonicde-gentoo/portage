@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="alternate-calendar">Enable alternative calendar support</flag>
+		<flag name="led">Enable LED control support</flag>
+		<flag name="share">Enable sharing features</flag>
+		<flag name="webengine">Enable Qt WebEngine integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-workspace-addons</remote-id>
+	</upstream>
+</pkgmetadata>

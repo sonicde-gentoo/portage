@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing integration of QML and KDE work spaces"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

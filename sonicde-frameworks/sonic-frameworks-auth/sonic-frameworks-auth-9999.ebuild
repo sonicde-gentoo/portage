@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to let applications perform actions as a privileged user"
-
 LICENSE="LGPL-2.1+"
 IUSE="+policykit"
 

@@ -8,10 +8,9 @@ PYTHON_COMPAT=( python3_{12..15} )
 inherit ecm plasma.sonic python-any-r1
 
 DESCRIPTION="Official GTK+ port of Plasma's Breeze widget style"
-
 LICENSE="LGPL-2.1+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 BDEPEND="${PYTHON_DEPS}
 	dev-lang/sassc
@@ -22,3 +21,5 @@ BDEPEND="${PYTHON_DEPS}
 python_check_deps() {
 	python_has_version "dev-python/pycairo[${PYTHON_USEDEP}]"
 }
+RDEPEND+=" !<kde-plasma/breeze-gtk-6.7.3 !kde-plasma/breeze-gtk:6/6"
+PDEPEND+=" ~kde-plasma/breeze-gtk-6.7.3:6/6-sonicde"

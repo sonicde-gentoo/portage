@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="ModemManager bindings for Qt"
-
 LICENSE="LGPL-2"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -22,3 +21,5 @@ RDEPEND="${DEPEND}
 	sonicde-frameworks/sonic-frameworks-settings
 "
 BDEPEND="virtual/pkgconfig"
+RDEPEND+=" !<kde-frameworks/modemmanager-qt-6.30.0 !kde-frameworks/modemmanager-qt:6/6.30"
+PDEPEND+=" ~kde-frameworks/modemmanager-qt-6.30.0:6/6.30-sonicde"

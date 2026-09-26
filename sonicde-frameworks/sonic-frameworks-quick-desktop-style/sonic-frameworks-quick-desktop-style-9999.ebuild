@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Style for QtQuickControls 2 that uses QWidget's QStyle for painting"
-
 LICENSE="|| ( GPL-2+ LGPL-3+ )"
 
 # Qt_6_PRIVATE_API matches org.kde.desktop.so, see also:

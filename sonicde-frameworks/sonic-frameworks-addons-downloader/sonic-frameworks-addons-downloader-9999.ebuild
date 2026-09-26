@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for downloading and sharing additional application data"
-
 LICENSE="LGPL-2+"
 IUSE="opds"
 

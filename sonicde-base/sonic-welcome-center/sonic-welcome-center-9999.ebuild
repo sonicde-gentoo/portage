@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm dot-a plasma.sonic xdg
 
 DESCRIPTION="Friendly onboarding wizard for Plasma"
-
 LICENSE="GPL-2+"
 SLOT="6"
 

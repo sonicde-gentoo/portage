@@ -32,9 +32,12 @@ DEPEND="
 	opencv? ( media-libs/opencv:= )
 "
 RDEPEND="${DEPEND}
+
 	!${CATEGORY}/${PN}:5
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 "
+RDEPEND+=" !<media-libs/kquickimageeditor-9999 !media-libs/kquickimageeditor:6/6"
+PDEPEND+=" ~media-libs/kquickimageeditor-9999:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

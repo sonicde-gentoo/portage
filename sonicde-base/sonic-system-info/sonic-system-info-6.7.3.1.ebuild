@@ -8,16 +8,16 @@ KFMIN=6.26.0
 QTMIN=6.10.1
 inherit ecm plasma.sonic optfeature xdg
 
-SRC_URI="https://github.com/Sonic-DE/sonic-system-info/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-system-info-${PV}"
-
 DESCRIPTION="Utility providing information about the computer hardware"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-system-info"
+SRC_URI="https://github.com/Sonic-DE/sonic-system-info/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+
 SRC_URI+=" https://www.gentoo.org/assets/img/logo/gentoo-3d-small.png -> glogo-small.png"
 
+S="${WORKDIR}/sonic-system-info-${PV}"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="gles2-only usb"
 
 DEPEND="
@@ -50,6 +50,8 @@ CMAKE_SKIP_TESTS=(
 	# bug 816591
 	smbmountmodeltest
 )
+RDEPEND+=" !<kde-plasma/kinfocenter-6.7.3 !kde-plasma/kinfocenter:6/6"
+PDEPEND+=" ~kde-plasma/kinfocenter-6.7.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

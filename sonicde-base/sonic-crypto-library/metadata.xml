@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="botan">Use Botan as a cryptography backend</flag>
+		<flag name="gcrypt">Use libgcrypt as a cryptography backend</flag>
+		<flag name="gpg">Enable GnuPG integration</flag>
+		<flag name="logger">Enable logging backend</flag>
+		<flag name="nss">Use NSS as a cryptography backend</flag>
+		<flag name="pkcs11">Enable PKCS#11 integration</flag>
+		<flag name="softstore">Enable software keystore backend</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-crypto-library</remote-id>
+	</upstream>
+</pkgmetadata>

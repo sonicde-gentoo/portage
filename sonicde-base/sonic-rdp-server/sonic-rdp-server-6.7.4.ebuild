@@ -14,7 +14,7 @@ HOMEPAGE+=" https://quantumproductions.info/articles/2023-08/remote-desktop-usin
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="systemd"
 
 COMMON_DEPEND="
@@ -42,6 +42,8 @@ RDEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 "
 BDEPEND=">=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6"
+RDEPEND+=" !<kde-plasma/krdp-6.7.4 !kde-plasma/krdp:6/6"
+PDEPEND+=" ~kde-plasma/krdp-6.7.4:6/6-sonicde"
 
 src_configure() {
 	# std::jthread and std::stop_token are implemented as experimental in libcxx

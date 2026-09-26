@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing an assortment of widgets for displaying and editing text"
-
 LICENSE="LGPL-2+ LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="speech"
@@ -24,6 +23,8 @@ DEPEND="
 	speech? ( >=dev-qt/qtspeech-${QTMIN}:6 )
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/ktextwidgets-6.29.0 !kde-frameworks/ktextwidgets:6/6.29"
+PDEPEND+=" ~kde-frameworks/ktextwidgets-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

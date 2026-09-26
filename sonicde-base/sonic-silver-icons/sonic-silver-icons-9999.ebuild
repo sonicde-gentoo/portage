@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.9.0
 inherit cmake frameworks.sonic python-any-r1 xdg
 
 DESCRIPTION="Breeze SVG icon theme"
-
 LICENSE="LGPL-3"
 IUSE="test"
 

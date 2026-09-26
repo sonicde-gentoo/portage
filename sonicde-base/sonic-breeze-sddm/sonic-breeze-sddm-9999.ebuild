@@ -5,6 +5,7 @@ EAPI=8
 
 KFMIN=6.26.0
 QTMIN=6.10.1
+KDE_CATV=6.7
 inherit ecm sonic git-r3
 
 EGIT_REPO_URI="https://github.com/Sonic-DE/sonic-breeze-sddm.git"
@@ -24,8 +25,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	|| (
-		>=x11-misc/sddm-0.21.0[qt6]
-		>=gui-libs/display-manager-init
+		>=x11-misc/sddm-0.21.0[qt6(+)]
+		gui-libs/display-manager-init
 	)
 "
 

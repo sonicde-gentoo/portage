@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Central daemon of KDE workspaces"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="+man"
@@ -26,6 +25,8 @@ RDEPEND="${DEPEND}
 	sonicde-frameworks/sonic-frameworks-cmake-modules
 "
 BDEPEND="man? ( >=sonicde-frameworks/sonic-frameworks-doctools-${KDE_CATV}:6 )"
+RDEPEND+=" !<kde-frameworks/kded-6.29.0 !kde-frameworks/kded:6/6.29"
+PDEPEND+=" ~kde-frameworks/kded-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Plasma integration for controlling Thunderbolt devices"
-
 LICENSE="|| ( GPL-2 GPL-3+ )"
 SLOT="6"
 KEYWORDS="~amd64 ~riscv ~x86"
@@ -32,3 +31,5 @@ RDEPEND="${DEPEND}
 	sys-apps/bolt
 "
 BDEPEND=">=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6"
+RDEPEND+=" !<kde-plasma/plasma-thunderbolt-6.7.4 !kde-plasma/plasma-thunderbolt:6/6"
+PDEPEND+=" ~kde-plasma/plasma-thunderbolt-6.7.4:6/6-sonicde"

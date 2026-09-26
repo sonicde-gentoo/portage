@@ -4,12 +4,11 @@
 EAPI=8
 
 ECM_TEST="forceoptional"
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
 inherit ecm frameworks.sonic python-any-r1
 
 DESCRIPTION="Framework for syntax highlighting"
-
 LICENSE="MIT"
 
 # examples: dev-qt/qtbase[printsupport,widgets]

@@ -1,7 +1,7 @@
 # Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# @ECLASS: plasma.kde.org.eclass
+# @ECLASS: plasma.sonicde.org.eclass
 # @MAINTAINER:
 # kde@gentoo.org
 # @SUPPORTED_EAPIS: 8

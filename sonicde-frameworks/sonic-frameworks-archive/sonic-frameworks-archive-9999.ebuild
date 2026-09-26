@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for reading, creation, and manipulation of various archive formats"
-
 LICENSE="GPL-2 LGPL-2.1"
 IUSE="crypt +zstd"
 

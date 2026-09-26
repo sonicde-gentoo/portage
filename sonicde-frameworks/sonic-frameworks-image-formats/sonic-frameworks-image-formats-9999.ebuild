@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing additional format plugins for Qt's image I/O system"
-
 LICENSE="LGPL-2+"
 IUSE="avif eps heif jpeg2k jpegxl openexr raw"
 

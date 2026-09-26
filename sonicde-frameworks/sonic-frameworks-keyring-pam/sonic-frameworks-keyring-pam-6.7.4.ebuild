@@ -10,7 +10,7 @@ DESCRIPTION="PAM module to not enter KWallet password again after login"
 
 LICENSE="LGPL-2.1"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	dev-libs/libgcrypt:0=
@@ -21,6 +21,8 @@ RDEPEND="${DEPEND}
 	net-misc/socat
 "
 BDEPEND="virtual/pkgconfig"
+RDEPEND+=" !<kde-plasma/kwallet-pam-6.7.4 !kde-plasma/kwallet-pam:6/6"
+PDEPEND+=" ~kde-plasma/kwallet-pam-6.7.4:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

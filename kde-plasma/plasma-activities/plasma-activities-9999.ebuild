@@ -3,26 +3,8 @@
 
 EAPI=8
 
-ECM_QTHELP="true"
-ECM_TEST="true"
-KFMIN=6.18.0
-QTMIN=6.10.1
-inherit ecm plasma.kde.org
-
-DESCRIPTION="Core components for KDE's Activities System"
-
-LICENSE="|| ( LGPL-2.1 LGPL-3 )"
-SLOT="6/7"
-if [[ ${PV} != 9999 ]]; then
-	KEYWORDS="amd64 arm64 ~loong ppc64 ~riscv ~x86"
-fi
-IUSE=""
-
-RDEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,sql,widgets]
-	>=dev-qt/qtdeclarative-${QTMIN}:6[widgets]
-	>=kde-frameworks/kconfig-${KFMIN}:6
-	>=kde-frameworks/kcoreaddons-${KFMIN}:6
-"
-DEPEND="${RDEPEND}
-"
+DESCRIPTION="Compatibility package for SonicDE sonic-activities"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-activities"
+LICENSE="metapackage"
+SLOT="6/7-sonicde"
+RDEPEND="~sonicde-base/sonic-activities-9999:6"

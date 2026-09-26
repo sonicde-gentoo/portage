@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Assortment of high-level widgets for common tasks"
-
 LICENSE="LGPL-2.1+"
 
 DEPEND=">=dev-qt/qtbase-${QTMIN}:6[gui,widgets]"

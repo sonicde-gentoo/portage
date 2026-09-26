@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="s6">Install and use service definitions for the s6 supervision suite</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-login-manager</remote-id>
+	</upstream>
+</pkgmetadata>

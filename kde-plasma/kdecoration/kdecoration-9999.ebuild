@@ -3,22 +3,8 @@
 
 EAPI=8
 
-ECM_TEST="forceoptional"
-KFMIN=6.18.0
-QTMIN=6.10.1
-inherit ecm plasma.kde.org
-
-DESCRIPTION="Plugin based library to create window decorations"
-
-LICENSE="|| ( LGPL-2.1 LGPL-3 )"
-SLOT="6"
-if [[ ${PV} != 9999 ]]; then
-	KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
-fi
-IUSE=""
-
-DEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6[gui]
-	>=kde-frameworks/ki18n-${KFMIN}:6
-"
-RDEPEND="${DEPEND}"
+DESCRIPTION="Compatibility package for SonicDE sonic-decoration"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-decoration"
+LICENSE="metapackage"
+SLOT="6/6-sonicde"
+RDEPEND="~sonicde-base/sonic-decoration-9999:6"

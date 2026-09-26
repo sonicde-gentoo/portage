@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for managing bookmarks stored in XBEL format"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -20,3 +19,5 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/kbookmarks-6.30.0 !kde-frameworks/kbookmarks:6/6.30"
+PDEPEND+=" ~kde-frameworks/kbookmarks-6.30.0:6/6.30-sonicde"

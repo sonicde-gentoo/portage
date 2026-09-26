@@ -33,6 +33,8 @@ RDEPEND="${DEPEND}
 	)
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/kirigami-6.29.0 !kde-frameworks/kirigami:6/6.29"
+PDEPEND+=" ~kde-frameworks/kirigami-6.29.0:6/6.29-sonicde"
 
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
@@ -53,6 +55,6 @@ src_configure() {
 
 # The matrix release 6.28.0.1 uses the upstream 6.28.0 source tag.
 if [[ ${PV} != *9999* ]]; then
-	SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-quick-ui/archive/refs/tags/6.28.0.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/sonic-frameworks-quick-ui-6.28.0"
+	SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-quick-ui/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+	S="${WORKDIR}/sonic-frameworks-quick-ui-${PV}"
 fi

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Plasma integration for controlling Thunderbolt devices"
-
 LICENSE="|| ( GPL-2 GPL-3+ )"
 SLOT="6"
 

@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for reading, creation, and manipulation of various archive formats"
-
 LICENSE="GPL-2 LGPL-2.1"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="crypt +zstd"
@@ -29,6 +28,8 @@ CMAKE_SKIP_TESTS=(
 	karchivetest # bug 948899
 	kfiltertest # bug 978879
 )
+RDEPEND+=" !<kde-frameworks/karchive-6.29.0 !kde-frameworks/karchive:6/6.29"
+PDEPEND+=" ~kde-frameworks/karchive-6.29.0:6/6.29-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

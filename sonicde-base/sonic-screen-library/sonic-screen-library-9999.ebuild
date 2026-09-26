@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic toolchain-funcs
 
 DESCRIPTION="Plasma screen management library"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6/8"
 
@@ -19,7 +18,7 @@ RESTRICT="test"
 
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 RDEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
 	x11-libs/libxcb:=
 "

@@ -11,7 +11,7 @@ HOMEPAGE="https://develop.kde.org/frameworks/oxygen-icons/"
 
 LICENSE="LGPL-3"
 SLOT="6"
-KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~x86"
 IUSE="test"
 
 RESTRICT="!test? ( test )"
@@ -22,6 +22,8 @@ BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-cmake-modules-${KDE_CATV}:0
 	test? ( app-misc/fdupes )
 "
+RDEPEND+=" !<kde-frameworks/oxygen-icons-6.28.0 !kde-frameworks/oxygen-icons:6/6"
+PDEPEND+=" ~kde-frameworks/oxygen-icons-6.28.0:6/6.28-sonicde"
 
 src_prepare() {
 	cmake_src_prepare

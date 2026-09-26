@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{12..15} )
 inherit ecm plasma.sonic python-any-r1
 
 DESCRIPTION="Official GTK+ port of Plasma's Breeze widget style"
-
 LICENSE="LGPL-2.1+"
 SLOT="6"
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="openconnect">Enable OpenConnect VPN integration</flag>
+		<flag name="teamd">Enable teamd network teaming integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-network-manager</remote-id>
+	</upstream>
+</pkgmetadata>

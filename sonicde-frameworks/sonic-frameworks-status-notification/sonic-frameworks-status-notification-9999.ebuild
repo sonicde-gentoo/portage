@@ -8,22 +8,12 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Implementation of Status Notifier Items"
-
 LICENSE="LGPL-2+"
-IUSE="X"
 
 # slot op: Qt6::WidgetsPrivate use
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,widgets]
-	=sonicde-frameworks/sonic-frameworks-windowsystem-${KDE_CATV}*:6[X?]
+	=sonicde-frameworks/sonic-frameworks-windowsystem-${KDE_CATV}*:6
 "
 DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
-
-src_configure() {
-	local mycmakeargs=(
-		-DWITHOUT_X11=$(usex !X)
-	)
-
-	ecm_src_configure
-}

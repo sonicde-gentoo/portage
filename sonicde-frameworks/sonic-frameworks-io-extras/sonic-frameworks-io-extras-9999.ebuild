@@ -22,7 +22,7 @@ HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-io-extras"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-IUSE="activities ios +man mtp nfs +libproxy openexr samba +sftp taglib X"
+IUSE="activities ios +man mtp nfs +libproxy openexr samba +sftp taglib"
 
 # requires running Plasma environment
 RESTRICT="test"
@@ -71,18 +71,19 @@ DEPEND="
 		>=net-libs/libssh-0.9.8:=[sftp]
 	)
 	taglib? ( >=media-libs/taglib-1.11.1:= )
-	X? (
-		x11-libs/libX11
-		x11-libs/libXcursor
-	)
+	x11-libs/libX11
+	x11-libs/libXcursor
 "
 RDEPEND="${DEPEND}
+
 	!kde-apps/kio-extras-kf5:5
 	!<sonicde-frameworks/sonic-frameworks-io-5.116.0-r2:5
 	!kde-frameworks/kio-trash-desktop-file:5
 	>=sonicde-base/sonic-daemon-${KFMIN}:6
 "
 BDEPEND="man? ( dev-util/gperf )"
+RDEPEND+=" !<kde-apps/kio-extras-9999 !kde-apps/kio-extras:6/6"
+PDEPEND+=" ~kde-apps/kio-extras-9999:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
@@ -97,7 +98,6 @@ src_configure() {
 		$(cmake_use_find_package samba Samba)
 		$(cmake_use_find_package sftp libssh)
 		$(cmake_use_find_package taglib Taglib)
-		-DWITHOUT_X11=$(usex !X)
 	)
 	ecm_src_configure
 }

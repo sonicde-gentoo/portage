@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing an assortment of configuration-related widgets"
-
 LICENSE="LGPL-2+"
 
 CMAKE_SKIP_TESTS=(

@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for providing different actions given a string query"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

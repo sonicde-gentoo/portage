@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic python-single-r1 xdg
 
 DESCRIPTION="Plasma frontend for Firewalld or UFW"
-
 LICENSE="GPL-2+"
 SLOT="6"
 IUSE="firewalld +ufw"

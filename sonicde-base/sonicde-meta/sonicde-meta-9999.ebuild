@@ -6,8 +6,9 @@ EAPI=9
 inherit toolchain-funcs
 
 # Sonic: Mimicing KDE_CATV from plasma.sonic.eclass.
-PLASMA_MIN=$(ver_cut 1-3)
-[[ ${PV} == *9999* ]] && PLASMA_MIN=6.7
+BASE_MIN=$(ver_cut 1-3)
+[[ ${PV} == *9999* ]] && BASE_MIN=6.7
+FRAMEWORKS_MIN=6.30.0
 
 DESCRIPTION="Merge this to pull in all Sonic DE packages"
 HOMEPAGE="https://github.com/Sonic-DE"
@@ -17,114 +18,100 @@ SLOT="6"
 if [[ "${PV}" != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~x86"
 fi
-IUSE="breeze-theme accessibility bluetooth +browser-integration +crash-handler crypt cups discover +display-manager +elogind +firewall flatpak grub gtk +kwallet +networkmanager ocr oxygen-theme plymouth pulseaudio rdp +sddm sdk +smart systemd thunderbolt unsupported virtualkeyboard wacom +wallpapers webengine X"
-
+IUSE="accessibility bluetooth +browser-integration +crash-handler crypt cups +display-manager +elogind +file-manager +firewall gtk +kwallet +networkmanager ocr oxygen-theme plymouth pulseaudio rdp sdk +smart systemd thunderbolt unsupported virtualkeyboard wacom +wallpapers webengine"
 
 RDEPEND="
-	sonicde-base/sonic-silver
-	sonicde-base/sonic-silver-icons
-	breeze-theme? ( sonicde-base/sonic-breeze )
+	dev-perl/XML-Parser
 	!${CATEGORY}/${PN}:5
 	!kde-plasma/khotkeys:5
-	>=kde-plasma/aurorae-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-activity-manager-daemon-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-terminal-tools-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/kde-cli-tools-common-${PLASMA_MIN}
-	>=sonicde-base/sonic-decoration-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-workspace-addons-${PLASMA_MIN}:${SLOT}
-	>=sonicde-frameworks/sonic-frameworks-root-shell-${PLASMA_MIN}[X?]
-	>=sonicde-base/sonic-desktop-interface-${PLASMA_MIN}
-	>=sonicde-base/sonic-keybind-daemon-${PLASMA_MIN}:${SLOT}[X?]
-	>=sonicde-base/sonic-system-info-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-launcher-menu-edit-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-night-light-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-pipewire-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-screen-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-screenlocker-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-ssh-password-prompt-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-system-stats-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-write-daemon-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-screen-library-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-system-monitor-library-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-interface-libraries-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-file-search-ui-${PLASMA_MIN}:${SLOT}
-	>=kde-plasma/ocean-sound-theme-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-activities-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-activities-stats-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-qt-theme-bridge-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-system-monitor-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-welcome-center-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-plasma5-support-library-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-polkit-agent-${PLASMA_MIN}:*
-	>=kde-plasma/powerdevil-${PLASMA_MIN}:${SLOT}
-	>=sonicde-frameworks/sonic-frameworks-quick-silver-style-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-desktop-interface-${PLASMA_MIN}:${SLOT}
-	>=sonicde-base/sonic-win-${PLASMA_MIN}:${SLOT}[lock]
-	>=sonicde-base/sonic-workspace-${PLASMA_MIN}:${SLOT}[X?]
-	>=sonicde-base/xdg-desktop-portal-sonicde-${PLASMA_MIN}:${SLOT}
+	>=sonicde-base/sonic-activity-manager-daemon-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-terminal-tools-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-decoration-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-workspace-addons-${BASE_MIN}:${SLOT}
+	>=sonicde-frameworks/sonic-frameworks-root-shell-${FRAMEWORKS_MIN}
+	>=sonicde-base/sonic-desktop-interface-${BASE_MIN}
+	>=sonicde-base/sonic-keybind-daemon-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-system-info-${BASE_MIN}:${SLOT}
+	>=kde-plasma/systemsettings-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-launcher-menu-edit-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-night-light-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-pipewire-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-screen-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-screenlocker-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-silver-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-silver-icons-${FRAMEWORKS_MIN}:${SLOT}
+	>=sonicde-base/sonic-ssh-password-prompt-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-system-stats-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-write-daemon-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-screen-library-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-system-monitor-library-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-interface-libraries-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-file-search-ui-${BASE_MIN}:${SLOT}
+	>=kde-plasma/ocean-sound-theme-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-activities-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-activities-stats-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-qt-theme-bridge-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-system-monitor-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-welcome-center-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-plasma5-support-library-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-polkit-agent-${BASE_MIN}:*
+	>=kde-plasma/powerdevil-${BASE_MIN}:${SLOT}
+	>=sonicde-frameworks/sonic-frameworks-quick-silver-style-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-desktop-interface-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-win-${BASE_MIN}:${SLOT}[lock]
+	>=sonicde-base/sonic-workspace-${BASE_MIN}:${SLOT}
+	>=sonicde-base/xdg-desktop-portal-sonicde-${BASE_MIN}:${SLOT}
 	sys-apps/dbus[elogind?,systemd?]
 	sys-auth/polkit[systemd?]
 	sys-fs/udisks:2[elogind?,systemd?]
-	bluetooth? ( >=sonicde-base/sonic-bluetooth-runtime-${PLASMA_MIN}:${SLOT} )
-	browser-integration? ( >=sonicde-base/sonic-browser-integration-${PLASMA_MIN}:${SLOT} )
-	crash-handler? (
-		!systemd? ( >=kde-plasma/drkonqi-legacy-6.3.80_p20250417:${SLOT} )
-		systemd? ( >=sonicde-base/sonic-dr-robotnik-${PLASMA_MIN}:${SLOT} )
-	)
-	crypt? ( >=sonicde-base/sonic-vault-${PLASMA_MIN}:${SLOT} )
+	bluetooth? ( >=sonicde-base/sonic-bluetooth-runtime-${BASE_MIN}:${SLOT} )
+	browser-integration? ( >=sonicde-base/sonic-browser-integration-${BASE_MIN}:${SLOT} )
+	crash-handler? ( >=sonicde-base/sonic-dr-robotnik-${BASE_MIN}:${SLOT} )
+	crypt? ( >=sonicde-base/sonic-vault-${BASE_MIN}:${SLOT} )
 	cups? (
-		>=kde-plasma/print-manager-${PLASMA_MIN}:${SLOT}
+		>=kde-plasma/print-manager-${BASE_MIN}:${SLOT}
 		net-print/cups-meta
 	)
-	discover? ( >=kde-plasma/discover-${PLASMA_MIN}:${SLOT} )
-	display-manager? (
-		sddm? (
-			>=kde-plasma/sddm-kcm-${PLASMA_MIN}:${SLOT}
-			>=x11-misc/sddm-0.21.0_p20240302[elogind?,systemd?]
-		)
-		!sddm? ( x11-misc/lightdm )
-	)
+	display-manager? ( >=sonicde-base/sonic-login-manager-${BASE_MIN}:${SLOT}[systemd=] )
 	elogind? ( sys-auth/elogind[pam] )
-	flatpak? ( >=kde-plasma/flatpak-kcm-${PLASMA_MIN}:${SLOT} )
-	grub? ( >=kde-plasma/breeze-grub-${PLASMA_MIN}:${SLOT} )
+	file-manager? ( >=sonicde-base/sonic-ecco-26.04.3.2:${SLOT} )
 	gtk? (
-		>=sonicde-base/sonic-silver-gtk-${PLASMA_MIN}:${SLOT}
-		>=sonicde-base/sonic-gtk-theme-bridge-${PLASMA_MIN}:${SLOT}
+		>=sonicde-base/sonic-silver-gtk-${BASE_MIN}:${SLOT}
+		>=sonicde-base/sonic-gtk-theme-bridge-${BASE_MIN}:${SLOT}
 		sys-apps/xdg-desktop-portal-gtk
 		x11-misc/appmenu-gtk-module
 	)
-	kwallet? ( >=sonicde-frameworks/sonic-frameworks-keyring-pam-${PLASMA_MIN}:${SLOT} )
+	kwallet? ( >=sonicde-frameworks/sonic-frameworks-keyring-pam-${BASE_MIN}:${SLOT} )
 	networkmanager? (
-		>=sonicde-base/sonic-network-manager-${PLASMA_MIN}:${SLOT}
+		>=sonicde-base/sonic-network-manager-${BASE_MIN}:${SLOT}
 		net-misc/networkmanager[elogind?,systemd?]
 	)
 	oxygen-theme? (
 		>=sonicde-base/sonic-oxygen-icons-6.0.0:*
-		>=sonicde-base/sonic-oxygen-${PLASMA_MIN}:${SLOT}[X?]
-		>=sonicde-base/sonic-oxygen-sounds-${PLASMA_MIN}:${SLOT}
+	>=sonicde-base/sonic-oxygen-${BASE_MIN}:${SLOT}
+		>=sonicde-base/sonic-oxygen-sounds-${BASE_MIN}:${SLOT}
 	)
 	plymouth? (
-		>=kde-plasma/breeze-plymouth-${PLASMA_MIN}:${SLOT}
-		>=kde-plasma/plymouth-kcm-${PLASMA_MIN}:${SLOT}
+		>=kde-plasma/plymouth-kcm-${BASE_MIN}:${SLOT}
 	)
-	pulseaudio? ( >=sonicde-base/sonic-audio-applet-pulse-${PLASMA_MIN}:${SLOT} )
-	rdp? ( >=sonicde-base/sonic-rdp-server-${PLASMA_MIN}:${SLOT} )
-	sdk? ( >=kde-plasma/plasma-sdk-${PLASMA_MIN}:${SLOT} )
-	smart? ( >=sonicde-base/sonic-disks-${PLASMA_MIN}:${SLOT} )
+	pulseaudio? ( >=sonicde-base/sonic-audio-applet-pulse-${BASE_MIN}:${SLOT} )
+	rdp? ( >=sonicde-base/sonic-rdp-server-${BASE_MIN}:${SLOT} )
+	sdk? ( >=kde-plasma/plasma-sdk-${BASE_MIN}:${SLOT} )
+	smart? ( >=sonicde-base/sonic-disks-${BASE_MIN}:${SLOT} )
 	systemd? (
 		>=sys-apps/systemd-257[pam]
-		firewall? ( >=sonicde-base/sonic-firewall-${PLASMA_MIN}:${SLOT} )
+		firewall? ( >=sonicde-base/sonic-firewall-${BASE_MIN}:${SLOT} )
 	)
-	thunderbolt? ( >=sonicde-base/sonic-thunderbolt-${PLASMA_MIN}:${SLOT} )
+	thunderbolt? (
+		amd64? ( >=sonicde-base/sonic-thunderbolt-${BASE_MIN}:${SLOT} )
+		x86? ( >=sonicde-base/sonic-thunderbolt-${BASE_MIN}:${SLOT} )
+	)
 	!unsupported? ( !gui-apps/qt6ct )
-	virtualkeyboard? ( >=kde-plasma/plasma-keyboard-${PLASMA_MIN}:${SLOT} )
-	wacom? ( >=sonicde-base/sonic-desktop-interface-${PLASMA_MIN}:${SLOT}[input_devices_wacom] )
-	wallpapers? ( >=sonicde-base/sonic-workspace-wallpapers-${PLASMA_MIN}:${SLOT} )
+	virtualkeyboard? ( >=kde-plasma/plasma-keyboard-${BASE_MIN}:${SLOT} )
+	wacom? ( >=sonicde-base/sonic-drawing-tablet-${BASE_MIN}:${SLOT} )
+	wallpapers? ( >=sonicde-base/sonic-workspace-wallpapers-${BASE_MIN}:${SLOT} )
 	webengine? ( kde-apps/khelpcenter:6 )
-	X? (
-		>=kde-plasma/kgamma-${PLASMA_MIN}:${SLOT}
-		wacom? ( >=sonicde-base/sonic-drawing-tablet-${PLASMA_MIN}:${SLOT} )
-	)
+	>=kde-plasma/kgamma-${BASE_MIN}:${SLOT}
 "
 # NOTE sonic-screenies follows the Sonic DE version scheme
 # TODO drop after 2027-04-26

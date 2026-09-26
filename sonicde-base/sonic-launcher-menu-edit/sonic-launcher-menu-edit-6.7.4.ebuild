@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="KDE Plasma menu editor"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets,xml]
@@ -34,3 +33,5 @@ RDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-spell-check-${KFMIN}:6
 "
 DEPEND="${RDEPEND}"
+RDEPEND+=" !<kde-plasma/kmenuedit-6.7.4 !kde-plasma/kmenuedit:6/6"
+PDEPEND+=" ~kde-plasma/kmenuedit-6.7.4:6/6-sonicde"

@@ -8,9 +8,7 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing assorted widgets for showing the progress of jobs"
-
 LICENSE="LGPL-2+"
-IUSE="X"
 
 # slot op: WITH_X11 uses Qt6::GuiPrivate for qtx11extras_p.h
 RDEPEND="
@@ -18,14 +16,7 @@ RDEPEND="
 	=sonicde-frameworks/sonic-frameworks-core-addons-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-notifications-${KDE_CATV}*:6
 	=sonicde-frameworks/sonic-frameworks-widgets-addons-${KDE_CATV}*:6
-	X? ( >=dev-qt/qtbase-${QTMIN}:6=[X] )
+	>=dev-qt/qtbase-${QTMIN}:6=
 "
 DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
-
-src_configure() {
-	local mycmakeargs=(
-		-DWITH_X11=$(usex X)
-	)
-	ecm_src_configure
-}

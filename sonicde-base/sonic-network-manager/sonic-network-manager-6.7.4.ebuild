@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="KDE Plasma applet for NetworkManager"
-
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="openconnect teamd"
 
 COMMON_DEPEND="
@@ -66,6 +65,8 @@ CMAKE_SKIP_TESTS=(
 	# https://bugs.kde.org/show_bug.cgi?id=506217
 	mobileproviderstest
 )
+RDEPEND+=" !<kde-plasma/plasma-nm-6.7.4 !kde-plasma/plasma-nm:6/6"
+PDEPEND+=" ~kde-plasma/plasma-nm-6.7.4:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic pam xdg
 
 DESCRIPTION="Library and components for secure lock screen architecture"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # requires running environment w/ RDEPENDs (circular dep w/ plasma-workspace)
 RESTRICT="test"
@@ -55,6 +54,8 @@ BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 "
 PDEPEND=">=sonicde-base/sonic-workspace-${KDE_CATV}:6"
+RDEPEND+=" !<kde-plasma/kscreenlocker-6.7.4 !kde-plasma/kscreenlocker:6/6"
+PDEPEND+=" ~kde-plasma/kscreenlocker-6.7.4:6/6-sonicde"
 
 src_install() {
 	ecm_src_install

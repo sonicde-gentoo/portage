@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for converting units"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -17,6 +16,8 @@ DEPEND="
 	=sonicde-frameworks/sonic-frameworks-internationalization-${KDE_CATV}*:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/kunitconversion-6.28.0 !kde-frameworks/kunitconversion:6/6.28"
+PDEPEND+=" ~kde-frameworks/kunitconversion-6.28.0:6/6.28-sonicde"
 
 src_test() {
 	local CMAKE_SKIP_TESTS=(

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic pam xdg
 
 DESCRIPTION="Library and components for secure lock screen architecture"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 

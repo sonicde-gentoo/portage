@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit cmake plasma.sonic
 
 DESCRIPTION="Wallpapers for the Plasma workspace"
-
 LICENSE="GPL-2"
 SLOT="6"
 

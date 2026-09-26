@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for notifying the user of an event"
-
 LICENSE="LGPL-2.1+"
 
 RDEPEND="

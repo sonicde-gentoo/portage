@@ -14,13 +14,13 @@ HOMEPAGE="https://apps.kde.org/spectacle/"
 
 LICENSE="LGPL-2+ handbook? ( FDL-1.3 )"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="share"
 
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
 	app-text/tesseract:=
-	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtmultimedia-${QTMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
@@ -37,7 +37,7 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-status-notification-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-barcode-${KFMIN}:6
 	>=sonicde-base/sonic-pipewire-${KDE_CATV}:6
@@ -61,6 +61,8 @@ BDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6
 	virtual/pkgconfig
 "
+RDEPEND+=" !<kde-plasma/spectacle-6.7.5 !kde-plasma/spectacle:6/6"
+PDEPEND+=" ~kde-plasma/spectacle-6.7.5:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

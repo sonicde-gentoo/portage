@@ -49,6 +49,8 @@ CMAKE_SKIP_TESTS=(
 	# bug 816591
 	smbmountmodeltest
 )
+RDEPEND+=" !<kde-plasma/kinfocenter-6.6.5"
+PDEPEND+=" ~kde-plasma/kinfocenter-6.6.5:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

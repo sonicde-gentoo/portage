@@ -11,7 +11,7 @@ if [[ ${PV} = *9999* ]] ; then
 else
 	SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-sso/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/sonic-frameworks-sso-${PV}"
-	KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 DESCRIPTION="Signon daemon for libaccounts-glib"
@@ -39,20 +39,15 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}"/0001-Don-t-forward-declare-QStringList.patch
-	"${FILESDIR}"/0002-Remove-usage-of-Q_EXTERN_C.patch
-	"${FILESDIR}"/0003-Port-from-QProcess-pid-to-processId.patch
-	"${FILESDIR}"/0004-Port-away-from-deprecated-QString-SplitBehavior.patch
-	"${FILESDIR}"/0005-Port-away-from-QtContainer-toSet.patch
-	"${FILESDIR}"/0006-Port-away-from-deprecated-QMap-unite.patch
 	"${FILESDIR}"/0008-Use-return-instead-of-reference-for-DBus-output-para.patch
 	"${FILESDIR}"/0009-Adjust-buildsystem-to-include-correct-Qt-Major-versi.patch
 	"${FILESDIR}"/0010-Fix-plugin-datastream-in-Qt6.patch
 	"${FILESDIR}"/0011-Port-away-from-deprecated-QProcess-signal.patch
 	"${FILESDIR}/${PN}-8.60-buildsystem.patch"
 	"${FILESDIR}/${PN}-8.60-unused-dep.patch" # bug 727346
-	"${FILESDIR}/${PN}-8.61-consistent-paths.patch" # bug 701142
 )
+RDEPEND+=" !<net-libs/signond-8.61.2 !net-libs/signond:0/0"
+PDEPEND+=" ~net-libs/signond-8.61.2:0/0-sonicde"
 
 src_prepare() {
 	default

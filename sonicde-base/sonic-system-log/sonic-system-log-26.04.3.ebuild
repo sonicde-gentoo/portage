@@ -9,15 +9,14 @@ KFMIN=6.22.0
 QTMIN=6.10.1
 inherit ecm sonic
 
-SRC_URI="https://github.com/Sonic-DE/sonic-system-log/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-system-log-${PV}"
-
 DESCRIPTION="System log viewer by KDE"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-system-log"
+SRC_URI="https://github.com/Sonic-DE/sonic-system-log/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-system-log-${PV}"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="audit kdesu systemd"
 
 DEPEND="
@@ -41,8 +40,11 @@ DEPEND="
 	)
 "
 RDEPEND="${DEPEND}
+
 	sonicde-frameworks/sonic-frameworks-doctools
 "
+RDEPEND+=" !<kde-apps/ksystemlog-26.04.3 !kde-apps/ksystemlog:6/6"
+PDEPEND+=" ~kde-apps/ksystemlog-26.04.3:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

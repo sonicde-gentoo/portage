@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Syncs KDE Plasma theme settings to GTK applications"
-
 LICENSE="GPL-3"
 SLOT="6"
 
@@ -24,7 +23,7 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-gui-addons-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-base/sonic-decoration-${KDE_CATV}:6
-	x11-libs/gtk+:3[X]
+	x11-libs/gtk+:3
 "
 RDEPEND="${DEPEND}
 	x11-misc/xsettingsd

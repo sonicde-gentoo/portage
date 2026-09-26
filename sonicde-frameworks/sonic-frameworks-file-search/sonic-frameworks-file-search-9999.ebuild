@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for searching and managing metadata"
-
 LICENSE="LGPL-2+"
 
 RESTRICT="test" # bug 624250

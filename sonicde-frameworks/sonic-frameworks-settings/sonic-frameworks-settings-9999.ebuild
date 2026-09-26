@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for reading and writing configuration"
-
 LICENSE="LGPL-2+"
 IUSE="dbus qml"
 

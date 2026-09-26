@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing elaborate user-interface components"
-
 LICENSE="LGPL-2+"
 
 RDEPEND="

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="activities">Enable activities KIO worker and file item plugin</flag>
+		<flag name="libproxy">Enable proxy discovery with libproxy</flag>
+		<flag name="nfs">Enable NFS support using libtirpc</flag>
+		<flag name="sftp">Enable SFTP protocol support using libssh</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-frameworks-io-extras</remote-id>
+	</upstream>
+</pkgmetadata>

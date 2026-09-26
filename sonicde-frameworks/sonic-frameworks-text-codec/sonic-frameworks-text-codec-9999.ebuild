@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for manipulating strings using various encodings"
-
 LICENSE="GPL-2+ LGPL-2+"
 
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"

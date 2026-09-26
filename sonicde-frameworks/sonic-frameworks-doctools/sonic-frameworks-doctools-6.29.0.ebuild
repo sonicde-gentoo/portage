@@ -7,7 +7,6 @@ ECM_QTHELP="false"
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Tools to generate documentation in various formats from DocBook files"
-
 LICENSE="MIT"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="nls"
@@ -33,6 +32,8 @@ CMAKE_SKIP_TESTS=(
 )
 
 PATCHES=( "${FILESDIR}/${PN}-5.54.0-gentoo-docbundledir.patch" )
+RDEPEND+=" !<kde-frameworks/kdoctools-6.29.0 !kde-frameworks/kdoctools:6/6.29"
+PDEPEND+=" ~kde-frameworks/kdoctools-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

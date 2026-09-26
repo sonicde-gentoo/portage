@@ -9,15 +9,14 @@ KFMIN=6.13.0
 QTMIN=6.8.1
 inherit ecm sonic
 
-SRC_URI="https://github.com/Sonic-DE/sonic-quick-image-editor/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-quick-image-editor-${PV}"
-KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
-
 DESCRIPTION="QtQuick components providing basic image editing capabilities"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-quick-image-editor"
-
+SRC_URI="https://github.com/Sonic-DE/sonic-quick-image-editor/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/sonic-quick-image-editor-${PV}"
 LICENSE="LGPL-2.1+"
 SLOT="6"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
 IUSE="+opencv"
 
 DEPEND="
@@ -27,9 +26,12 @@ DEPEND="
 	opencv? ( media-libs/opencv:= )
 "
 RDEPEND="${DEPEND}
+
 	!${CATEGORY}/${PN}:5
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 "
+RDEPEND+=" !<media-libs/kquickimageeditor-0.7.0.1 !media-libs/kquickimageeditor:6/6"
+PDEPEND+=" ~media-libs/kquickimageeditor-0.7.0.1:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

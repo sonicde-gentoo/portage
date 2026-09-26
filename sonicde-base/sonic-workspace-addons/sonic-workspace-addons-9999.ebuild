@@ -3,25 +3,13 @@
 
 EAPI=8
 
-CARGO_OPTIONAL=1
-CRATES="
-"
-RUST_MIN_VER="1.87.0"
-
 ECM_HANDBOOK="forceoptional"
 KFMIN=6.26.0
 QTMIN=6.10.1
-inherit cargo ecm flag-o-matic plasma.sonic optfeature xdg
+inherit ecm plasma.sonic optfeature xdg
 
 DESCRIPTION="Extra Plasma applets and engines"
-
-if [[ ${KDE_BUILD_TYPE} == release ]] && [[ ${PKGBUMPING} != ${PVR} ]]; then
-	SRC_URI+=" https://github.com/gentoo-crate-dist/kdeplasma-addons/releases/download/v${PV}/kdeplasma-addons-${PV}-crates.tar.xz -> ${P}-crates.tar.xz"
-fi
-
 LICENSE="GPL-2 LGPL-2"
-# Dependent crate licenses
-LICENSE+=" GPL-3 MIT Unicode-3.0 ZLIB"
 SLOT="6"
 IUSE="+alternate-calendar led share webengine"
 
@@ -56,6 +44,7 @@ DEPEND="
 	led? (
 		>=sonicde-frameworks/sonic-frameworks-auth-${KFMIN}:6
 		>=sonicde-frameworks/sonic-frameworks-dbus-${KFMIN}:6
+		>=sys-auth/polkit-qt-0.175[qt6(+)]
 	)
 	share? ( >=sonicde-frameworks/sonic-frameworks-purpose-${KFMIN}:6 )
 	webengine? ( >=dev-qt/qtwebengine-${QTMIN}:6 )
@@ -67,33 +56,15 @@ RDEPEND="${DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-data-models-${KFMIN}:6
 "
-BDEPEND="
-	led? (
-		${RUST_DEPEND}
-		dev-build/corrosion
-	)
-"
-
-pkg_setup() {
-	use led && rust_pkg_setup
-}
 
 src_prepare() {
 	ecm_src_prepare
-	# TODO: upstream build switch?
 	if ! use led; then
 		cmake_comment_add_subdirectory kdeds
-		ecm_punt_bogus_dep Corrosion
-		ecm_punt_bogus_dep KF6 Auth
-		ecm_punt_bogus_dep KF6 DBusAddons
 	fi
 }
 
 src_configure() {
-	# Rust extensions are incompatible with C/C++ LTO compiler see e.g.
-	# https://bugs.gentoo.org/910220
-	filter-lto
-
 	local mycmakeargs=(
 		$(cmake_use_find_package alternate-calendar ICU)
 		$(cmake_use_find_package share KF6Purpose)

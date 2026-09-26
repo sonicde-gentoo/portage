@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Components for handling SVGs"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -25,3 +24,5 @@ DEPEND="
 	=sonicde-frameworks/sonic-frameworks-quick-ui-${KDE_CATV}*:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/ksvg-6.28.0 !kde-frameworks/ksvg:6/6.28"
+PDEPEND+=" ~kde-frameworks/ksvg-6.28.0:6/6.28-sonicde"

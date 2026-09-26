@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic xdg
 
 DESCRIPTION="Framework for solving common problems such as caching, randomisation, and more"
-
 LICENSE="LGPL-2+"
 IUSE="dbus"
 

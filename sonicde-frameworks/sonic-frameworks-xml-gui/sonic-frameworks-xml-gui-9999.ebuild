@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for managing menu and toolbar actions in an abstract way"
-
 LICENSE="LGPL-2+"
 
 # slot op: includes QtCore/private/qlocale_p.h

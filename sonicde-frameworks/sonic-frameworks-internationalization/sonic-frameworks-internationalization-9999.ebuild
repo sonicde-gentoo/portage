@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
 inherit ecm frameworks.sonic python-single-r1
 
 DESCRIPTION="Framework based on Gettext for internationalizing user interface text"
-
 LICENSE="LGPL-2+"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"

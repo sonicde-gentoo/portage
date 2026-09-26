@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Monitors S.M.A.R.T. capable devices for imminent failure"
-
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui]
@@ -35,3 +34,5 @@ RDEPEND="${DEPEND}
 	sonicde-base/sonic-system-info:6
 "
 BDEPEND=">=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6"
+RDEPEND+=" !<kde-plasma/plasma-disks-6.7.3 !kde-plasma/plasma-disks:6/6"
+PDEPEND+=" ~kde-plasma/plasma-disks-6.7.3:6/6-sonicde"

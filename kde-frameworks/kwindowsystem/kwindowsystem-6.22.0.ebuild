@@ -4,11 +4,11 @@
 EAPI=8
 
 DESCRIPTION="Dummy package"
-HOMEPAGE=""
+HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-windowsystem"
 
+LICENSE="metapackage"
 SLOT="6"
 if [[ ${PV} != 9999* ]]; then
 	KEYWORDS="~amd64"
 fi
-IUSE="X wayland debug test"
-RDEPEND="sonicde-frameworks/sonic-windowsystem"
+RDEPEND=">=sonicde-frameworks/sonic-frameworks-windowsystem-6.28:6"

@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Components relating to Flatpak pipewire use in Plasma"
-
 LICENSE="LGPL-2.1+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RESTRICT="test" # bug 964943
 
@@ -35,3 +34,5 @@ RDEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	sonicde-base/xdg-desktop-portal-sonicde
 "
+RDEPEND+=" !<kde-plasma/kpipewire-6.7.4 !kde-plasma/kpipewire:6/6"
+PDEPEND+=" ~kde-plasma/kpipewire-6.7.4:6/6-sonicde"

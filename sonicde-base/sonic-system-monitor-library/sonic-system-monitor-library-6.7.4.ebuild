@@ -9,10 +9,9 @@ QTMIN=6.10.1
 inherit ecm fcaps flag-o-matic plasma.sonic toolchain-funcs
 
 DESCRIPTION="Task management and system monitoring library"
-
 LICENSE="LGPL-2+"
 SLOT="6/11"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	dev-libs/libnl:3
@@ -38,6 +37,8 @@ RDEPEND="${DEPEND}
 
 # -m 0755 to avoid suid with USE="-filecaps"
 FILECAPS=( -m 0755 cap_net_raw+ep usr/libexec/ksysguard/ksgrd_network_helper )
+RDEPEND+=" !<kde-plasma/libksysguard-6.7.4 !kde-plasma/libksysguard:6/11"
+PDEPEND+=" ~kde-plasma/libksysguard-6.7.4:6/11-sonicde"
 
 src_configure() {
 	# support std::jthread and std::stop_token is not enabled per default

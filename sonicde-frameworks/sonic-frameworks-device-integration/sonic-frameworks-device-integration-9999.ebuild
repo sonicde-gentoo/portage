@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic optfeature
 
 DESCRIPTION="Provider for platform independent hardware discovery, abstraction and management"
-
 LICENSE="LGPL-2.1+"
 IUSE="ios"
 

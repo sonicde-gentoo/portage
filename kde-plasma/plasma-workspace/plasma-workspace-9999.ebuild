@@ -3,18 +3,10 @@
 
 EAPI=8
 
-DESCRIPTION="Dummy package to pull in sonic-workspace"
-HOMEPAGE="https://github.com/Sonic-DE/"
-SRC_URI=""
-
+DESCRIPTION="Compatibility package for SonicDE sonic-workspace"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-workspace"
 LICENSE="metapackage"
 SLOT="6/6-sonicde"
-if [[ ${PV} != *9999 ]]; then
-	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-fi
-IUSE="appstream +fontconfig +ksysguard networkmanager +policykit
-screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
-
-RDEPEND="~sonicde-base/sonic-workspace-${PV}[appstream=,fontconfig=,ksysguard=,networkmanager=,policykit=,screencast=,semantic-desktop=,systemd=,telemetry=,wallpaper-metadata=,X=]"
-DEPEND="${RDEPEND}"
-BDEPEND=""
+IUSE="appstream flatpak +fontconfig +ksysguard networkmanager +policykit screencast +semantic-desktop systemd telemetry +wallpaper-metadata debug +handbook test"
+RESTRICT="test"
+RDEPEND="~sonicde-base/sonic-workspace-${PV}:6[appstream=,flatpak=,fontconfig=,ksysguard=,networkmanager=,policykit=,screencast=,semantic-desktop=,systemd=,telemetry=,wallpaper-metadata=,debug=,handbook=,test=]"

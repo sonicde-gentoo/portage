@@ -7,7 +7,6 @@ ECM_QTHELP="false"
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Tools to generate documentation in various formats from DocBook files"
-
 LICENSE="MIT"
 IUSE="nls"
 

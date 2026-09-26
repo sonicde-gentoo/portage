@@ -13,12 +13,12 @@ HOMEPAGE="https://userbase.kde.org/Wacomtablet"
 
 LICENSE="GPL-2"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
 RDEPEND="
 	>=dev-libs/libwacom-0.30:=
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
@@ -43,6 +43,8 @@ DEPEND="${RDEPEND}
 	x11-libs/libX11
 "
 BDEPEND="sys-devel/gettext"
+RDEPEND+=" !<kde-plasma/wacomtablet-6.7.4 !kde-plasma/wacomtablet:6/6"
+PDEPEND+=" ~kde-plasma/wacomtablet-6.7.4:6/6-sonicde"
 
 src_test() {
 	# test needs DBus, bug 675548

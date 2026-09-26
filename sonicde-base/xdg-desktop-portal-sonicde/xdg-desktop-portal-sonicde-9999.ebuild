@@ -9,19 +9,18 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Backend implementation for xdg-desktop-portal that is using Qt/KDE Frameworks"
-
 LICENSE="LGPL-2+"
 SLOT="6"
 
 # dev-qt/qtbase:= slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 # dev-qt/qtbase:=[cups]: includes specifically the cups private header
-# dev-qt/qtgui: QtXkbCommonSupport is provided by either IUSE libinput or X
+# dev-qt/qtgui: QtXkbCommonSupport is provided by IUSE libinput
 COMMON_DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6=[cups,dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	|| (
 		>=dev-qt/qtbase-${QTMIN}:6[libinput]
-		>=dev-qt/qtbase-${QTMIN}:6[X]
+		>=dev-qt/qtbase-${QTMIN}:6
 	)
 	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6[dbus]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6

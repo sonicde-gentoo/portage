@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Qt Platform Theme integration plugins for the Plasma workspaces"
-
 LICENSE="LGPL-2+"
 SLOT="6"
 

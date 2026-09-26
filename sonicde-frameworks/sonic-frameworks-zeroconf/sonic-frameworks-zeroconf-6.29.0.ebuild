@@ -7,9 +7,8 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for network service discovery using Zeroconf"
-
 LICENSE="LGPL-2+"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="minimal"
 
 DEPEND="
@@ -23,6 +22,8 @@ RDEPEND="${DEPEND}
 	!minimal? ( elibc_glibc? ( sys-auth/nss-mdns ) )
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/kdnssd-6.29.0 !kde-frameworks/kdnssd:6/6.29"
+PDEPEND+=" ~kde-frameworks/kdnssd-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	if use minimal; then

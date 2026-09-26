@@ -8,10 +8,9 @@ QTMIN=6.10.1
 inherit ecm dot-a plasma.sonic xdg
 
 DESCRIPTION="Friendly onboarding wizard for Plasma"
-
 LICENSE="GPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-addons-1.12.0
@@ -43,6 +42,8 @@ RDEPEND="${DEPEND}
 	sonicde-frameworks/sonic-frameworks-user-feedback
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-plasma/plasma-welcome-6.7.4 !kde-plasma/plasma-welcome:6/6"
+PDEPEND+=" ~kde-plasma/plasma-welcome-6.7.4:6/6-sonicde"
 
 src_configure() {
 	lto-guarantee-fat

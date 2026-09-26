@@ -19,7 +19,7 @@ IUSE="share"
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
 	app-text/tesseract:=
-	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtmultimedia-${QTMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
@@ -36,7 +36,7 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-status-notification-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-barcode-${KFMIN}:6
 	>=sonicde-base/sonic-pipewire-${KDE_CATV}:6

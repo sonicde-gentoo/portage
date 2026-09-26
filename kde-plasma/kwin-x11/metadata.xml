@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="gamepad">Enable game controller input</flag>
+		<flag name="lock">Enable screen locking through SonicDE screenlocker</flag>
+		<flag name="nightlight">Enable nighttime display color adjustment</flag>
+		<flag name="shortcuts">Enable SonicDE global keyboard shortcuts</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-win</remote-id>
+	</upstream>
+</pkgmetadata>

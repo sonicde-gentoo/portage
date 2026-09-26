@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="browser-integration">Integrate the desktop with web browsers</flag>
+		<flag name="crash-handler">Install crash reporting integration</flag>
+		<flag name="display-manager">Install Sonic Login Manager</flag>
+		<flag name="file-manager">Install the Ecco file manager</flag>
+		<flag name="firewall">Install firewall configuration tools</flag>
+		<flag name="kwallet">Enable wallet integration</flag>
+		<flag name="ocr">Enable optical character recognition</flag>
+		<flag name="oxygen-theme">Install the Oxygen desktop theme</flag>
+		<flag name="plymouth">Install Plymouth theme integration</flag>
+		<flag name="sdk">Install developer tools</flag>
+		<flag name="smart">Enable SMART disk health support</flag>
+		<flag name="thunderbolt">Install Thunderbolt device management</flag>
+		<flag name="unsupported">Allow unsupported desktop integrations</flag>
+		<flag name="virtualkeyboard">Install virtual keyboard support</flag>
+		<flag name="wacom">Enable Wacom tablet support</flag>
+		<flag name="wallpapers">Install desktop wallpapers</flag>
+		<flag name="webengine">Enable Qt WebEngine integration</flag>
+	</use>
+</pkgmetadata>

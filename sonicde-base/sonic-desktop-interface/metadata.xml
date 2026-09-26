@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="ibus">Enable IBus input method integration</flag>
+		<flag name="scim">Enable SCIM input method integration</flag>
+		<flag name="webengine">Enable Qt WebEngine integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-desktop-interface</remote-id>
+	</upstream>
+</pkgmetadata>

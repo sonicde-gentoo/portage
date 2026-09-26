@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for reading and writing configuration"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="dbus qml"
@@ -23,6 +22,8 @@ DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
 
 DOCS=( DESIGN docs/{DESIGN.kconfig,options.md} )
+RDEPEND+=" !<kde-frameworks/kconfig-6.29.0 !kde-frameworks/kconfig:6/6.29"
+PDEPEND+=" ~kde-frameworks/kconfig-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

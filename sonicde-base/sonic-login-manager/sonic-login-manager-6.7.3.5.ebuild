@@ -20,24 +20,24 @@ RESTRICT="!test? ( test )"
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
-	>=kde-frameworks/kauth-${KFMIN}:6
-	>=kde-frameworks/kcmutils-${KFMIN}:6
-	>=kde-frameworks/kconfig-${KFMIN}:6
-	>=kde-frameworks/kcoreaddons-${KFMIN}:6
-	>=kde-frameworks/kdbusaddons-${KFMIN}:6
-	>=kde-frameworks/ki18n-${KFMIN}:6
-	>=kde-frameworks/kio-6.22.1:6
-	>=kde-frameworks/kpackage-${KFMIN}:6
-	>=kde-frameworks/kwindowsystem-${KFMIN}:6
-	>=kde-plasma/kscreen-${KDE_CATV}:6
-	>=kde-plasma/libplasma-${KDE_CATV}:6=
+	>=sonicde-frameworks/sonic-frameworks-auth-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-dbus-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-io-6.22.1:6
+	>=sonicde-frameworks/sonic-frameworks-package-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
+	>=sonicde-base/sonic-screen-${KDE_CATV}:6
+	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6=
 	>=sonicde-base/sonic-workspace-${KDE_CATV}:6
 	sys-libs/pam
 	x11-libs/libXau
 "
 RDEPEND="
 	${DEPEND}
-	!kde-plasma/plasma-login-manager
+
 	acct-user/soniclogin
 	sonicde-base/sonic-win[lock]
 	s6? ( sys-auth/elogind )
@@ -48,9 +48,11 @@ BDEPEND="
 	dev-python/docutils
 	>=dev-build/cmake-3.25.0
 	>=dev-qt/qttools-${QTMIN}[linguist]
-	kde-frameworks/extra-cmake-modules:0
+	sonicde-frameworks/sonic-frameworks-cmake-modules:0
 	virtual/pkgconfig
 "
+RDEPEND+=" !<kde-plasma/plasma-login-manager-6.7.3 !kde-plasma/plasma-login-manager:0/0"
+PDEPEND+=" ~kde-plasma/plasma-login-manager-6.7.3:0/0-sonicde"
 
 pkg_setup() {
 	local CONFIG_CHECK="~DRM"

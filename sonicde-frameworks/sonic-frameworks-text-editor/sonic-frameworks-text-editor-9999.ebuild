@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing a full text editor component"
-
 LICENSE="LGPL-2+"
 IUSE="+editorconfig"
 

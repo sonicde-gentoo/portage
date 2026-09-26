@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for reading, creation, and manipulation of various archive formats"
-
 LICENSE="GPL-2 LGPL-2.1"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="crypt +zstd"
@@ -24,6 +23,8 @@ BDEPEND="
 	>=dev-qt/qttools-${QTMIN}:6[linguist]
 	zstd? ( virtual/pkgconfig )
 "
+RDEPEND+=" !<kde-frameworks/karchive-${PV} !kde-frameworks/karchive:6/6.30"
+PDEPEND="~kde-frameworks/karchive-${PV}:6/6.30-sonicde"
 
 CMAKE_SKIP_TESTS=(
 	karchivetest # bug 948899

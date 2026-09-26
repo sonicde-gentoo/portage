@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing a full text editor component"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="+editorconfig"
@@ -39,6 +38,9 @@ DEPEND="
 	editorconfig? ( app-text/editorconfig-core-c )
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/ktexteditor-6.29.0 !kde-frameworks/ktexteditor:6/6.29"
+PDEPEND+=" ~kde-frameworks/ktexteditor-6.29.0:6/6.29-sonicde"
+
 src_configure() {
 	local mycmakeargs=(
 		$(cmake_use_find_package editorconfig EditorConfig)

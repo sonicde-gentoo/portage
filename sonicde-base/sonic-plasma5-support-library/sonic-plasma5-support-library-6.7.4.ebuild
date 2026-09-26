@@ -10,11 +10,10 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Support components for porting from KF5/Qt5 to KF6/Qt6"
-
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
-IUSE="activities geolocation ksysguard X"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="activities geolocation ksysguard"
 
 RESTRICT="test" # bug 926347
 
@@ -35,7 +34,7 @@ DEPEND="
 	activities? ( >=sonicde-base/sonic-activities-${KDE_CATV}:6= )
 	geolocation? ( >=sonicde-frameworks/sonic-frameworks-networkmanager-${KFMIN}:6 )
 	ksysguard? ( >=sonicde-base/sonic-system-monitor-library-${KDE_CATV}:6 )
-	X? ( x11-libs/libX11 )
+	x11-libs/libX11
 "
 RDEPEND="${DEPEND}
 	!sonicde-base/sonic-workspace:5
@@ -47,7 +46,6 @@ src_configure() {
 		$(cmake_use_find_package activities PlasmaActivities)
 		$(cmake_use_find_package geolocation KF6NetworkManagerQt)
 		$(cmake_use_find_package ksysguard KSysGuard)
-		-DWITH_X11=$(usex X)
 	)
 	ecm_src_configure
 }

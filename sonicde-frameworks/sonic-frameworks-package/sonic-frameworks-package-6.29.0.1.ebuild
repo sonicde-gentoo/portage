@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to install and load packages of non binary content"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="man"
@@ -27,6 +26,8 @@ CMAKE_SKIP_TESTS=(
 	# requires network access
 	testpackage-appstream
 )
+RDEPEND+=" !<kde-frameworks/kpackage-6.29.0 !kde-frameworks/kpackage:6/6.29"
+PDEPEND+=" ~kde-frameworks/kpackage-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

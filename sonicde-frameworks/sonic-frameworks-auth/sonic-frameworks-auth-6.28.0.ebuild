@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to let applications perform actions as a privileged user"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="+policykit"
@@ -18,7 +17,7 @@ RDEPEND="
 	policykit? (
 		>=dev-qt/qtbase-${QTMIN}:6[dbus]
 		=sonicde-frameworks/sonic-frameworks-windowsystem-${KDE_CATV}*:6
-		>=sys-auth/polkit-qt-0.175.0[qt6(+)]
+		sonicde-base/sonic-polkit:0
 	)
 "
 DEPEND="${RDEPEND}
@@ -32,6 +31,8 @@ CMAKE_SKIP_TESTS=(
 	# needs DBus, bug 938505
 	KAuthFdTest
 )
+RDEPEND+=" !<kde-frameworks/kauth-6.28.0 !kde-frameworks/kauth:6/6.28"
+PDEPEND+=" ~kde-frameworks/kauth-6.28.0:6/6.28-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

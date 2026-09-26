@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Qt wrapper for Bluez 5 DBus API"
-
 LICENSE="LGPL-2"
 
 RESTRICT="test" # bugs 668196, 924708; they all hang

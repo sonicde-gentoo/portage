@@ -27,7 +27,7 @@ src_install() {
 	ecm_src_install
 
 	insinto /etc/xdg/plasma-workspace/env/
-	doins "${FILESDIR}/05-ksshaskpass.sh"
+	doins "${FILESDIR}/05-sonic-ssh-password-prompt.sh"
 }
 
 pkg_postinst() {
@@ -44,5 +44,5 @@ pkg_postinst() {
 	elog "${PN} has been installed as your default askpass application"
 	elog "for Plasma 6 sessions."
 	elog "If that's not desired, select the one you want to use in"
-	elog "/etc/xdg/plasma-workspace/env/05-ksshaskpass.sh"
+	elog "/etc/xdg/plasma-workspace/env/05-sonic-ssh-password-prompt.sh"
 }

@@ -3,14 +3,9 @@
 
 EAPI=8
 
-DESCRIPTION="Dummy package to pull in sonic-system-info"
-HOMEPAGE="https://github.com/Sonic-DE/"
+DESCRIPTION="Compatibility package for SonicDE sonic-system-info"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-system-info"
 LICENSE="metapackage"
 SLOT="6/6-sonicde"
-if [[ ${PV} != *9999 ]]; then
-	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
-fi
 IUSE="gles2-only usb"
-
-RDEPEND="~sonicde-base/sonic-system-info-${PV}[gles2-only=,usb=]"
-DEPEND="${RDEPEND}"
+RDEPEND="~sonicde-base/sonic-system-info-9999:6[gles2-only=,usb=]"

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for notifying the user of an event"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -21,3 +20,5 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/knotifications-6.29.0 !kde-frameworks/knotifications:6/6.29"
+PDEPEND+=" ~kde-frameworks/knotifications-6.29.0:6/6.29-sonicde"

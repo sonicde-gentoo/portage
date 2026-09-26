@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Library to determine holidays and other special events for a geographical region"
-
 LICENSE="LGPL-2.1+"
 
 DEPEND=">=dev-qt/qtdeclarative-${QTMIN}:6"

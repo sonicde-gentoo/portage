@@ -4,12 +4,11 @@
 EAPI=8
 
 ECM_TEST="forceoptional"
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
 inherit ecm frameworks.sonic python-any-r1
 
 DESCRIPTION="Framework for syntax highlighting"
-
 LICENSE="MIT"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -25,6 +24,8 @@ BDEPEND="${PYTHON_DEPS}
 	dev-lang/perl
 	>=dev-qt/qttools-${QTMIN}:6[linguist]
 "
+RDEPEND+=" !<kde-frameworks/syntax-highlighting-6.30.0 !kde-frameworks/syntax-highlighting:6/6.30"
+PDEPEND+=" ~kde-frameworks/syntax-highlighting-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Plasma applet for audio volume management using PulseAudio"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 

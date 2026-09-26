@@ -26,4 +26,8 @@ DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui]
 	>=media-gfx/exiv2-0.27:=[xmp=]
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+
+"
+RDEPEND+=" !<kde-apps/libkexiv2-9999 !kde-apps/libkexiv2:6/6"
+PDEPEND+=" ~kde-apps/libkexiv2-9999:6/6-sonicde"

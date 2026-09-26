@@ -13,7 +13,7 @@ HOMEPAGE="https://apps.kde.org/plasma-systemmonitor/"
 
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-addons-1.1.0:6
@@ -46,3 +46,5 @@ CMAKE_SKIP_TESTS=(
 	# bug 977514, problem when running with translations available
 	TestPageManager
 )
+RDEPEND+=" !<kde-plasma/plasma-systemmonitor-6.7.5 !kde-plasma/plasma-systemmonitor:6/6"
+PDEPEND+=" ~kde-plasma/plasma-systemmonitor-6.7.5:6/6-sonicde"

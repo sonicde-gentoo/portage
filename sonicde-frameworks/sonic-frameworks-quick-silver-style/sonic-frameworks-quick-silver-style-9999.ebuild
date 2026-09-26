@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Breeze inspired QQC2 Style"
-
 LICENSE="|| ( GPL-2+ LGPL-3+ ) CC0-1.0"
 SLOT="6"
 

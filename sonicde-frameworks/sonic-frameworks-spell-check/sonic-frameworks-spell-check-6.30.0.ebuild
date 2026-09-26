@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for providing spell-checking through abstraction of popular backends"
-
 LICENSE="LGPL-2+ LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="aspell +hunspell qml"
@@ -29,6 +28,8 @@ CMAKE_SKIP_TESTS=(
 	sonnet-test_settings
 	sonnet-test_highlighter
 )
+RDEPEND+=" !<kde-frameworks/sonnet-6.30.0 !kde-frameworks/sonnet:6/6.30"
+PDEPEND+=" ~kde-frameworks/sonnet-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

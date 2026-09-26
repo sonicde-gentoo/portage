@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Library for parsing RSS and Atom feeds"
-
 LICENSE="LGPL-2+"
 
 RDEPEND="

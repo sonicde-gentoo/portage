@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic optfeature
 
 DESCRIPTION="Provider for platform independent hardware discovery, abstraction and management"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="ios"
@@ -30,6 +29,8 @@ BDEPEND="
 	app-alternatives/yacc
 	>=dev-qt/qttools-${QTMIN}:6[linguist]
 "
+RDEPEND+=" !<kde-frameworks/solid-6.28.0 !kde-frameworks/solid:6/6.28"
+PDEPEND+=" ~kde-frameworks/solid-6.28.0:6/6.28-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

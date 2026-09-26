@@ -45,8 +45,11 @@ DEPEND="
 	)
 "
 RDEPEND="${DEPEND}
+
 	sonicde-frameworks/sonic-frameworks-doctools
 "
+RDEPEND+=" !<kde-apps/ksystemlog-9999 !kde-apps/ksystemlog:6/6"
+PDEPEND+=" ~kde-apps/ksystemlog-9999:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

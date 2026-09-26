@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.9.0
 inherit cmake frameworks.sonic python-any-r1 xdg
 
 DESCRIPTION="Breeze SVG icon theme"
-
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="test"
@@ -30,6 +29,8 @@ BDEPEND="${PYTHON_DEPS}
 python_check_deps() {
 	python_has_version "dev-python/lxml[${PYTHON_USEDEP}]"
 }
+RDEPEND+=" !<kde-frameworks/breeze-icons-6.28.0 !kde-frameworks/breeze-icons:6/6.28"
+PDEPEND+=" ~kde-frameworks/breeze-icons-6.28.0:6/6.28-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

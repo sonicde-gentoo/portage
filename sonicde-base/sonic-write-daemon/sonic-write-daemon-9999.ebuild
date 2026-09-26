@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="KDE Plasma daemon listening for wall and write messages"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 

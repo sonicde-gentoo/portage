@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="kwallet">Enable SonicDE wallet integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-frameworks-io</remote-id>
+	</upstream>
+</pkgmetadata>

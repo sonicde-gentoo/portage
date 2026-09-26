@@ -4,19 +4,20 @@
 EAPI=8
 
 CMAKE_QA_COMPAT_SKIP=1 # bug #964519 tests/ subdir is irrelevant
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 QTMIN=6.10.1
 inherit cmake frameworks.sonic python-any-r1
 
 DESCRIPTION="Extra modules and scripts for CMake"
-
 LICENSE="BSD"
-KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~x86"
 IUSE="doc test"
 
 RESTRICT="!test? ( test )"
 
-RDEPEND="app-arch/libarchive[bzip2]"
+RDEPEND="app-arch/libarchive[bzip2]
+
+"
 DEPEND="
 	test? (
 		>=dev-qt/qtbase-${QTMIN}:6[dbus,gui]
@@ -34,6 +35,10 @@ BDEPEND="
 		>=dev-qt/qttools-${QTMIN}:6[linguist]
 	)
 "
+
+# The old KDE provider owns the same paths; the file-free stub has its own subslot.
+RDEPEND+=" !kde-frameworks/extra-cmake-modules:0/0"
+PDEPEND="~kde-frameworks/extra-cmake-modules-6.30.0:0/0-sonicde"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.49.0-no-fatal-warnings.patch"

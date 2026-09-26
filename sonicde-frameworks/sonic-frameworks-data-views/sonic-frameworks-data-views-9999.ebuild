@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing additional widgets for item models"
-
 LICENSE="LGPL-2+"
 
 DEPEND=">=dev-qt/qtbase-${QTMIN}:6[gui,widgets]"

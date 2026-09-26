@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Library for accessing usage data collected by the activities system"
-
 LICENSE="LGPL-2+"
 SLOT="6"
 

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Monitors S.M.A.R.T. capable devices for imminent failure"
-
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="6"
 

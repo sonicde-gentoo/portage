@@ -33,9 +33,12 @@ DEPEND="
 	sys-fs/fuse:3=
 "
 RDEPEND="${DEPEND}
+
 	!${CATEGORY}/${PN}:5
 	sonicde-frameworks/sonic-frameworks-io-extras
 "
+RDEPEND+=" !<kde-misc/kio-fuse-9999 !kde-misc/kio-fuse:6/6"
+PDEPEND+=" ~kde-misc/kio-fuse-9999:6/6-sonicde"
 
 pkg_setup() {
 	local CONFIG_CHECK="~FUSE_FS"

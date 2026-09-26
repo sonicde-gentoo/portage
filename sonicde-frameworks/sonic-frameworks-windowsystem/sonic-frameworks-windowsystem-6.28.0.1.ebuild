@@ -7,10 +7,8 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing access to properties and features of the window manager"
-
 LICENSE="|| ( LGPL-2.1 LGPL-3 ) MIT"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-IUSE="X"
 
 RESTRICT="test"
 
@@ -20,14 +18,12 @@ RESTRICT="test"
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
-	X? (
-		>=dev-qt/qtbase-${QTMIN}:6=[gui,X]
-		x11-base/xorg-proto
-		x11-libs/libX11
-		x11-libs/libXfixes
-		x11-libs/libxcb
-		x11-libs/xcb-util-keysyms
-	)
+	>=dev-qt/qtbase-${QTMIN}:6=[gui]
+	x11-base/xorg-proto
+	x11-libs/libX11
+	x11-libs/libXfixes
+	x11-libs/libxcb
+	x11-libs/xcb-util-keysyms
 "
 DEPEND="${RDEPEND}
 "
@@ -36,12 +32,5 @@ BDEPEND="
 "
 
 DOCS=( docs/README.kstartupinfo )
-
-src_configure() {
-	local mycmakeargs=(
-		-DKWINDOWSYSTEM_WAYLAND=OFF
-		-DKWINDOWSYSTEM_X11=$(usex X)
-	)
-
-	ecm_src_configure
-}
+RDEPEND+=" !<kde-frameworks/kwindowsystem-6.28.0 !kde-frameworks/kwindowsystem:6/6.28"
+PDEPEND+=" ~kde-frameworks/kwindowsystem-6.28.0:6/6.28-sonicde"

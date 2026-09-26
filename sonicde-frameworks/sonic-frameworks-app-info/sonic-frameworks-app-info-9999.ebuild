@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Advanced plugin and service introspection"
-
 LICENSE="LGPL-2 LGPL-2.1+"
 IUSE="+man"
 

@@ -9,21 +9,17 @@ KFMIN=6.26.0
 QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
-DESCRIPTION="Sonic Workspace"
-
 # LICENSE is based on Debian's plasma-workspace 4:6.5.4-3 d/copyright file.
+DESCRIPTION="Sonic Workspace"
 LICENSE="GPL-2+ GPL-2 GPL-3+ || ( GPL-2 GPL-3 ) || ( GPL-2 LicenseRef-KDE-Accepted-GPL ) LicenseRef-KDE-Accepted-GPL LGPL-2 LGPL-2+ LGPL-2.1+ LGPL-3+ || ( LGPL-2 GPL-2 LicenseRef-KDE-Accepted-GPL ) || ( LGPL-2.1 LicenseRef-KDE-Accepted-LGPL ) || ( public-domain MIT ) BSD BSD-2 CC0-1.0 MIT FDL-1.2+"
 SLOT="6"
 if [[ ${PV} != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
-IUSE="appstream +fontconfig +ksysguard networkmanager +policykit
-screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
-
-REQUIRED_USE="fontconfig? ( X )"
+IUSE="appstream +fontconfig +ksysguard networkmanager +policykit screencast +semantic-desktop systemd telemetry +wallpaper-metadata"
 RESTRICT="test"
 
-# kde-frameworks/kwindowsystem[X]: Uses KX11Extras
+# kde-frameworks/kwindowsystem: Uses KX11Extras
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
 	dev-libs/icu:=
@@ -70,9 +66,9 @@ COMMON_DEPEND="
 	>=kde-frameworks/ktextwidgets-${KFMIN}:6
 	>=kde-frameworks/kwallet-${KFMIN}:6
 	>=kde-frameworks/kwidgetsaddons-${KFMIN}:6
-	>=kde-frameworks/kwindowsystem-${KFMIN}:6[X?]
+	>=kde-frameworks/kwindowsystem-${KFMIN}:6
 	>=kde-frameworks/kxmlgui-${KFMIN}:6
-	>=kde-frameworks/prison-${KFMIN}:6[qml]
+	>=kde-frameworks/prison-${KFMIN}:6
 	>=kde-frameworks/solid-${KFMIN}:6
 	>=kde-plasma/breeze-${KDE_CATV}:6
 	>=kde-plasma/knighttime-${KDE_CATV}:6
@@ -94,33 +90,29 @@ COMMON_DEPEND="
 	systemd? ( sys-apps/systemd:= )
 	telemetry? ( >=kde-frameworks/kuserfeedback-${KFMIN}:6 )
 	wallpaper-metadata? ( kde-apps/libkexiv2:6 )
-	X? (
-		>=dev-qt/qtbase-${QTMIN}:6=[X]
-		>=kde-plasma/kscreenlocker-${KDE_CATV}:6
-		x11-libs/libICE
-		x11-libs/libSM
-		x11-libs/libX11
-		x11-libs/libXau
-		x11-libs/libxcb
-		x11-libs/libXcursor
-		x11-libs/libXfixes
-		x11-libs/libXtst
-		x11-libs/xcb-util
-		fontconfig? (
-			media-libs/fontconfig
-			media-libs/freetype
-			x11-libs/libXft
-			x11-libs/xcb-util-image
-		)
+	>=dev-qt/qtbase-${QTMIN}:6=
+	>=kde-plasma/kscreenlocker-${KDE_CATV}:6
+	x11-libs/libICE
+	x11-libs/libSM
+	x11-libs/libX11
+	x11-libs/libXau
+	x11-libs/libxcb
+	x11-libs/libXcursor
+	x11-libs/libXfixes
+	x11-libs/libXtst
+	x11-libs/xcb-util
+	fontconfig? (
+		media-libs/fontconfig
+		media-libs/freetype
+		x11-libs/libXft
+		x11-libs/xcb-util-image
 	)
 "
 DEPEND="${COMMON_DEPEND}
 	dev-libs/qcoro
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
-	X? (
-		fontconfig? ( x11-libs/libXrender )
-		x11-base/xorg-proto
-	)
+	fontconfig? ( x11-libs/libXrender )
+	x11-base/xorg-proto
 "
 # Sonic: Block on conflicting Plasma packages, and in particular
 # plasma-workspace:6/6, because Portage needs to switch to
@@ -157,6 +149,7 @@ BDEPEND="
 	>=kde-frameworks/kcmutils-${KFMIN}:6
 	virtual/pkgconfig
 "
+RDEPEND+=" !<kde-plasma/plasma-workspace-${PV} !kde-plasma/plasma-workspace:6/6"
 PDEPEND="~kde-plasma/plasma-workspace-${PV}:6/6-sonicde"
 
 PATCHES=(

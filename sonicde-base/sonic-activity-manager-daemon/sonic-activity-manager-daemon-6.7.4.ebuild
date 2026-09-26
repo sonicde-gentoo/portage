@@ -8,10 +8,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="System service to manage user's activities, track the usage patterns etc."
-
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,sql,sqlite,widgets]
@@ -28,3 +27,5 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-libs/boost
 "
+RDEPEND+=" !<kde-plasma/kactivitymanagerd-6.7.4 !kde-plasma/kactivitymanagerd:6/6"
+PDEPEND+=" ~kde-plasma/kactivitymanagerd-6.7.4:6/6-sonicde"

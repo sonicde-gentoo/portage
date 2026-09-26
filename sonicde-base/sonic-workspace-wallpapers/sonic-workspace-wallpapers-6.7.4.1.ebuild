@@ -7,12 +7,13 @@ QTMIN=6.10.1
 inherit cmake plasma.sonic
 
 DESCRIPTION="Wallpapers for the Plasma workspace"
-
 LICENSE="GPL-2"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 BDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6
 	sonicde-frameworks/sonic-frameworks-cmake-modules:0
 "
+RDEPEND+=" !<kde-plasma/plasma-workspace-wallpapers-6.7.4 !kde-plasma/plasma-workspace-wallpapers:6/6"
+PDEPEND+=" ~kde-plasma/plasma-workspace-wallpapers-6.7.4:6/6-sonicde"

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Library to determine holidays and other special events for a geographical region"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -25,6 +24,8 @@ CMAKE_SKIP_TESTS=(
 	# bug 948900
 	testholidayregion
 )
+RDEPEND+=" !<kde-frameworks/kholidays-6.30.0 !kde-frameworks/kholidays:6/6.30"
+PDEPEND+=" ~kde-frameworks/kholidays-6.30.0:6/6.30-sonicde"
 
 src_test() {
 	# bug 624214

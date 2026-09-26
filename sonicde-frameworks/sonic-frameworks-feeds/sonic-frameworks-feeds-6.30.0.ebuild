@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Library for parsing RSS and Atom feeds"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -18,3 +17,5 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 "
+RDEPEND+=" !<kde-frameworks/syndication-6.30.0 !kde-frameworks/syndication:6/6.30"
+PDEPEND+=" ~kde-frameworks/syndication-6.30.0:6/6.30-sonicde"

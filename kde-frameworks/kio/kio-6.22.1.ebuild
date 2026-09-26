@@ -13,15 +13,15 @@ inherit ecm frameworks.kde.org xdg
 DESCRIPTION="Framework providing transparent file and data management"
 
 LICENSE="LGPL-2+"
-KEYWORDS="amd64 arm64 ~loong ppc64 ~riscv ~x86"
-IUSE="acl +kwallet wayland X"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="acl +kwallet"
 
 # tests hang
 RESTRICT="test"
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
-	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,ssl,widgets,X?]
+	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,ssl,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	=kde-frameworks/kbookmarks-${KDE_CATV}*:6
 	=kde-frameworks/kcodecs-${KDE_CATV}*:6
@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	=kde-frameworks/kservice-${KDE_CATV}*:6
 	=kde-frameworks/ktextwidgets-${KDE_CATV}*:6
 	=kde-frameworks/kwidgetsaddons-${KDE_CATV}*:6
-	=sonicde-frameworks/sonic-windowsystem-9999*:6[wayland?,X?]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-6.28:6
 	=kde-frameworks/solid-${KDE_CATV}*:6
 	sys-apps/util-linux
 	acl? (
@@ -54,7 +54,7 @@ COMMON_DEPEND="
 		=kde-frameworks/kdoctools-${KDE_CATV}*:6
 	)
 	kwallet? ( =kde-frameworks/kwallet-${KDE_CATV}*:6 )
-	X? ( >=dev-qt/qtbase-${QTMIN}:6=[gui] )
+	>=dev-qt/qtbase-${QTMIN}:6=[gui]
 "
 DEPEND="${COMMON_DEPEND}
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
@@ -75,8 +75,6 @@ src_configure() {
 	local mycmakeargs=(
 		$(cmake_use_find_package acl ACL)
 		$(cmake_use_find_package kwallet KF6Wallet)
-		-DWITH_WAYLAND=$(usex wayland)
-		-DWITH_X11=$(usex X)
 	)
 
 	ecm_src_configure

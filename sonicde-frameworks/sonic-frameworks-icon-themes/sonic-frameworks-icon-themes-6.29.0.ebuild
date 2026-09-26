@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for icon theming and configuration"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -27,3 +26,5 @@ RDEPEND="
 	=sonicde-frameworks/sonic-frameworks-widgets-addons-${KDE_CATV}*:6
 "
 DEPEND="${RDEPEND}"
+RDEPEND+=" !<kde-frameworks/kiconthemes-6.29.0 !kde-frameworks/kiconthemes:6/6.29"
+PDEPEND+=" ~kde-frameworks/kiconthemes-6.29.0:6/6.29-sonicde"

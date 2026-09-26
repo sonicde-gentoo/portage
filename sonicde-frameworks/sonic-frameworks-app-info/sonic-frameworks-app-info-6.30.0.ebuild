@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Advanced plugin and service introspection"
-
 LICENSE="LGPL-2 LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="+man"
@@ -25,6 +24,8 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 BDEPEND="man? ( >=sonicde-frameworks/sonic-frameworks-doctools-${KDE_CATV}:6 )"
+RDEPEND+=" !<kde-frameworks/kservice-6.30.0 !kde-frameworks/kservice:6/6.30"
+PDEPEND+=" ~kde-frameworks/kservice-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

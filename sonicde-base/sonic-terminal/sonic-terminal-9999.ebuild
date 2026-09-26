@@ -22,7 +22,6 @@ HOMEPAGE="https://github.com/Sonic-DE/sonic-terminal"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-IUSE="X"
 
 DEPEND="
 	dev-libs/icu:=
@@ -48,18 +47,20 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-text-widgets-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X?]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 "
 RDEPEND="${DEPEND}
+
 	sonicde-frameworks/sonic-frameworks-doctools
 "
+RDEPEND+=" !<kde-apps/konsole-9999 !kde-apps/konsole:6/6"
+PDEPEND+=" ~kde-apps/konsole-9999:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
 		# kapsule is not yet packaged
 		-DWITH_KAPSULE=OFF
-		-DWITH_X11=$(usex X)
 	)
 	ecm_src_configure
 }

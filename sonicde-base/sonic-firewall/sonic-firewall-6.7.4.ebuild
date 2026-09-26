@@ -10,10 +10,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic python-single-r1 xdg
 
 DESCRIPTION="Plasma frontend for Firewalld or UFW"
-
 LICENSE="GPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="firewalld +ufw"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE} || ( firewalld ufw )"
@@ -33,6 +32,8 @@ RDEPEND="${DEPEND}
 	ufw? ( net-firewall/ufw )
 "
 BDEPEND=">=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6"
+RDEPEND+=" !<kde-plasma/plasma-firewall-6.7.4 !kde-plasma/plasma-firewall:6/6"
+PDEPEND+=" ~kde-plasma/plasma-firewall-6.7.4:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

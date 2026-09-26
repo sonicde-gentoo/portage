@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to collect user feedback for applications via telemetry and surveys"
-
 LICENSE="MIT"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="doc tools"
@@ -29,6 +28,8 @@ BDEPEND="
 	app-alternatives/yacc
 	doc? ( >=dev-qt/qttools-${QTMIN}:6[assistant,qdoc,linguist] )
 "
+RDEPEND+=" !<kde-frameworks/kuserfeedback-6.30.0 !kde-frameworks/kuserfeedback:6/6.30"
+PDEPEND+=" ~kde-frameworks/kuserfeedback-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

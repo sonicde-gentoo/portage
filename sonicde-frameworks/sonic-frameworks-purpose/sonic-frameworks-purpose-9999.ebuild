@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic optfeature xdg
 
 DESCRIPTION="Library for providing abstractions to get the developer's purposes fulfilled"
-
 LICENSE="LGPL-2.1+"
 IUSE="bluetooth webengine"
 
@@ -30,7 +29,7 @@ DEPEND="
 	webengine? (
 		>=dev-qt/qtbase-${QTMIN}:6[dbus]
 		sonicde-base/sonic-accounts-integration:6
-		>=net-libs/accounts-qt-1.17[qt6(+)]
+		>=sonicde-base/sonic-qt-accounts-library-1.17.2:0
 	)
 "
 RDEPEND="${DEPEND}
@@ -42,6 +41,7 @@ RDEPEND="${DEPEND}
 "
 BDEPEND="
 	webengine? (
+		dev-perl/XML-Parser
 		dev-util/intltool
 		sonicde-base/sonic-accounts-integration:6
 	)

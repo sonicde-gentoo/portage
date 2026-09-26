@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing data models to help with tasks such as sorting and filtering"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -16,6 +15,8 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 "
+RDEPEND+=" !<kde-frameworks/kitemmodels-6.29.0 !kde-frameworks/kitemmodels:6/6.29"
+PDEPEND+=" ~kde-frameworks/kitemmodels-6.29.0:6/6.29-sonicde"
 
 src_test() {
 	LC_NUMERIC="C" ecm_src_test # bug 708820

@@ -6,7 +6,6 @@ EAPI=8
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for pseudo terminal devices and running child processes"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -16,6 +15,8 @@ DEPEND="
 	sys-libs/libutempter
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/kpty-6.28.0 !kde-frameworks/kpty:6/6.28"
+PDEPEND+=" ~kde-frameworks/kpty-6.28.0:6/6.28-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

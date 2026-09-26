@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="QRCode and data matrix barcode library"
-
 LICENSE="GPL-2"
 IUSE="qml"
 

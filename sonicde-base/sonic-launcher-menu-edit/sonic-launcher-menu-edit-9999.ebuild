@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="KDE Plasma menu editor"
-
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 

@@ -10,10 +10,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Core components for KDE's Activities System"
-
 LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 SLOT="6/7"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,sql,widgets]
@@ -23,3 +22,5 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 "
+RDEPEND+=" !<kde-plasma/plasma-activities-6.7.4 !kde-plasma/plasma-activities:6/7"
+PDEPEND+=" ~kde-plasma/plasma-activities-6.7.4:6/7-sonicde"

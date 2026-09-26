@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic xdg
 
 DESCRIPTION="Framework for solving common problems such as caching, randomisation, and more"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="dbus"
@@ -26,6 +25,8 @@ RDEPEND="${COMMON_DEPEND}
 	>=dev-qt/qttranslations-${QTMIN}:6
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/kcoreaddons-6.29.0 !kde-frameworks/kcoreaddons:6/6.29"
+PDEPEND+=" ~kde-frameworks/kcoreaddons-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

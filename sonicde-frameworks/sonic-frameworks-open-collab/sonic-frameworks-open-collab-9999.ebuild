@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing access to Open Collaboration Services"
-
 LICENSE="LGPL-2.1+"
 
 RDEPEND=">=dev-qt/qtbase-${QTMIN}:6[network]"

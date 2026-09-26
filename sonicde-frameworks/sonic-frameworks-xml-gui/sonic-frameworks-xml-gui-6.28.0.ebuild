@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for managing menu and toolbar actions in an abstract way"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -36,3 +35,5 @@ CMAKE_SKIP_TESTS=(
 	# bug 808216
 	ktooltiphelper_unittest
 )
+RDEPEND+=" !<kde-frameworks/kxmlgui-6.28.0 !kde-frameworks/kxmlgui:6/6.28"
+PDEPEND+=" ~kde-frameworks/kxmlgui-6.28.0:6/6.28-sonicde"

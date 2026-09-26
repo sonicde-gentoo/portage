@@ -12,7 +12,7 @@ HOMEPAGE+=" https://invent.kde.org/sonicde-base/sonic-ssh-password-prompt"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	>=dev-libs/qtkeychain-0.16.0:=
@@ -23,12 +23,14 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-plasma/ksshaskpass-6.7.4 !kde-plasma/ksshaskpass:6/6"
+PDEPEND+=" ~kde-plasma/ksshaskpass-6.7.4:6/6-sonicde"
 
 src_install() {
 	ecm_src_install
 
 	insinto /etc/xdg/plasma-workspace/env/
-	doins "${FILESDIR}/05-ksshaskpass.sh"
+	doins "${FILESDIR}/05-sonic-ssh-password-prompt.sh"
 }
 
 pkg_postinst() {
@@ -45,5 +47,5 @@ pkg_postinst() {
 	elog "${PN} has been installed as your default askpass application"
 	elog "for Plasma 6 sessions."
 	elog "If that's not desired, select the one you want to use in"
-	elog "/etc/xdg/plasma-workspace/env/05-ksshaskpass.sh"
+	elog "/etc/xdg/plasma-workspace/env/05-sonic-ssh-password-prompt.sh"
 }

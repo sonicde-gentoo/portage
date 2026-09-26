@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing access to Open Collaboration Services"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -18,3 +17,5 @@ CMAKE_SKIP_TESTS=(
 	# requires network access, bug #661230
 	providertest
 )
+RDEPEND+=" !<kde-frameworks/attica-6.28.0 !kde-frameworks/attica:6/6.28"
+PDEPEND+=" ~kde-frameworks/attica-6.28.0:6/6.28-sonicde"

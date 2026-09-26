@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for common completion tasks such as filename or URL completion"
-
 LICENSE="LGPL-2+"
 
 DEPEND="

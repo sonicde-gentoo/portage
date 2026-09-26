@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="QtQuick plugin providing high-performance charts"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -27,6 +26,8 @@ DEPEND="
 RDEPEND="${DEPEND}
 	examples? ( !${CATEGORY}/${PN}:5[examples(-)] )
 "
+RDEPEND+=" !<kde-frameworks/kquickcharts-6.28.0 !kde-frameworks/kquickcharts:6/6.28"
+PDEPEND+=" ~kde-frameworks/kquickcharts-6.28.0:6/6.28-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

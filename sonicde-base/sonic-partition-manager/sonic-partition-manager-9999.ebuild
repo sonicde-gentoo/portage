@@ -36,9 +36,12 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
-	>=sys-auth/polkit-qt-0.175.0[qt6(+)]
+	sonicde-base/sonic-polkit:0
 	sys-libs/kpmcore:6=
 "
 RDEPEND="${DEPEND}
+
 	sonicde-base/sonic-polkit
 "
+RDEPEND+=" !<sys-block/partitionmanager-9999 !sys-block/partitionmanager:6/6"
+PDEPEND+=" ~sys-block/partitionmanager-9999:6/6-sonicde"

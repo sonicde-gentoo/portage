@@ -9,15 +9,13 @@ KFMIN=6.27.0
 QTMIN=6.10.1
 inherit ecm sonic
 
-SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-quick-ui-addons/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-frameworks-quick-ui-addons-${PV}"
-KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-
 DESCRIPTION="Visual end user components for Kirigami-based applications"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-quick-ui-addons"
-
+SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-quick-ui-addons/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/sonic-frameworks-quick-ui-addons-${PV}"
 LICENSE="|| ( GPL-2 GPL-3 LGPL-3 ) LGPL-2.1+"
 SLOT="6"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # would profit from VIRTUALX_REQUIRED=test, but then still requires
 # org.qt-project.qt.mediaplayer service and fails, bug 911186
@@ -37,9 +35,12 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 "
 RDEPEND="${COMMON_DEPEND}
+
 	>=dev-qt/qtmultimedia-${QTMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-quick-desktop-style-${KFMIN}:6
 	sonicde-base/sonic-interface-libraries:6=
 "
 DEPEND="${COMMON_DEPEND}
 "
+RDEPEND+=" !<dev-libs/kirigami-addons-1.13.1 !dev-libs/kirigami-addons:6/6"
+PDEPEND+=" ~dev-libs/kirigami-addons-1.13.1:6/6-sonicde"

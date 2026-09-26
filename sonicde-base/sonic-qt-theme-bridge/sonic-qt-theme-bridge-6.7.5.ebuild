@@ -8,10 +8,9 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Qt Platform Theme integration plugins for the Plasma workspaces"
-
 LICENSE="LGPL-2+"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # requires running kde environment
 RESTRICT="test"
@@ -50,6 +49,8 @@ RDEPEND="${COMMON_DEPEND}
 "
 PDEPEND=">=sonicde-base/xdg-desktop-portal-sonicde-${KDE_CATV}:6"
 BDEPEND=">=dev-qt/qtbase-${QTMIN}:6"
+RDEPEND+=" !<kde-plasma/plasma-integration-6.7.5 !kde-plasma/plasma-integration:6/6"
+PDEPEND+=" ~kde-plasma/plasma-integration-6.7.5:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

@@ -3,17 +3,9 @@
 
 EAPI=8
 
-DESCRIPTION="Dummy package to pull in sonic-win"
-HOMEPAGE="https://github.com/Sonic-DE/"
-SRC_URI=""
-
+DESCRIPTION="Compatibility package for SonicDE sonic-win"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-win"
 LICENSE="metapackage"
 SLOT="6/6-sonicde"
-if [[ ${PV} != *9999 ]]; then
-	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-fi
-IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
-
-RDEPEND="~sonicde-base/sonic-win-${PV}[accessibility=,gamepad=,gles2-only=,lock=,screencast=,shortcuts=,systemd=]"
-DEPEND="${RDEPEND}"
-BDEPEND=""
+IUSE="accessibility gles2-only lock +nightlight selinux +shortcuts systemd"
+RDEPEND="~sonicde-base/sonic-win-9999:6[accessibility=,gles2-only=,lock=,nightlight=,selinux=,shortcuts=,systemd=]"

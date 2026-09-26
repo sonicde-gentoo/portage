@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Assortment of high-level widgets for common tasks"
-
 LICENSE="LGPL-2.1+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -32,3 +31,5 @@ CMAKE_SKIP_TESTS=(
 	ktwofingertaptest
 	ktwofingerswipetest
 )
+RDEPEND+=" !<kde-frameworks/kwidgetsaddons-6.29.0 !kde-frameworks/kwidgetsaddons:6/6.29"
+PDEPEND+=" ~kde-frameworks/kwidgetsaddons-6.29.0:6/6.29-sonicde"

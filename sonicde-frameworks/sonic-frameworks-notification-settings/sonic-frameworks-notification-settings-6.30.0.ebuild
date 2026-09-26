@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for configuring desktop notifications"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -21,6 +20,8 @@ DEPEND="
 	=sonicde-frameworks/sonic-frameworks-io-${KDE_CATV}*:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/knotifyconfig-6.30.0 !kde-frameworks/knotifyconfig:6/6.30"
+PDEPEND+=" ~kde-frameworks/knotifyconfig-6.30.0:6/6.30-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

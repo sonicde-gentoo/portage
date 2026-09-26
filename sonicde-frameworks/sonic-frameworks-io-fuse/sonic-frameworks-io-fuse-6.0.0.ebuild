@@ -8,15 +8,14 @@ KFMIN=6.16.0
 QTMIN=6.8.1
 inherit ecm sonic linux-info tmpfiles
 
-SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-io-fuse/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-frameworks-io-fuse-${PV}"
-
 DESCRIPTION="FUSE interface for KIO"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-io-fuse"
+SRC_URI="https://github.com/Sonic-DE/sonic-frameworks-io-fuse/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-frameworks-io-fuse-${PV}"
 LICENSE="GPL-3+"
 SLOT="6"
-KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 RESTRICT="test" # depend on fuse kernel module
 
@@ -28,9 +27,12 @@ DEPEND="
 	sys-fs/fuse:3=
 "
 RDEPEND="${DEPEND}
+
 	!${CATEGORY}/${PN}:5
 	sonicde-frameworks/sonic-frameworks-io-extras
 "
+RDEPEND+=" !<kde-misc/kio-fuse-6.0.0 !kde-misc/kio-fuse:6/6"
+PDEPEND+=" ~kde-misc/kio-fuse-6.0.0:6/6-sonicde"
 
 pkg_setup() {
 	local CONFIG_CHECK="~FUSE_FS"

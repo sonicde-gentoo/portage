@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Helpers for scheduling the dark-light cycle"
-
 LICENSE="BSD CC0-1.0 || ( GPL-2 GPL-3 ) || ( LGPL-2.1 LGPL-3 )"
 SLOT="6"
 
@@ -33,3 +32,5 @@ RDEPEND="${DEPEND}
 	sonicde-frameworks/sonic-frameworks-text-widgets
 	sonicde-frameworks/sonic-frameworks-ui-components
 "
+RDEPEND+=" !<kde-plasma/knighttime-9999 !kde-plasma/knighttime:6/6"
+PDEPEND+=" ~kde-plasma/knighttime-9999:6/6-sonicde"

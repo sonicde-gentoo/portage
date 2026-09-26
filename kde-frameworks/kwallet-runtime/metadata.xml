@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="gpg">Enable GnuPG integration in the keyring daemon</flag>
+		<flag name="keyring">Enable the Secret Service daemon</flag>
+		<flag name="legacy-kwallet">Enable the legacy KWallet daemon</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-frameworks-keyring</remote-id>
+	</upstream>
+</pkgmetadata>

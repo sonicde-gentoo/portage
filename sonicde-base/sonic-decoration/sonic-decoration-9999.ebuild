@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic
 
 DESCRIPTION="Plugin based library to create window decorations"
-
 LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 SLOT="6"
 
@@ -18,3 +17,5 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
 "
 RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-plasma/kdecoration-9999 !kde-plasma/kdecoration:6/6"
+PDEPEND+=" ~kde-plasma/kdecoration-9999:6/6-sonicde"

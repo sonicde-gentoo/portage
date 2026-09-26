@@ -9,24 +9,22 @@ KFMIN=6.26.0
 QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
-SRC_URI="https://github.com/Sonic-DE/sonic-workspace/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-workspace-${PV}"
-
 DESCRIPTION="Sonic Workspace"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-workspace"
+SRC_URI="https://github.com/Sonic-DE/sonic-workspace/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 # LICENSE is based on Debian's plasma-workspace 4:6.5.4-3 d/copyright file.
+S="${WORKDIR}/sonic-workspace-${PV}"
 LICENSE="GPL-2+ GPL-2 GPL-3+ || ( GPL-2 GPL-3 ) || ( GPL-2 LicenseRef-KDE-Accepted-GPL ) LicenseRef-KDE-Accepted-GPL LGPL-2 LGPL-2+ LGPL-2.1+ LGPL-3+ || ( LGPL-2 GPL-2 LicenseRef-KDE-Accepted-GPL ) || ( LGPL-2.1 LicenseRef-KDE-Accepted-LGPL ) || ( public-domain MIT ) BSD BSD-2 CC0-1.0 MIT FDL-1.2+"
 SLOT="6"
 if [[ ${PV} != *9999 ]]; then
 	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
-IUSE="appstream flatpak +fontconfig +ksysguard networkmanager +policykit screencast +semantic-desktop systemd telemetry +wallpaper-metadata +X"
+IUSE="appstream flatpak +fontconfig +ksysguard networkmanager +policykit screencast +semantic-desktop systemd telemetry +wallpaper-metadata"
 
-REQUIRED_USE="fontconfig? ( X )"
 RESTRICT="test"
 
-# sonicde-frameworks/sonic-frameworks-windowsystem[X]: Uses KX11Extras
+# sonicde-frameworks/sonic-frameworks-windowsystem: Uses KX11Extras
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 COMMON_DEPEND="
 	dev-libs/icu:=
@@ -73,7 +71,7 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-text-widgets-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-keyring-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X?]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-barcode-${KFMIN}:6[qml]
 	>=sonicde-frameworks/sonic-frameworks-device-integration-${KFMIN}:6
@@ -98,33 +96,29 @@ COMMON_DEPEND="
 	systemd? ( sys-apps/systemd:= )
 	telemetry? ( >=sonicde-frameworks/sonic-frameworks-user-feedback-${KFMIN}:6 )
 	wallpaper-metadata? ( sonicde-base/sonic-exiv2-library:6 )
-	X? (
-		>=dev-qt/qtbase-${QTMIN}:6=[X]
-		>=sonicde-base/sonic-screenlocker-${KDE_CATV}:6
-		x11-libs/libICE
-		x11-libs/libSM
-		x11-libs/libX11
-		x11-libs/libXau
-		x11-libs/libxcb
-		x11-libs/libXcursor
-		x11-libs/libXfixes
-		x11-libs/libXtst
-		x11-libs/xcb-util
-		fontconfig? (
-			media-libs/fontconfig
-			media-libs/freetype
-			x11-libs/libXft
-			x11-libs/xcb-util-image
-		)
+	>=dev-qt/qtbase-${QTMIN}:6=
+	>=sonicde-base/sonic-screenlocker-${KDE_CATV}:6
+	x11-libs/libICE
+	x11-libs/libSM
+	x11-libs/libX11
+	x11-libs/libXau
+	x11-libs/libxcb
+	x11-libs/libXcursor
+	x11-libs/libXfixes
+	x11-libs/libXtst
+	x11-libs/xcb-util
+	fontconfig? (
+		media-libs/fontconfig
+		media-libs/freetype
+		x11-libs/libXft
+		x11-libs/xcb-util-image
 	)
 "
 DEPEND="${COMMON_DEPEND}
 	dev-libs/qcoro
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
-	X? (
-		fontconfig? ( x11-libs/libXrender )
-		x11-base/xorg-proto
-	)
+	fontconfig? ( x11-libs/libXrender )
+	x11-base/xorg-proto
 "
 # Sonic: Block on conflicting Plasma packages, and in particular
 # plasma-workspace:6/6, because Portage needs to switch to
@@ -164,6 +158,8 @@ PATCHES=(
 	"${FILESDIR}/plasma-workspace-5.22.5-krunner-cwd-at-home.patch" # TODO upstream: KDE-bug 432975, bug 767478
 	"${FILESDIR}/plasma-workspace-6.7.3-optional-nm.patch" # in git master
 )
+RDEPEND+=" !<kde-plasma/plasma-workspace-6.7.4 !kde-plasma/plasma-workspace:6/6"
+PDEPEND+=" ~kde-plasma/plasma-workspace-6.7.4:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

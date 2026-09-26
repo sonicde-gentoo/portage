@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="Flexible, composited X window manager"
-
 LICENSE="GPL-2+"
 SLOT="6"
 IUSE="accessibility gles2-only lock +nightlight selinux +shortcuts systemd"
@@ -20,7 +19,7 @@ RESTRICT="test"
 # qtbase slot op: GuiPrivate use in tabbox
 COMMON_DEPEND="
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
-	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,opengl,widgets,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,opengl,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtsensors-${QTMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
@@ -45,7 +44,7 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-svg-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6=[X]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6=
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	>=sonicde-base/sonic-silver-${KDE_CATV}:6
 	>=sonicde-base/sonic-decoration-${KDE_CATV}:6
@@ -57,7 +56,7 @@ COMMON_DEPEND="
 	>=media-libs/libdisplay-info-0.2.0:=
 	media-libs/libepoxy
 	media-libs/libglvnd
-	>=media-libs/mesa-24.1.0_rc1[opengl,X]
+	>=media-libs/mesa-24.1.0_rc1[opengl]
 	virtual/libudev:=
 	x11-libs/libX11
 	x11-libs/libXi
@@ -76,7 +75,6 @@ RDEPEND="${COMMON_DEPEND}
 	!sonicde-base/sonic-workspace-addons:5
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-data-models-${KFMIN}:6
-	>=kde-plasma/aurorae-${KDE_CATV}:6
 	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6
 	sys-apps/hwdata
 	>=x11-base/xwayland-23.1.0

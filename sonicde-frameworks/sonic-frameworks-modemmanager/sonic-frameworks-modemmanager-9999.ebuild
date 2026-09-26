@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="ModemManager bindings for Qt"
-
 LICENSE="LGPL-2"
 
 # requires running environment

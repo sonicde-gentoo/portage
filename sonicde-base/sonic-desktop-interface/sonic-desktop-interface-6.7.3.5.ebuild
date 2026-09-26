@@ -10,22 +10,20 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic optfeature xdg
 
 DESCRIPTION="KDE Plasma desktop"
-XORGHDRS="plasma-desktop-override-include-dirs-5"
-SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${XORGHDRS}.tar.xz"
 
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="ibus input_devices_wacom scim screencast sdl +semantic-desktop webengine"
 
 RESTRICT="test" # missing selenium-webdriver-at-spi
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
-# sonicde-frameworks/sonic-frameworks-windowsystem[X]: Uses KX11Extras
-# sonicde-base/sonic-workspace[X]: applets/pager/pagermodel.cpp includes xwindowtasksmodel.h
+# sonicde-frameworks/sonic-frameworks-windowsystem: Uses KX11Extras
+# sonicde-base/sonic-workspace: applets/pager/pagermodel.cpp includes xwindowtasksmodel.h
 COMMON_DEPEND="
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
-	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,network,sql,widgets,xml,X]
+	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,network,sql,widgets,xml]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6
@@ -59,7 +57,7 @@ COMMON_DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-svg-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X(-)]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-device-integration-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-spell-check-${KFMIN}:6
@@ -68,7 +66,7 @@ COMMON_DEPEND="
 	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6=
 	>=sonicde-base/sonic-activities-${KDE_CATV}:6=
 	>=sonicde-base/sonic-activities-stats-${KDE_CATV}:6
-	>=sonicde-base/sonic-workspace-${KDE_CATV}:6[screencast?,X(-)]
+	>=sonicde-base/sonic-workspace-${KDE_CATV}:6[screencast?]
 	>=sonicde-base/sonic-plasma5-support-library-${KDE_CATV}:6
 	virtual/libudev:=
 	x11-libs/libX11
@@ -97,12 +95,14 @@ COMMON_DEPEND="
 DEPEND="${COMMON_DEPEND}
 	dev-libs/boost
 	x11-base/xorg-proto
+	x11-base/xorg-server[xorg]
+	x11-drivers/xf86-input-libinput
 "
 RDEPEND="${COMMON_DEPEND}
 	!<sonicde-base/sonic-workspace-6.0.80
 	sonicde-frameworks/sonic-frameworks-quick-ui-addons:6
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
-	>=sonicde-base/sonic-win-${KDE_CATV}:6[X(-)]
+	>=sonicde-base/sonic-win-${KDE_CATV}:6
 	>=kde-plasma/plasma-mimeapps-list-3
 	media-fonts/noto-emoji
 	sys-apps/util-linux
@@ -114,14 +114,14 @@ RDEPEND="${COMMON_DEPEND}
 	sonicde-base/sonic-silver
 "
 BDEPEND="
+	dev-perl/XML-Parser
 	dev-util/intltool
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	virtual/pkgconfig
 "
 
-PATCHES=(
-	"${WORKDIR}/${XORGHDRS}/${PN}-6.1.80-override-include-dirs.patch" # downstream patch
-)
+RDEPEND+=" !<kde-plasma/plasma-desktop-6.7.3 !kde-plasma/plasma-desktop:6/6"
+PDEPEND+=" ~kde-plasma/plasma-desktop-6.7.3:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare
@@ -141,8 +141,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_KCM_MOUSE_X11=ON
 		-DBUILD_KCM_TOUCHPAD_X11=ON
-		-DXORGLIBINPUT_INCLUDE_DIRS="${WORKDIR}/${XORGHDRS}"/include
-		-DXORGSERVER_INCLUDE_DIRS="${WORKDIR}/${XORGHDRS}"/include
 		-DCMAKE_DISABLE_FIND_PACKAGE_PackageKitQt6=ON # not packaged
 		$(cmake_use_find_package ibus GLIB2)
 		-DBUILD_KCM_TABLET=$(usex input_devices_wacom)

@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm plasma.sonic xdg
 
 DESCRIPTION="System service to manage user's activities, track the usage patterns etc."
-
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="6"
 

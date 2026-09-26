@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for network service discovery using Zeroconf"
-
 LICENSE="LGPL-2+"
 IUSE="minimal"
 

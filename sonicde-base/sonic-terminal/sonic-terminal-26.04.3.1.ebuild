@@ -9,16 +9,14 @@ KFMIN=6.22.0
 QTMIN=6.10.1
 inherit ecm sonic
 
-SRC_URI="https://github.com/Sonic-DE/sonic-terminal/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-terminal-${PV}"
-
 DESCRIPTION="KDE's terminal emulator"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-terminal"
+SRC_URI="https://github.com/Sonic-DE/sonic-terminal/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-terminal-${PV}"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
-KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv ~x86"
-IUSE="X"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
 	dev-libs/icu:=
@@ -44,18 +42,20 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-text-widgets-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
-	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X?]
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 "
 RDEPEND="${DEPEND}
+
 	sonicde-frameworks/sonic-frameworks-doctools
 "
+RDEPEND+=" !<kde-apps/konsole-26.04.3.1 !kde-apps/konsole:6/6"
+PDEPEND+=" ~kde-apps/konsole-26.04.3.1:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
 		# kapsule is not yet packaged
 		-DWITH_KAPSULE=OFF
-		-DWITH_X11=$(usex X)
 	)
 	ecm_src_configure
 }

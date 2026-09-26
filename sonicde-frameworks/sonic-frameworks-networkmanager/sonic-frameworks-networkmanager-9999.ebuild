@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="NetworkManager bindings for Qt"
-
 LICENSE="LGPL-2"
 IUSE="teamd"
 

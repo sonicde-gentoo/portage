@@ -8,10 +8,11 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework providing additional widgets for item models"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND=">=dev-qt/qtbase-${QTMIN}:6[gui,widgets]"
 RDEPEND="${DEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+RDEPEND+=" !<kde-frameworks/kitemviews-6.30.0 !kde-frameworks/kitemviews:6/6.30"
+PDEPEND+=" ~kde-frameworks/kitemviews-6.30.0:6/6.30-sonicde"

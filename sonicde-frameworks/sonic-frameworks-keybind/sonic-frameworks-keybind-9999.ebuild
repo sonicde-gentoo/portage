@@ -7,21 +7,12 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to handle global shortcuts"
-
 LICENSE="LGPL-2+"
-IUSE="X"
 
 # slot op: WITH_X11 uses Qt6::GuiPrivate for qtx11extras_p.h
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
-	X? ( >=dev-qt/qtbase-${QTMIN}:6=[X] )
+	>=dev-qt/qtbase-${QTMIN}:6=
 "
 DEPEND="${RDEPEND}"
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
-
-src_configure() {
-	local mycmakeargs=(
-		-DWITH_X11=$(usex X)
-	)
-	ecm_src_configure
-}

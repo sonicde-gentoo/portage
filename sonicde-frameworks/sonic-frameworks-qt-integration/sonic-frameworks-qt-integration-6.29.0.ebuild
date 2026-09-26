@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for integrating Qt applications with KDE Plasma workspaces"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
@@ -28,6 +27,8 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	=sonicde-frameworks/sonic-frameworks-package-${KDE_CATV}*:6
 "
+RDEPEND+=" !<kde-frameworks/frameworkintegration-6.29.0 !kde-frameworks/frameworkintegration:6/6.29"
+PDEPEND+=" ~kde-frameworks/frameworkintegration-6.29.0:6/6.29-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

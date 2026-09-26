@@ -7,7 +7,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Components for handling SVGs"
-
 LICENSE="LGPL-2+"
 
 RESTRICT="test" # bug 969244

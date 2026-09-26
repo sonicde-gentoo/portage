@@ -3,17 +3,16 @@
 
 EAPI=8
 
-inherit cmake sonic out-of-source-utils qmake-utils
-
-SRC_URI="https://github.com/Sonic-DE/sonic-crypto-library/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/sonic-crypto-library-${PV}"
+inherit cmake sonic out-of-source-utils qt-utils
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-crypto-library"
+SRC_URI="https://github.com/Sonic-DE/sonic-crypto-library/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/sonic-crypto-library-${PV}"
 LICENSE="LGPL-2.1"
 SLOT="2"
-KEYWORDS="amd64 ~arm arm64 ~loong ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 IUSE="botan debug doc examples gcrypt gpg logger nss pkcs11 sasl softstore +ssl test"
 
 RESTRICT="!test? ( test )"
@@ -48,6 +47,8 @@ PATCHES=( "${FILESDIR}/${PN}-disable-pgp-test.patch" )
 qca_plugin_use() {
 	echo -DWITH_${2:-$1}_PLUGIN=$(usex "$1")
 }
+RDEPEND+=" !<app-crypt/qca-2.3.10 !app-crypt/qca:2/2"
+PDEPEND+=" ~app-crypt/qca-2.3.10:2/2-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

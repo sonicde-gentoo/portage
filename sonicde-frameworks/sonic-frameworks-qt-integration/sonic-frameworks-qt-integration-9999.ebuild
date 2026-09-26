@@ -8,7 +8,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for integrating Qt applications with KDE Plasma workspaces"
-
 LICENSE="LGPL-2+"
 
 # requires running Plasma environment

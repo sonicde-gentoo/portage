@@ -12,7 +12,7 @@ HOMEPAGE+=" https://cukic.co/2017/02/03/vaults-encryption-in-plasma/"
 
 LICENSE="LGPL-3"
 SLOT="6"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="networkmanager"
 
 DEPEND="
@@ -42,6 +42,8 @@ RDEPEND="${DEPEND}
 	sonicde-frameworks/sonic-frameworks-widgets-addons
 	sonicde-frameworks/sonic-frameworks-windowsystem
 "
+RDEPEND+=" !<kde-plasma/plasma-vault-6.7.4 !kde-plasma/plasma-vault:6/6"
+PDEPEND+=" ~kde-plasma/plasma-vault-6.7.4:6/6-sonicde"
 
 pkg_pretend() {
 	if [[ -n "${REPLACING_VERSIONS}" ]] && ! has_version app-crypt/gocryptfs; then

@@ -9,7 +9,6 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework to collect user feedback for applications via telemetry and surveys"
-
 LICENSE="MIT"
 IUSE="doc tools"
 

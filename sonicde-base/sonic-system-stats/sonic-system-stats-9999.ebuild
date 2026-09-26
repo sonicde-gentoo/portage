@@ -10,7 +10,6 @@ QTMIN=6.10.1
 inherit ecm fcaps plasma.sonic
 
 DESCRIPTION="Plugin-based system monitoring daemon"
-
 LICENSE="GPL-2+"
 SLOT="6"
 IUSE="networkmanager"

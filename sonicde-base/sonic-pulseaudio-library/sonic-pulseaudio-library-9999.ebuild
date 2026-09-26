@@ -32,3 +32,5 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 BDEPEND="virtual/pkgconfig"
+RDEPEND+=" !<media-libs/pulseaudio-qt-9999 !media-libs/pulseaudio-qt:0/5"
+PDEPEND+=" ~media-libs/pulseaudio-qt-9999:0/5-sonicde"

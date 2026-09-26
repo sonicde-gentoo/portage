@@ -8,20 +8,15 @@ QTMIN=6.10.1
 inherit ecm frameworks.sonic
 
 DESCRIPTION="Framework for detection and notification of device idle time"
-
 LICENSE="LGPL-2+"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
-IUSE="X xscreensaver"
-
-REQUIRED_USE="xscreensaver? ( X )"
+IUSE="xscreensaver"
 
 RDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[gui]
-	X? (
-		x11-libs/libX11
-		x11-libs/libxcb
-		x11-libs/libXext
-	)
+	x11-libs/libX11
+	x11-libs/libxcb
+	x11-libs/libXext
 	xscreensaver? (
 		>=dev-qt/qtbase-${QTMIN}:6[dbus]
 		x11-libs/libXScrnSaver
@@ -29,20 +24,12 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 "
-BDEPEND=""
+RDEPEND+=" !<kde-frameworks/kidletime-6.28.0 !kde-frameworks/kidletime:6/6.28"
+PDEPEND+=" ~kde-frameworks/kidletime-6.28.0:6/6.28-sonicde"
 
 src_prepare() {
 	ecm_src_prepare
 	if ! use xscreensaver; then
 		sed -i -e "s/\${X11_Xscreensaver_FOUND}/0/" CMakeLists.txt || die
 	fi
-}
-
-src_configure() {
-	local mycmakeargs=(
-		-DWITH_WAYLAND=OFF
-		-DWITH_X11=$(usex X)
-	)
-
-	ecm_src_configure
 }

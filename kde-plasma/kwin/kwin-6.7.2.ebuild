@@ -5,7 +5,6 @@ EAPI=8
 
 DESCRIPTION="Dummy package to pull in sonic-win"
 HOMEPAGE="https://github.com/Sonic-DE/"
-SRC_URI=""
 
 LICENSE="metapackage"
 SLOT="6/6-sonicde"
@@ -16,4 +15,3 @@ IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
 
 RDEPEND="~sonicde-base/sonic-win-${PV}[accessibility=,gamepad=,gles2-only=,lock=,screencast=,shortcuts=,systemd=]"
 DEPEND="${RDEPEND}"
-BDEPEND=""
