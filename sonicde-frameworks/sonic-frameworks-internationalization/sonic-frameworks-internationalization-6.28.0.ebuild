@@ -21,7 +21,6 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	virtual/libintl
 "
 DEPEND="${COMMON_DEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[concurrent] )
 "
 RDEPEND="${COMMON_DEPEND}
 	app-text/iso-codes

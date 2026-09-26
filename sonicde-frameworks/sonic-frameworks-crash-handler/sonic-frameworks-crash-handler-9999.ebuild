@@ -22,7 +22,6 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	X? ( x11-base/xorg-proto )
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[widgets] )
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
 

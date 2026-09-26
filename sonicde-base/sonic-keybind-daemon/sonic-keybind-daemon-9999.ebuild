@@ -14,7 +14,6 @@ LICENSE="LGPL-2+"
 SLOT="6"
 IUSE="X"
 
-REQUIRED_USE="test? ( X )"
 RESTRICT="test" # requires installed instance
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h

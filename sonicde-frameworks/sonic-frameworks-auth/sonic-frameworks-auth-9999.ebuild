@@ -21,7 +21,6 @@ RDEPEND="
 	)
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[dbus] )
 "
 BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
 PDEPEND="policykit? ( sonicde-base/sonic-polkit-agent:* )"

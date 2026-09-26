@@ -15,7 +15,6 @@ SLOT="6"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 IUSE="X"
 
-REQUIRED_USE="test? ( X )"
 RESTRICT="test" # requires installed instance
 
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h

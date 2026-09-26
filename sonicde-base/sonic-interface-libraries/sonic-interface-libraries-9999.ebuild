@@ -45,7 +45,6 @@ COMMON_DEPEND="
 "
 DEPEND="${COMMON_DEPEND}
 	x11-base/xorg-proto
-	test? ( >=sonicde-frameworks/sonic-frameworks-archive-${KFMIN}:6 )
 "
 RDEPEND="${COMMON_DEPEND}
 	!${CATEGORY}/${PN}:5[-kf6compat(-)]

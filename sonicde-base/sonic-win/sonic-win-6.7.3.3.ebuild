@@ -100,7 +100,6 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
 	x11-base/xorg-proto
 	x11-libs/xcb-util-image
-	test? ( screencast? ( >=kde-plasma/kpipewire-${KDE_CATV}:6 ) )
 "
 BDEPEND="
 	${PYTHON_DEPS}

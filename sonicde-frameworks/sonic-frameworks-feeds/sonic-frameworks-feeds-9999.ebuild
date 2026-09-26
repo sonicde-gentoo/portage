@@ -16,5 +16,4 @@ RDEPEND="
 	=sonicde-frameworks/sonic-frameworks-text-codec-${KDE_CATV}*:6
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[network] )
 "

@@ -25,6 +25,5 @@ RDEPEND="
 	media-libs/libpulse[glib]
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtdeclarative-${QTMIN}:6 )
 "
 BDEPEND="virtual/pkgconfig"

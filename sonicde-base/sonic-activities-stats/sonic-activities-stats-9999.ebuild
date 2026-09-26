@@ -20,11 +20,6 @@ RDEPEND="
 	sonicde-base/sonic-activities:6=
 "
 DEPEND="${RDEPEND}
-	test? (
-		dev-libs/boost
-		>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
-		sonicde-base/sonic-activity-manager-daemon:6
-	)
 "
 
 CMAKE_SKIP_TESTS=(

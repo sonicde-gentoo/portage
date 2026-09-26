@@ -25,5 +25,4 @@ RDEPEND="
 	>=kde-frameworks/kcoreaddons-${KFMIN}:6
 "
 DEPEND="${RDEPEND}
-	test? ( >=kde-frameworks/kwindowsystem-${KFMIN}:6[X] )
 "

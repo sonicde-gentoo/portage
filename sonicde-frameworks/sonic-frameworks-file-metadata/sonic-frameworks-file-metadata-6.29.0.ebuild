@@ -32,8 +32,6 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	kernel_linux? ( sys-apps/attr )
 "
-BDEPEND="test? ( ${PYTHON_DEPS} )"
-
 CMAKE_SKIP_TESTS=(
 	# FIXME: bug 644650, fails on tmpfs (but not for everyone)
 	usermetadatawritertest

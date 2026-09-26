@@ -42,8 +42,4 @@ RDEPEND="${COMMON_DEPEND}
 	sonicde-base/sonic-interface-libraries:6=
 "
 DEPEND="${COMMON_DEPEND}
-	test? (
-		>=dev-qt/qtmultimedia-${QTMIN}:6[qml]
-		x11-themes/sound-theme-freedesktop
-	)
 "

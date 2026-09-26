@@ -96,10 +96,6 @@ COMMON_DEPEND="
 DEPEND="${COMMON_DEPEND}
 	dev-libs/boost
 	x11-base/xorg-proto
-	test? (
-		>=sonicde-frameworks/sonic-frameworks-quick-desktop-style-${KFMIN}:6
-		>=sonicde-base/sonic-activity-manager-daemon-${KDE_CATV}:6
-	)
 "
 RDEPEND="${COMMON_DEPEND}
 	!<sonicde-base/sonic-workspace-6.0.80

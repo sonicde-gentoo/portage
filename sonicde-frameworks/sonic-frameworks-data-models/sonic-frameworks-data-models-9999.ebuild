@@ -14,7 +14,6 @@ RDEPEND="
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[widgets] )
 "
 
 src_test() {

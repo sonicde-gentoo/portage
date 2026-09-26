@@ -39,7 +39,6 @@ COMMON_DEPEND="${PYTHON_DEPS}
 "
 DEPEND="${COMMON_DEPEND}
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[network] )
 "
 RDEPEND="${COMMON_DEPEND}
 	|| (

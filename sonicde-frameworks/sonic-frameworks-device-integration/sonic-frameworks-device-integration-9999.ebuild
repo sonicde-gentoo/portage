@@ -23,7 +23,6 @@ RDEPEND="
 	)
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[concurrent] )
 "
 BDEPEND="
 	app-alternatives/lex

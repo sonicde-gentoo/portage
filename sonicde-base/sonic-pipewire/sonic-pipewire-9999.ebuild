@@ -29,13 +29,8 @@ COMMON_DEPEND="
 	x11-libs/libdrm
 "
 DEPEND="${COMMON_DEPEND}
-	test? (
-		>=dev-qt/qtbase-${QTMIN}:6
-		media-video/pipewire[extra]
-	)
 "
 RDEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	sonicde-base/xdg-desktop-portal-sonicde
 "
-BDEPEND="test? ( >=dev-qt/qtbase-${QTMIN}:6 )"

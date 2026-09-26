@@ -39,8 +39,6 @@ DEPEND="
 	editorconfig? ( app-text/editorconfig-core-c )
 "
 RDEPEND="${DEPEND}"
-BDEPEND="test? ( >=sonicde-frameworks/sonic-frameworks-app-info-${KDE_CATV}:6 )"
-
 src_configure() {
 	local mycmakeargs=(
 		$(cmake_use_find_package editorconfig EditorConfig)

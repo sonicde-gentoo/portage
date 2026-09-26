@@ -29,7 +29,6 @@ RDEPEND="
 	)
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[widgets] )
 "
 BDEPEND="
 	>=dev-qt/qttools-${QTMIN}:6[linguist]

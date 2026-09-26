@@ -21,5 +21,4 @@ RDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
 "
 DEPEND="${RDEPEND}
-	test? ( >=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6[X] )
 "

@@ -121,7 +121,6 @@ COMMON_DEPEND="
 DEPEND="${COMMON_DEPEND}
 	dev-libs/qcoro
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
-	test? ( screencast? ( >=media-video/pipewire-0.3:* ) )
 	X? (
 		fontconfig? ( x11-libs/libXrender )
 		x11-base/xorg-proto
@@ -159,9 +158,6 @@ RDEPEND="${COMMON_DEPEND}
 BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	virtual/pkgconfig
-	test? (
-		X? ( x11-misc/xdotool )
-	)
 "
 
 PATCHES=(

@@ -22,7 +22,6 @@ RDEPEND="
 	sonicde-frameworks/sonic-frameworks-cmake-modules
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-${QTMIN}:6[concurrent] )
 "
 BDEPEND="man? ( >=sonicde-frameworks/sonic-frameworks-doctools-${KDE_CATV}:6 )"
 
