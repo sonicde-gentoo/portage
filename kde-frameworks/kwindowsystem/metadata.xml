@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
+	<use>
+		<flag name="X">X11 support, always enabled in the SonicDE implementation</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">Sonic-DE/sonic-frameworks-windowsystem</remote-id>
 	</upstream>

@@ -7,6 +7,8 @@ DESCRIPTION="Dummy package"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-windowsystem"
 
 LICENSE="metapackage"
+IUSE="+X"
+REQUIRED_USE="X"
 SLOT="6"
 if [[ ${PV} != 9999* ]]; then
 	KEYWORDS="~amd64"

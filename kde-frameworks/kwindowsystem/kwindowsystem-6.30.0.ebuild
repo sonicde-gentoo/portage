@@ -6,6 +6,8 @@ EAPI=8
 DESCRIPTION="Compatibility package for SonicDE sonic-frameworks-windowsystem"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-windowsystem"
 LICENSE="metapackage"
+IUSE="+X"
+REQUIRED_USE="X"
 SLOT="6/6.30-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
