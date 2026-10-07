@@ -1,0 +1,2 @@
+move sonicde-base/sonic-meta sonicde-base/sonicde-meta
+move sonicde-base/sonic-desktop sonicde-base/sonic-desktop-interface
