@@ -12,8 +12,6 @@ DESCRIPTION="Utility providing information about the computer hardware"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-system-info"
 SRC_URI="https://github.com/Sonic-DE/sonic-system-info/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
-SRC_URI+=" https://www.gentoo.org/assets/img/logo/gentoo-3d-small.png -> glogo-small.png"
-
 S="${WORKDIR}/sonic-system-info-${PV}"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
@@ -40,6 +38,7 @@ RDEPEND="${DEPEND}
 	>=dev-qt/qttools-${QTMIN}:6[qdbus]
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	>=sonicde-base/sonic-desktop-interface-${KDE_CATV}:6
+	x11-themes/gentoo-artwork[pixmaps]
 "
 BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
@@ -66,9 +65,6 @@ src_install() {
 
 	insinto /etc/xdg
 	doins "${FILESDIR}"/scm-about-distrorc
-
-	insinto /usr/sonicde-base/sonic-system-info
-	doins "${DISTDIR}"/glogo-small.png
 }
 
 pkg_postinst() {
