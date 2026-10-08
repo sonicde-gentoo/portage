@@ -17,9 +17,9 @@ from unittest.mock import patch
 
 import portage
 from portage.const import PORTAGE_PYM_PATH, USER_CONFIG_PATH
-from portage.dep import Atom
+from portage.dep import Atom, use_reduce
 from portage.tests.resolver.ResolverPlayground import ResolverPlayground
-from migration_fixtures import releases, slots, transition_pair, variable, version as ebuild_version
+from migration_fixtures import post_atoms, releases, slots, transition_pair, variable, version as ebuild_version
 
 
 OVERLAY = Path(__file__).resolve().parents[1]
@@ -68,9 +68,9 @@ class ECMMetaMigration(unittest.TestCase):
                 transition_pair(original, sonic, root=root)
 
     def run_transition(self, newrepo, *, original=ORIGINAL, sonic=SONIC, oldest=False,
-                       older_subslot=False,
+                       older_subslot=False, uselist=(),
                        payload_path='usr/share/ECM/cmake/ECMConfigVersion.cmake'):
-        owner, stub = transition_pair(original, sonic, oldest=oldest)
+        owner, stub = transition_pair(original, sonic, oldest=oldest, uselist=uselist)
         source_version = ebuild_version(owner)
         version = ebuild_version(stub)
         source_slot, previous_slot = slots(owner, stub)
@@ -90,10 +90,7 @@ class ECMMetaMigration(unittest.TestCase):
              for token in value.split() if token.startswith('!') and original in token]
         migration_blockers = [token.replace('${PV}', source_version) for token in migration_blockers]
         self.assertTrue(migration_blockers)
-        posts = [token.replace('${PV}', source_version)
-                 for value in re.findall(r'^PDEPEND\+?="([^"]*)"', owner_text, re.M)
-                 for token in value.split()]
-        posts = [token for token in posts if Atom(token).cp == original]
+        posts = [str(atom.without_use) for atom in post_atoms(owner, uselist=uselist) if atom.cp == original]
         self.assertEqual(len(posts), 1)
         post = posts[0]
         self.assertEqual(post,
@@ -311,6 +308,70 @@ src_install() {
                             original='kde-plasma/kde-cli-tools-common',
                             sonic='sonicde-base/sonic-terminal-tools',
                             payload_path='usr/share/locale/de/LC_MESSAGES/kioclient.mo')
+
+    def test_kwallet_runtime_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-frameworks/kwallet-runtime',
+                            sonic='sonicde-frameworks/sonic-frameworks-keyring',
+                            older_subslot=True,
+                            payload_path='usr/bin/kwalletd6')
+
+    def test_kwallet_runtime_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-frameworks/kwallet-runtime',
+                            sonic='sonicde-frameworks/sonic-frameworks-keyring',
+                            payload_path='usr/share/locale/de/LC_MESSAGES/kwalletd6.mo')
+
+    def test_kwallet_runtime_is_not_required_by_minimal_provider(self):
+        for owner in (OVERLAY / 'sonicde-frameworks/sonic-frameworks-keyring').glob('*.ebuild'):
+            with self.subTest(ebuild=owner):
+                self.assertTrue(any(atom.cp == 'kde-frameworks/kwallet-runtime'
+                                    for atom in post_atoms(owner)))
+                self.assertFalse(any(atom.cp == 'kde-frameworks/kwallet-runtime'
+                                     for atom in post_atoms(owner, uselist=('minimal',))))
+
+    def test_ksecretd_services_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-frameworks/ksecretd-services',
+                            sonic='sonicde-frameworks/sonic-frameworks-keyring',
+                            uselist=('keyring',),
+                            payload_path='usr/share/dbus-1/services/org.kde.secretservicecompat.service')
+
+    def test_ksecretd_services_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-frameworks/ksecretd-services',
+                            sonic='sonicde-frameworks/sonic-frameworks-keyring',
+                            uselist=('keyring',),
+                            payload_path='usr/share/dbus-1/services/org.freedesktop.impl.portal.desktop.kwallet.service')
+
+    def test_ksecretd_services_follow_the_build_options(self):
+        for owner in (OVERLAY / 'sonicde-frameworks/sonic-frameworks-keyring').glob('*.ebuild'):
+            for flags in ((), ('keyring',), ('minimal',), ('minimal', 'keyring')):
+                with self.subTest(ebuild=owner, flags=flags):
+                    present = any(atom.cp == 'kde-frameworks/ksecretd-services'
+                                  for atom in post_atoms(owner, uselist=flags))
+                    self.assertEqual(present, 'keyring' in flags and 'minimal' not in flags)
+
+    def test_keyring_covers_all_three_gentoo_split_owners(self):
+        expected = {'kde-frameworks/kwallet', 'kde-frameworks/kwallet-runtime',
+                    'kde-frameworks/ksecretd-services'}
+        for owner in releases('sonicde-frameworks/sonic-frameworks-keyring'):
+            with self.subTest(ebuild=owner):
+                posts = {atom.cp: atom for atom in post_atoms(owner, uselist=('keyring',))}
+                self.assertTrue(expected <= posts.keys())
+                blockers = [atom
+                            for value in re.findall(r'^RDEPEND\+="([^"]*)"', owner.read_text(), re.M)
+                            for atom in use_reduce(value.replace('${PV}', ebuild_version(owner)),
+                                                   uselist=('keyring',), flat=True, token_class=Atom)
+                            if isinstance(atom, Atom) and atom.blocker]
+                for original in expected:
+                    post = posts[original]
+                    stub = OVERLAY / original / (original.split('/')[-1] + '-' + post.version + '.ebuild')
+                    stub_slot = variable(stub.read_text(), 'SLOT')
+                    self.assertTrue(stub_slot.endswith('-sonicde'))
+                    original_slot, original_subslot = stub_slot.removesuffix('-sonicde').split('/')
+                    self.assertTrue(any(atom.cp == original and atom.slot == original_slot
+                                        and atom.sub_slot == original_subslot for atom in blockers), original)
 
     def test_cli_common_newrepo_same_version_handbook_handoff(self):
         self.run_transition(newrepo=True,
