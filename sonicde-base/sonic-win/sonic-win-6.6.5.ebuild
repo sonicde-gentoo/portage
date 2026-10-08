@@ -21,14 +21,13 @@ IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
 
 RESTRICT="test"
 
-# qtbase slot op: GuiPrivate use in tabbox, Qt6WaylandClientPrivate for xx-pip-v1
+# qtbase slot op: GuiPrivate use in tabbox
 # qtbase: private/qtx11extras_p.h in src/helpers/killer
 COMMON_DEPEND="
 	>=dev-libs/libei-1.4
 	>=dev-libs/libinput-1.28:=
-	>=dev-libs/wayland-1.24.0
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
-	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,libinput,opengl,wayland,widgets]
+	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,libinput,opengl,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtsensors-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6
@@ -90,19 +89,15 @@ RDEPEND="${COMMON_DEPEND}
 	>=kde-plasma/breeze-${KDE_CATV}:6
 	>=kde-plasma/libplasma-${KDE_CATV}:6
 	sys-apps/hwdata
-	>=x11-base/xwayland-23.1.0[libei]
 "
 DEPEND="${COMMON_DEPEND}
-	>=dev-libs/plasma-wayland-protocols-1.20.0
-	>=dev-libs/wayland-protocols-1.47
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
 	x11-base/xorg-proto
 	x11-libs/xcb-util-image
 "
 BDEPEND="
 	${PYTHON_DEPS}
-	>=dev-qt/qtbase-${QTMIN}:6[wayland]
-	dev-util/wayland-scanner
+	>=dev-qt/qtbase-${QTMIN}:6
 	>=kde-frameworks/kcmutils-${KFMIN}:6
 "
 PDEPEND="~kde-plasma/kwin-${PV}:6/6-sonicde"

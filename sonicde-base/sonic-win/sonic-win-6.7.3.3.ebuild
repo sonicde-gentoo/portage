@@ -21,14 +21,13 @@ IUSE="accessibility gamepad gles2-only lock screencast +shortcuts systemd"
 
 RESTRICT="test"
 
-# qtbase slot op: GuiPrivate use in tabbox, Qt6WaylandClientPrivate for xx-pip-v1
+# qtbase slot op: GuiPrivate use in tabbox
 # qtbase: private/qtx11extras_p.h in src/helpers/killer
 COMMON_DEPEND="
 	>=dev-libs/libei-1.4
 	>=dev-libs/libinput-1.28:=
-	>=dev-libs/wayland-1.24.0
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
-	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,libinput,opengl,wayland,widgets]
+	>=dev-qt/qtbase-${QTMIN}:6=[accessibility=,gles2-only=,gui,libinput,opengl,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtsensors-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6

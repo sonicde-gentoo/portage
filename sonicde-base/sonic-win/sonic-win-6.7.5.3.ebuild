@@ -79,7 +79,6 @@ RDEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-data-models-${KFMIN}:6
 	>=sonicde-base/sonic-interface-libraries-${KDE_CATV}:6
 	sys-apps/hwdata
-	>=x11-base/xwayland-23.1.0
 	selinux? ( sec-policy/selinux-wm )
 "
 DEPEND="${COMMON_DEPEND}
