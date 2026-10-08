@@ -89,6 +89,8 @@ BDEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 "
+RDEPEND+=" !kde-plasma/kwin:6/6 !kde-plasma/kwin-x11:6/6"
+PDEPEND+=" ~kde-plasma/kwin-${PV}:6/6-sonicde ~kde-plasma/kwin-x11-${PV}:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare

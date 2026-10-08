@@ -93,6 +93,8 @@ BDEPEND="
 "
 RDEPEND+=" !<kde-plasma/kwin-x11-6.7.5 !kde-plasma/kwin-x11:6/6"
 PDEPEND+=" ~kde-plasma/kwin-x11-6.7.5:6/6-sonicde"
+RDEPEND+=" !<kde-plasma/kwin-6.7.5 !kde-plasma/kwin:6/6"
+PDEPEND+=" ~kde-plasma/kwin-6.7.5:6/6-sonicde"
 
 src_prepare() {
 	ecm_src_prepare
