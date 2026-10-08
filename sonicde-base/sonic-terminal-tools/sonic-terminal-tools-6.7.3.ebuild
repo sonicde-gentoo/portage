@@ -18,20 +18,20 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
 	>=dev-qt/qtsvg-${QTMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-autocomplete-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-io-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-root-shell-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-ui-components-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-widgets-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=dev-qt/qtbase-${QTMIN}:6=[gui]
 "
-RDEPEND="${DEPEND}
-	sonicde-frameworks/sonic-frameworks-autocomplete
-	sonicde-frameworks/sonic-frameworks-icon-themes
-	sonicde-frameworks/sonic-frameworks-root-shell
-	sonicde-frameworks/sonic-frameworks-ui-components
-	sonicde-frameworks/sonic-frameworks-widgets-addons
-	sonicde-frameworks/sonic-frameworks-windowsystem
-"
+RDEPEND="${DEPEND}"
 BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-doctools-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
@@ -43,7 +43,14 @@ RDEPEND+=" !<kde-plasma/kde-cli-tools-6.7.3 !kde-plasma/kde-cli-tools:6/6"
 PDEPEND+=" ~kde-plasma/kde-cli-tools-6.7.3:6/6-sonicde"
 RDEPEND+=" !<kde-plasma/kde-cli-tools-common-${PV} !kde-plasma/kde-cli-tools-common:0/0"
 PDEPEND+=" ~kde-plasma/kde-cli-tools-common-${PV}:0/0-sonicde"
+RDEPEND+=" !<kde-plasma/keditfiletype-${PV} !kde-plasma/keditfiletype:0/0 !<kde-plasma/kdesu-gui-${PV} !kde-plasma/kdesu-gui:0/0"
+PDEPEND+=" ~kde-plasma/keditfiletype-${PV}:0/0-sonicde ~kde-plasma/kdesu-gui-${PV}:0/0-sonicde"
 
 src_prepare() {
 	ecm_src_prepare
+}
+
+src_install() {
+	ecm_src_install
+	dosym ../libexec/kf6/kdesu /usr/bin/kdesu
 }
