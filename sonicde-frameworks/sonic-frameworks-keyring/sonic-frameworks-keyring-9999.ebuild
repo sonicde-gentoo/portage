@@ -36,6 +36,8 @@ RDEPEND+=" !<kde-frameworks/kwallet-9999 !kde-frameworks/kwallet:6/6.30"
 PDEPEND+=" ~kde-frameworks/kwallet-9999:6/6.30-sonicde"
 RDEPEND+=" !minimal? ( !<kde-frameworks/kwallet-runtime-9999 !kde-frameworks/kwallet-runtime:6/6.30 )"
 PDEPEND+=" !minimal? ( ~kde-frameworks/kwallet-runtime-9999:6/6.30-sonicde[debug=,gpg=,keyring=,legacy-kwallet=,man=] )"
+RDEPEND+=" !minimal? ( keyring? ( !<kde-frameworks/ksecretd-services-9999 !kde-frameworks/ksecretd-services:6/6 ) )"
+PDEPEND+=" !minimal? ( keyring? ( ~kde-frameworks/ksecretd-services-9999:6/6-sonicde ) )"
 
 src_configure() {
 	local mycmakeargs=(
