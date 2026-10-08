@@ -35,6 +35,8 @@ RDEPEND="${DEPEND}
 BDEPEND="man? ( >=sonicde-frameworks/sonic-frameworks-doctools-${KDE_CATV}:6 )"
 RDEPEND+=" !<kde-frameworks/kwallet-6.30.0 !kde-frameworks/kwallet:6/6.30"
 PDEPEND+=" ~kde-frameworks/kwallet-6.30.0:6/6.30-sonicde"
+RDEPEND+=" !minimal? ( !<kde-frameworks/kwallet-runtime-6.30.0 !kde-frameworks/kwallet-runtime:6/6.30 )"
+PDEPEND+=" !minimal? ( ~kde-frameworks/kwallet-runtime-6.30.0:6/6.30-sonicde[debug=,gpg=,keyring=,legacy-kwallet=,man=] )"
 
 src_configure() {
 	local mycmakeargs=(

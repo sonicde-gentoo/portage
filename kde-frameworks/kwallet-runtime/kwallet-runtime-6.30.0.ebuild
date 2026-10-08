@@ -6,7 +6,7 @@ EAPI=8
 DESCRIPTION="File-free compatibility package for the SonicDE keyring runtime"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-frameworks-keyring"
 LICENSE="metapackage"
-SLOT="6/6.30"
+SLOT="6/6.30-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="debug gpg +keyring +legacy-kwallet +man"
 
