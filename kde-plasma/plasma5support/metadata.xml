@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="activities">Enable support for activities in the provider</flag>
+		<flag name="geolocation">Enable geolocation support in the provider</flag>
+		<flag name="ksysguard">Enable system-monitor support in the provider</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-plasma5-support-library</remote-id>
+	</upstream>
+</pkgmetadata>

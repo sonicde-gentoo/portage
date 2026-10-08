@@ -41,6 +41,9 @@ RDEPEND="${DEPEND}
 	!<sonicde-base/sonic-workspace-6.5.90:6
 "
 
+RDEPEND+=" !<kde-plasma/plasma5support-${PV} !kde-plasma/plasma5support:6/6"
+PDEPEND+=" ~kde-plasma/plasma5support-${PV}:6/6-sonicde[activities=,geolocation=,ksysguard=,debug=,doc=,test=]"
+
 src_configure() {
 	local mycmakeargs=(
 		$(cmake_use_find_package activities PlasmaActivities)
