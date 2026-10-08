@@ -232,6 +232,80 @@ src_install() {
                             original='kde-plasma/plasma-login-manager',
                             sonic='sonicde-base/sonic-login-manager')
 
+    def test_kwin_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-plasma/kwin',
+                            sonic='sonicde-base/sonic-win')
+
+    def test_kwin_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-plasma/kwin',
+                            sonic='sonicde-base/sonic-win')
+
+    def test_sonicwin_replaces_both_aliases_without_pulling_kwayland(self):
+        sonic = 'sonicde-base/sonic-win'
+        aliases = ('kde-plasma/kwin', 'kde-plasma/kwin-x11')
+        owner, kwin_stub = transition_pair(aliases[0], sonic)
+        source_version = ebuild_version(owner)
+        source_slot, _ = slots(owner, kwin_stub)
+        owner_text = owner.read_text()
+        blockers = [token.replace('${PV}', source_version)
+                    for value in re.findall(r'^RDEPEND\+?="([^"]*)"', owner_text, re.M)
+                    for token in value.split()
+                    if token.startswith('!') and any(alias in token for alias in aliases)]
+        posts = [token.replace('${PV}', source_version)
+                 for value in re.findall(r'^PDEPEND\+?="([^"]*)"', owner_text, re.M)
+                 for token in value.split()]
+        posts = [token for token in posts if Atom(token).cp in aliases]
+        self.assertEqual({Atom(token).cp for token in posts}, set(aliases))
+        for alias in aliases:
+            self.assertTrue(any(Atom(token).cp == alias and Atom(token).sub_slot == '6'
+                                for token in blockers))
+        ebuilds = {
+            sonic + '-' + source_version + '::sonicde': {
+                'EAPI': '8', 'SLOT': source_slot,
+                'RDEPEND': ' '.join(blockers), 'PDEPEND': ' '.join(posts),
+            },
+            META + '::sonicde': {'EAPI': '8', 'RDEPEND': '=' + sonic + '-' + source_version},
+            'kde-plasma/kwayland-1::gentoo': {'EAPI': '8', 'SLOT': '6'},
+        }
+        consumer_deps = []
+        for alias in aliases:
+            _, stub = transition_pair(alias, sonic)
+            release = ebuild_version(stub)
+            text = stub.read_text()
+            ebuilds[alias + '-' + release + '::sonicde'] = {
+                'EAPI': '8', 'SLOT': variable(text, 'SLOT'),
+                'RDEPEND': re.sub(r'\[[^]]+\]', '', variable(text, 'RDEPEND')).replace('${PV}', release),
+            }
+            # A higher-revision Gentoo candidate deliberately pulls KWayland.
+            # These are resolver fixtures, not new overlay revision ebuilds.
+            ebuilds[alias + '-' + release + '-r1::gentoo'] = {
+                'EAPI': '8', 'SLOT': '6/6', 'RDEPEND': 'kde-plasma/kwayland:6',
+            }
+            consumer_deps.append('>=' + alias + '-' + release + ':6')
+        ebuilds['app-misc/external-consumer-1::gentoo'] = {
+            'EAPI': '8', 'RDEPEND': ' '.join(consumer_deps),
+        }
+        with tempfile.TemporaryDirectory(dir='/tmp/kilo') as directory:
+            with patch.dict(os.environ, {'PKGDIR': str(Path(directory) / 'pkgdir'),
+                                         'PORTAGE_GNUPGHOME': str(Path(directory) / 'gnupg')}):
+                playground = ResolverPlayground(ebuilds=ebuilds, eprefix=directory,
+                    user_config={'make.conf': ['BINPKG_FORMAT="xpak"',
+                                              'FEATURES="-binpkg-signing -gpg-keepalive"']})
+            try:
+                result = playground.run(['=' + META, 'app-misc/external-consumer'],
+                                        options={'--newrepo': True})
+                self.assertTrue(result.success, result.unsatisfied_deps)
+                plan = ' '.join(result.mergelist or [])
+                self.assertNotIn('kwayland', plan)
+                for alias in aliases:
+                    _, stub = transition_pair(alias, sonic)
+                    self.assertIn(alias + '-' + ebuild_version(stub), plan)
+                    self.assertNotIn(alias + '-' + ebuild_version(stub) + '-r1', plan)
+            finally:
+                playground.cleanup()
+
     def test_cli_common_older_owner_translation_handoff(self):
         self.run_transition(newrepo=False,
                             original='kde-plasma/kde-cli-tools-common',
