@@ -57,6 +57,7 @@ RDEPEND="${COMMON_DEPEND}
 	sonicde-base/sonic-polkit
 "
 RDEPEND+=" !<kde-plasma/drkonqi-6.7.3 !kde-plasma/drkonqi:6/6"
+RDEPEND+=" !kde-plasma/drkonqi-legacy"
 PDEPEND+=" ~kde-plasma/drkonqi-6.7.3:6/6-sonicde"
 
 src_configure() {

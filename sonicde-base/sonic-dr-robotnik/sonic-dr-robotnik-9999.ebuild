@@ -40,6 +40,7 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
 "
 RDEPEND="${COMMON_DEPEND}
+	!kde-plasma/drkonqi-legacy
 	|| (
 		dev-libs/elfutils[utils]
 		>=dev-debug/gdb-18
