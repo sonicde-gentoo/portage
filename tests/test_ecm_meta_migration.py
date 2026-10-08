@@ -411,6 +411,49 @@ src_install() {
                             sonic='sonicde-base/sonic-terminal-tools',
                             payload_path='usr/share/help/en/kdesu/index.cache.bz2')
 
+    def test_keditfiletype_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-plasma/keditfiletype',
+                            sonic='sonicde-base/sonic-terminal-tools',
+                            payload_path='usr/bin/keditfiletype')
+
+    def test_keditfiletype_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-plasma/keditfiletype',
+                            sonic='sonicde-base/sonic-terminal-tools',
+                            payload_path='usr/lib64/qt6/plugins/plasma/kcms/systemsettings_qwidgets/kcm_filetypes.so')
+
+    def test_kdesu_gui_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-plasma/kdesu-gui',
+                            sonic='sonicde-base/sonic-terminal-tools',
+                            payload_path='usr/libexec/kf6/kdesu')
+
+    def test_kdesu_gui_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-plasma/kdesu-gui',
+                            sonic='sonicde-base/sonic-terminal-tools',
+                            payload_path='usr/libexec/kf6/kdesu')
+
+    def test_cli_tools_cover_all_four_gentoo_split_owners(self):
+        expected = {'kde-plasma/kde-cli-tools', 'kde-plasma/kde-cli-tools-common',
+                    'kde-plasma/keditfiletype', 'kde-plasma/kdesu-gui'}
+        for owner in releases('sonicde-base/sonic-terminal-tools'):
+            with self.subTest(ebuild=owner):
+                posts = {atom.cp: atom for atom in post_atoms(owner)}
+                self.assertTrue(expected <= posts.keys())
+                blockers = [atom
+                            for value in re.findall(r'^RDEPEND\+="([^"]*)"', owner.read_text(), re.M)
+                            for atom in use_reduce(value.replace('${PV}', ebuild_version(owner)),
+                                                   flat=True, token_class=Atom)
+                            if isinstance(atom, Atom) and atom.blocker]
+                for original in expected:
+                    post = posts[original]
+                    stub = OVERLAY / original / (original.split('/')[-1] + '-' + post.version + '.ebuild')
+                    original_slot, original_subslot = variable(stub.read_text(), 'SLOT').removesuffix('-sonicde').split('/')
+                    self.assertTrue(any(atom.cp == original and atom.slot == original_slot
+                                        and atom.sub_slot == original_subslot for atom in blockers), original)
+
     def test_cli_shared_data_is_not_suppressed(self):
         owners = sorted((OVERLAY / 'sonicde-base/sonic-terminal-tools').glob('*.ebuild'))
         self.assertTrue(owners)
@@ -423,6 +466,11 @@ src_install() {
                               variable(text, 'BDEPEND'))
                 self.assertIn('sys-devel/gettext', variable(text, 'BDEPEND'))
                 self.assertIn('FDL-1.2', variable(text, 'LICENSE'))
+                for library in ('autocomplete', 'icon-themes', 'root-shell', 'settings-utils',
+                                'ui-components', 'widgets-addons', 'windowsystem'):
+                    self.assertIn('sonicde-frameworks/sonic-frameworks-' + library,
+                                  variable(text, 'DEPEND'))
+                self.assertIn('dosym ../libexec/kf6/kdesu /usr/bin/kdesu', text)
 
 
 if __name__ == '__main__':
