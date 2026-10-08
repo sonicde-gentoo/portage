@@ -68,7 +68,7 @@ class ECMMetaMigration(unittest.TestCase):
                 transition_pair(original, sonic, root=root)
 
     def run_transition(self, newrepo, *, original=ORIGINAL, sonic=SONIC, oldest=False,
-                       older_subslot=False, uselist=(),
+                       older_subslot=False, uselist=(), installed_owner=None,
                        payload_path='usr/share/ECM/cmake/ECMConfigVersion.cmake'):
         owner, stub = transition_pair(original, sonic, oldest=oldest, uselist=uselist)
         source_version = ebuild_version(owner)
@@ -77,17 +77,19 @@ class ECMMetaMigration(unittest.TestCase):
         # Version zero is an intentionally synthetic older owner, not a
         # production ebuild that must remain present in the overlay.
         old_version = version if newrepo else '0'
+        installed_owner = installed_owner or original
         if older_subslot:
             previous_slot = previous_slot.split('/')[0] + '/0'
         owner_text = owner.read_text()
         stub_text = stub.read_text()
         self.assertNotIn('src_install()', stub_text)
-        self.assertNotIn('inherit ', stub_text)
+        self.assertNotRegex(stub_text, r'(?m)^inherit .*\b(?:cmake|ecm|git-r3)\b')
         self.assertNotIn('SRC_URI=', stub_text)
         self.assertNotRegex(stub_text, r'(?m)^IUSE=.*\bsonicde\b')
         migration_blockers = [token for value in re.findall(
             r'^RDEPEND\+?="([^"]*)"', owner_text, re.M)
-             for token in value.split() if token.startswith('!') and original in token]
+             for token in value.split() if token.startswith('!')
+             and (original in token or installed_owner in token)]
         migration_blockers = [token.replace('${PV}', source_version) for token in migration_blockers]
         self.assertTrue(migration_blockers)
         posts = [str(atom.without_use) for atom in post_atoms(owner, uselist=uselist) if atom.cp == original]
@@ -107,8 +109,9 @@ src_install() {
 '''.replace('__payload_directory__', '/' + str(payload_path.parent)).replace(
             '__payload_name__', payload_path.name)
         ebuilds = {
-            original + '-' + old_version + '::gentoo': {
+            installed_owner + '-' + old_version + '::gentoo': {
                 'EAPI': '8', 'SLOT': previous_slot, 'MISC_CONTENT': payload_install,
+                'RDEPEND': '!' + original if installed_owner != original else '',
             },
             original + '-' + version + '::sonicde': {
                 'EAPI': '8', 'SLOT': variable(stub_text, 'SLOT'),
@@ -169,11 +172,12 @@ src_install() {
                                             env=env, capture_output=True, text=True, timeout=180)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-                emerge('=' + original + '-' + old_version + '::gentoo')
+                emerge('=' + installed_owner + '-' + old_version + '::gentoo')
                 payload = prefix / payload_path
-                self.assertEqual(payload.read_text(), original + '-' + old_version + '\n')
-                emerge('=app-misc/existing-consumer-1::gentoo')
-                self.assertEqual(payload.read_text(), original + '-' + old_version + '\n')
+                self.assertEqual(payload.read_text(), installed_owner + '-' + old_version + '\n')
+                if installed_owner == original:
+                    emerge('=app-misc/existing-consumer-1::gentoo')
+                    self.assertEqual(payload.read_text(), original + '-' + old_version + '\n')
                 self.assertFalse((prefix / 'var/db/pkg' / (sonic + '-' + source_version)).exists())
                 options = ['--newrepo'] if newrepo else []
                 # Exactly ONE emerge invocation performs the desktop migration.
@@ -185,10 +189,14 @@ src_install() {
                 self.assertEqual((stub_db / 'repository').read_text().strip(), 'sonicde')
                 self.assertIn(str(payload), (sonic_db / 'CONTENTS').read_text())
                 self.assertFalse(any(line.startswith(('obj ', 'sym '))
-                                     for line in (stub_db / 'CONTENTS').read_text().splitlines()))
+                                      for line in (stub_db / 'CONTENTS').read_text().splitlines()))
+                if installed_owner != original:
+                    # Consumers of the normal alias can be added after the
+                    # obsolete legacy owner has been replaced.
+                    emerge('=app-misc/existing-consumer-1::gentoo')
                 self.assertTrue((vdb / 'app-misc/existing-consumer-1').is_dir())
-                if old_version != version:
-                    self.assertFalse((vdb / (original + '-' + old_version)).exists())
+                if old_version != version or installed_owner != original:
+                    self.assertFalse((vdb / (installed_owner + '-' + old_version)).exists())
                 # Re-running the same command must preserve the new owner.
                 emerge(*options, '=' + META + '::sonicde')
                 self.assertEqual(payload.read_text(), sonic + '-' + source_version + '\n')
@@ -228,6 +236,18 @@ src_install() {
         self.run_transition(newrepo=False,
                             original='kde-plasma/plasma-login-manager',
                             sonic='sonicde-base/sonic-login-manager')
+
+    def test_drrobotnik_replaces_legacy_owner_without_collision_ignores(self):
+        self.run_transition(newrepo=True,
+                            original='kde-plasma/drkonqi',
+                            sonic='sonicde-base/sonic-dr-robotnik',
+                            installed_owner='kde-plasma/drkonqi-legacy',
+                            payload_path='usr/share/applications/org.kde.drkonqi.desktop')
+
+    def test_drrobotnik_blocks_legacy_directly_in_all_versions(self):
+        for owner in (OVERLAY / 'sonicde-base/sonic-dr-robotnik').glob('*.ebuild'):
+            with self.subTest(ebuild=owner):
+                self.assertIn('!kde-plasma/drkonqi-legacy', owner.read_text())
 
     def test_kwin_newrepo_replaces_same_version_owner(self):
         self.run_transition(newrepo=True,
@@ -308,6 +328,18 @@ src_install() {
                             original='kde-plasma/kde-cli-tools-common',
                             sonic='sonicde-base/sonic-terminal-tools',
                             payload_path='usr/share/locale/de/LC_MESSAGES/kioclient.mo')
+
+    def test_plasma5support_plain_emerge_replaces_older_owner(self):
+        self.run_transition(newrepo=False,
+                            original='kde-plasma/plasma5support',
+                            sonic='sonicde-base/sonic-plasma5-support-library',
+                            payload_path='usr/lib64/cmake/Plasma5Support/Plasma5SupportConfig.cmake')
+
+    def test_plasma5support_newrepo_replaces_same_version_owner(self):
+        self.run_transition(newrepo=True,
+                            original='kde-plasma/plasma5support',
+                            sonic='sonicde-base/sonic-plasma5-support-library',
+                            payload_path='usr/share/locale/de/LC_MESSAGES/libplasma5support.mo')
 
     def test_kwallet_runtime_plain_emerge_replaces_older_owner(self):
         self.run_transition(newrepo=False,
