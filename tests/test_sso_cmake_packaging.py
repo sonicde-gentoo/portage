@@ -31,6 +31,14 @@ class SSOCMakePackaging(unittest.TestCase):
                 self.assertIsNotNone(match)
                 self.assertTrue({'dbus', 'network', 'sql', 'xml'} <= set(match.group(1).split(',')))
 
+    def test_builds_do_not_reapply_upstreamed_qt_fixes(self):
+        package = ROOT / 'sonicde-frameworks/sonic-frameworks-sso'
+        self.assertTrue((package / 'sonic-frameworks-sso-8.61.2.3.ebuild').is_file())
+        self.assertFalse((package / 'sonic-frameworks-sso-8.61.2.2.ebuild').exists())
+        for ebuild in package.glob('*.ebuild'):
+            with self.subTest(ebuild=ebuild):
+                self.assertNotIn('PATCHES=', ebuild.read_text())
+
 
 if __name__ == '__main__':
     unittest.main()

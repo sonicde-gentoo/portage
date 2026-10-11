@@ -38,11 +38,6 @@ BDEPEND="
 	)
 "
 
-PATCHES=(
-	"${FILESDIR}"/0008-Use-return-instead-of-reference-for-DBus-output-para.patch
-	"${FILESDIR}"/0010-Fix-plugin-datastream-in-Qt6.patch
-	"${FILESDIR}"/0011-Port-away-from-deprecated-QProcess-signal.patch
-)
 RDEPEND+=" !<net-libs/signond-9999 !net-libs/signond:0/0"
 PDEPEND+=" ~net-libs/signond-9999:0/0-sonicde"
 
