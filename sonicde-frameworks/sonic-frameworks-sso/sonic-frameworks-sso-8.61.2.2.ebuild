@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit qmake-utils
+inherit cmake
 
 if [[ ${PV} = *9999* ]] ; then
 	EGIT_REPO_URI="https://github.com/Sonic-DE/sonic-frameworks-sso.git"
@@ -27,7 +27,7 @@ IUSE="doc test"
 RESTRICT="test !test? ( test )"
 
 RDEPEND="
-	dev-qt/qtbase:6[dbus,gui,network,sql]
+	dev-qt/qtbase:6[dbus,gui,network,sql,xml]
 	net-libs/libproxy
 "
 DEPEND="${RDEPEND}"
@@ -40,46 +40,18 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/0008-Use-return-instead-of-reference-for-DBus-output-para.patch
-	"${FILESDIR}"/0009-Adjust-buildsystem-to-include-correct-Qt-Major-versi.patch
 	"${FILESDIR}"/0010-Fix-plugin-datastream-in-Qt6.patch
 	"${FILESDIR}"/0011-Port-away-from-deprecated-QProcess-signal.patch
-	"${FILESDIR}/${PN}-8.60-buildsystem.patch"
-	"${FILESDIR}/${PN}-8.60-unused-dep.patch" # bug 727346
 )
 RDEPEND+=" !<net-libs/signond-8.61.2 !net-libs/signond:0/0"
 PDEPEND+=" ~net-libs/signond-8.61.2:0/0-sonicde"
 
-src_prepare() {
-	default
-
-	sed -e "/QHG_LOCATION/s|qhelpgenerator|$(qt6_get_libexecdir)/&|" \
-		-i {lib/plugins/,lib/SignOn/,}doc/doxy.conf || die
-
-	# install docs to correct location
-	sed -e "s|share/doc/\$\${PROJECT_NAME}|share/doc/${PF}|" \
-		-i doc/doc.pri || die
-	sed -e "/^documentation.path = /c\documentation.path = \$\${INSTALL_PREFIX}/share/doc/${PF}/\$\${TARGET}/" \
-		-i lib/plugins/doc/doc.pri || die
-	sed -e "/^documentation.path = /c\documentation.path = \$\${INSTALL_PREFIX}/share/doc/${PF}/libsignon-qt/" \
-		-i lib/SignOn/doc/doc.pri || die
-
-	use doc || sed -e "/include(\s*doc\/doc.pri\s*)/d" \
-		-i signon.pro lib/SignOn/SignOn.pro lib/plugins/plugins.pro || die
-
-	use test || sed -e '/^SUBDIRS/s/tests//' \
-		-i signon.pro || die "couldn't disable tests"
-}
-
 src_configure() {
-	local myqmakeargs=(
-		PREFIX="${EPREFIX}"/usr
-		LIBDIR=$(get_libdir)
+	local mycmakeargs=(
+		-DBUILD_SIGNOND=ON
+		-DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}/etc"
 	)
-	eqmake6 "${myqmakeargs[@]}"
-}
-
-src_install() {
-	emake INSTALL_ROOT="${D}" install
+	cmake_src_configure
 }
 
 pkg_postinst() {
