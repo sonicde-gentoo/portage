@@ -569,13 +569,13 @@ ecm_src_prepare() {
 
 	# only build unit tests when required
 	if ! { in_iuse test && use test; } ; then
-		if has kde.org ${INHERITED} && [[ ${ECM_TEST} != forceoptional ]]; then
+		if { has kde.org ${INHERITED} || has sonic ${INHERITED}; } && [[ ${ECM_TEST} != forceoptional ]]; then
 			cmake_comment_add_subdirectory appiumtests autotests test tests
 		fi
 	fi
 
 	# in frameworks, tests = manual tests so never build them
-	if has frameworks.kde.org ${INHERITED}; then
+	if has frameworks.kde.org ${INHERITED} || has frameworks.sonic ${INHERITED}; then
 		cmake_comment_add_subdirectory tests
 	fi
 
