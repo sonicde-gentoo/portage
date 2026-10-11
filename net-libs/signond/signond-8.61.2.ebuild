@@ -11,4 +11,4 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="doc test"
 
 RESTRICT="test !test? ( test )"
-RDEPEND="~sonicde-frameworks/sonic-frameworks-sso-${PV}:0[doc=,test=]"
+RDEPEND=">=sonicde-frameworks/sonic-frameworks-sso-8.61.2.2:0[doc=,test=]"
