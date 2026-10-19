@@ -1,0 +1,6 @@
+git -C /var/db/repos/sonicde fetch origin 6.7.5
+git -C /var/db/repos/sonicde reset --hard origin/6.7.5
+
+emerge --ask --newrepo sonicde-base/sonicde-meta::sonicde
+
+rc-service soniclogin start

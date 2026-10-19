@@ -32,7 +32,7 @@ DEPEND="
 	>=sonicde-frameworks/sonic-frameworks-windowsystem-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-xml-gui-${KFMIN}:6
 	sonicde-base/sonic-polkit:0
-	sys-libs/kpmcore:6=
+	>=sys-libs/kpmcore-26.07:6=
 "
 RDEPEND="${DEPEND}
 
