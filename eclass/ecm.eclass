@@ -162,9 +162,10 @@ fi
 # @PRE_INHERIT
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# Minimum version of Frameworks to require. Default value for kde-frameworks
-# is ${PV} and 6.22.0 baseline for everything else.  KF5 is unsupported.
-if [[ ${CATEGORY} = kde-frameworks ]]; then
+# Minimum version of Frameworks to require. If unset, defaults to the first two
+# components of ${PV} for kde-frameworks and sonicde-frameworks, or 6.22.0 for
+# other categories. KF5 is unsupported.
+if [[ ${CATEGORY} == @(kde-frameworks|sonicde-frameworks) ]]; then
 	: "${KFMIN:=$(ver_cut 1-2)}"
 fi
 : "${KFMIN:=6.22.0}"

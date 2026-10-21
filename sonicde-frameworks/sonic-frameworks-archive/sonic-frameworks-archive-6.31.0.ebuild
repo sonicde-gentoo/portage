@@ -1,0 +1,49 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+QTMIN=6.11.0
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Framework for reading, creation, and manipulation of various archive formats"
+LICENSE="GPL-2 LGPL-2.1"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="crypt +zstd"
+
+DEPEND="
+	app-arch/bzip2
+	app-arch/xz-utils
+	virtual/zlib:=
+	crypt? ( dev-libs/openssl:= )
+	zstd? ( app-arch/zstd:= )
+"
+RDEPEND="${DEPEND}"
+BDEPEND="
+	>=dev-qt/qttools-${QTMIN}:6[linguist]
+	zstd? ( virtual/pkgconfig )
+"
+RDEPEND+=" !<kde-frameworks/karchive-${PV} !kde-frameworks/karchive:6/6.31"
+PDEPEND="~kde-frameworks/karchive-${PV}:6/6.31-sonicde"
+
+CMAKE_SKIP_TESTS=(
+	karchivetest # bug 948899
+	kfiltertest # bug 978879
+)
+
+src_prepare() {
+	ecm_src_prepare
+
+	# TODO: try to get a build switch upstreamed
+	if ! use zstd; then
+		sed -e "s/^pkg_check_modules.*LibZstd/#&/" -i CMakeLists.txt || die
+	fi
+}
+
+src_configure() {
+	local mycmakeargs=(
+		-DWITH_OPENSSL=$(usex crypt)
+		-DWITH_LIBZSTD=$(usex zstd)
+	)
+	ecm_src_configure
+}

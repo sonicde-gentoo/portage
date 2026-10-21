@@ -1,0 +1,29 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_QTHELP="true"
+ECM_TEST="true"
+KFMIN=6.30.0
+QTMIN=6.11.0
+inherit ecm plasma.sonic
+
+DESCRIPTION="Library for accessing usage data collected by the activities system"
+LICENSE="LGPL-2+"
+SLOT="6"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
+RDEPEND="
+	>=dev-qt/qtbase-${QTMIN}:6[dbus,sql]
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
+	sonicde-base/sonic-activities:6=
+"
+DEPEND="${RDEPEND}
+"
+
+CMAKE_SKIP_TESTS=(
+	PlasmaActivitiesStatsTest # permission denied; bug 970321
+)
+RDEPEND+=" !<kde-plasma/plasma-activities-stats-6.8.0 !kde-plasma/plasma-activities-stats:6/6"
+PDEPEND+=" ~kde-plasma/plasma-activities-stats-6.8.0:6/6-sonicde"

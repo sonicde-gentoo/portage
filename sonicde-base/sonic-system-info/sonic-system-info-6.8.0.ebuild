@@ -1,0 +1,91 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_HANDBOOK="optional"
+KFMIN=6.30.0
+QTMIN=6.11.0
+inherit ecm plasma.sonic optfeature xdg
+
+DESCRIPTION="Utility providing information about the computer hardware"
+HOMEPAGE="https://github.com/Sonic-DE/sonic-system-info"
+SRC_URI="https://github.com/Sonic-DE/sonic-system-info/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/sonic-system-info-${PV}"
+LICENSE="GPL-2" # TODO: CHECK
+SLOT="6"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="gles2-only usb"
+
+DEPEND="
+	dev-util/vulkan-headers
+	>=dev-qt/qtbase-${QTMIN}:6[dbus,gles2-only=,gui,vulkan,widgets]
+	>=dev-qt/qtdeclarative-${QTMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-auth-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-core-addons-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-internationalization-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-io-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-device-integration-${KFMIN}:6
+	virtual/libudev:=
+	x11-libs/libdrm
+	gles2-only? ( >=media-libs/mesa-24.1.0_rc1[opengl] )
+	usb? ( virtual/libusb:1 )
+"
+RDEPEND="${DEPEND}
+	>=dev-qt/qttools-${QTMIN}:6[qdbus]
+	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
+	>=sonicde-base/sonic-desktop-interface-${KDE_CATV}:6
+	x11-themes/gentoo-artwork[pixmaps]
+"
+BDEPEND="
+	dev-util/vulkan-headers
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
+	virtual/pkgconfig
+"
+
+CMAKE_SKIP_TESTS=(
+	# bug 816591
+	smbmountmodeltest
+)
+RDEPEND+=" !<kde-plasma/kinfocenter-6.8.0 !kde-plasma/kinfocenter:6/6"
+PDEPEND+=" ~kde-plasma/kinfocenter-6.8.0:6/6-sonicde"
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake_use_find_package usb USB1)
+	)
+
+	ecm_src_configure
+}
+
+src_install() {
+	ecm_src_install
+
+	insinto /etc/xdg
+	doins "${FILESDIR}"/scm-about-distrorc
+}
+
+pkg_postinst() {
+	optfeature_header "Query network filesystem info:"
+	optfeature "NFS information module" net-fs/nfs-utils
+	optfeature "Samba status information module" net-fs/samba
+
+	optfeature_header "Query firmware/hardware info:"
+	optfeature "System DMI table readout" sys-apps/dmidecode
+	optfeature "Firmware security module" "app-text/aha sys-apps/fwupd"
+	optfeature "PCI devices information module" sys-apps/pciutils
+	optfeature "advanced CPU information module" sys-apps/util-linux
+
+	optfeature_header "Query GPU/graphics support info:"
+	optfeature "OpenCL information module" dev-util/clinfo
+	optfeature "OpenGL information module" x11-apps/mesa-progs
+	optfeature "VA-API information module" media-video/libva-utils
+	optfeature "Vulkan graphics API information module" dev-util/vulkan-tools
+	optfeature "X Server information module" x11-apps/xdpyinfo
+
+	xdg_pkg_postinst
+}

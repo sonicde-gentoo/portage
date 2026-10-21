@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<use>
+		<flag name="brightness-control">Enable monitor brightness control with <pkg>app-misc/ddcutil</pkg></flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Sonic-DE/sonic-power-management</remote-id>
+	</upstream>
+</pkgmetadata>

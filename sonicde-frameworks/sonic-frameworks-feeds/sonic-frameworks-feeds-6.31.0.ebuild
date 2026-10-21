@@ -1,0 +1,21 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_TEST="true"
+QTMIN=6.11.0
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Library for parsing RSS and Atom feeds"
+LICENSE="LGPL-2+"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
+RDEPEND="
+	>=dev-qt/qtbase-${QTMIN}:6[xml]
+	=sonicde-frameworks/sonic-frameworks-text-codec-${KDE_CATV}*:6
+"
+DEPEND="${RDEPEND}
+"
+RDEPEND+=" !<kde-frameworks/syndication-6.31.0 !kde-frameworks/syndication:6/6.31"
+PDEPEND+=" ~kde-frameworks/syndication-6.31.0:6/6.31-sonicde"

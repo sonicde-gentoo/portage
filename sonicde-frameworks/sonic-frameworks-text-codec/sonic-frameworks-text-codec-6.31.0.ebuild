@@ -1,0 +1,21 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+QTMIN=6.11.0
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Framework for manipulating strings using various encodings"
+LICENSE="GPL-2+ LGPL-2+"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
+BDEPEND=">=dev-qt/qttools-${QTMIN}:6[linguist]"
+
+CMAKE_SKIP_TESTS=(
+	# bug 938317
+	rfc2047test
+	kemailaddresstest
+)
+RDEPEND+=" !<kde-frameworks/kcodecs-6.31.0 !kde-frameworks/kcodecs:6/6.31"
+PDEPEND+=" ~kde-frameworks/kcodecs-6.31.0:6/6.31-sonicde"

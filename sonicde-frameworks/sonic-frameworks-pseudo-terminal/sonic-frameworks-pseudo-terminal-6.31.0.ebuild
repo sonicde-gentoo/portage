@@ -1,0 +1,28 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+QTMIN=6.11.0
+inherit ecm frameworks.sonic
+
+DESCRIPTION="Framework for pseudo terminal devices and running child processes"
+LICENSE="LGPL-2+"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
+DEPEND="
+	=sonicde-frameworks/sonic-frameworks-core-addons-${KDE_CATV}*:6
+	=sonicde-frameworks/sonic-frameworks-internationalization-${KDE_CATV}*:6
+	sys-libs/libutempter
+"
+RDEPEND="${DEPEND}"
+RDEPEND+=" !<kde-frameworks/kpty-6.31.0 !kde-frameworks/kpty:6/6.31"
+PDEPEND+=" ~kde-frameworks/kpty-6.31.0:6/6.31-sonicde"
+
+src_configure() {
+	local mycmakeargs=(
+		-DUTEMPTER_EXECUTABLE="${EPREFIX}/usr/sbin/utempter"
+	)
+
+	ecm_src_configure
+}

@@ -1,0 +1,34 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+QTMIN=6.11.0
+inherit ecm frameworks.sonic
+
+DESCRIPTION="QRCode and data matrix barcode library"
+LICENSE="GPL-2"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+IUSE="qml"
+
+RDEPEND="
+	>=dev-qt/qtbase-${QTMIN}:6[gui]
+	>=dev-qt/qtmultimedia-${QTMIN}:6
+	media-gfx/qrencode:=
+	media-libs/libdmtx
+	>=media-libs/zxing-cpp-1.4.0:=
+	qml? ( >=dev-qt/qtdeclarative-${QTMIN}:6 )
+"
+DEPEND="${RDEPEND}
+"
+RDEPEND+=" !<kde-frameworks/prison-6.31.0 !kde-frameworks/prison:6/6.31"
+PDEPEND+=" ~kde-frameworks/prison-6.31.0:6/6.31-sonicde"
+
+src_configure() {
+	local mycmakeargs=(
+		# TODO: WITH_MULTIMEDIA?
+		-DWITH_QUICK=$(usex qml)
+	)
+
+	ecm_src_configure
+}

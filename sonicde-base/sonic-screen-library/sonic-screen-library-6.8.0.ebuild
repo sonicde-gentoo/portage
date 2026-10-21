@@ -1,0 +1,41 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+ECM_QTHELP="true"
+ECM_TEST="forceoptional"
+KFMIN=6.30.0
+QTMIN=6.11.0
+inherit ecm plasma.sonic toolchain-funcs
+
+DESCRIPTION="Plasma screen management library"
+LICENSE="GPL-2" # TODO: CHECK
+SLOT="6/8"
+KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
+
+# requires running session
+RESTRICT="test"
+
+# slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
+RDEPEND="
+	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui]
+	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
+	x11-libs/libxcb:=
+"
+DEPEND="${RDEPEND}
+"
+BDEPEND="
+	>=dev-qt/qttools-${QTMIN}:6[linguist]
+	>=dev-qt/qtbase-${QTMIN}:6
+"
+RDEPEND+=" !<kde-plasma/libkscreen-6.8.0 !kde-plasma/libkscreen:6/8"
+PDEPEND+=" ~kde-plasma/libkscreen-6.8.0:6/8-sonicde"
+
+pkg_pretend() {
+	[[ ${MERGE_TYPE} != binary ]] && tc-check-min_ver gcc 13.4
+}
+
+pkg_setup() {
+	[[ ${MERGE_TYPE} != binary ]] && tc-check-min_ver gcc 13.4
+}
