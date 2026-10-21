@@ -47,6 +47,7 @@ RDEPEND="
 	x11-libs/libX11
 	sys-libs/libcap
 	>=sonicde-frameworks/sonic-frameworks-app-info-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-quick-silver-style-${KDE_CATV}:6
 	${DEPEND}
 
 	acct-user/soniclogin
