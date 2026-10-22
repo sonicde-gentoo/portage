@@ -4,7 +4,9 @@ import re
 import subprocess
 import unittest
 
-from migration_fixtures import OVERLAY, version
+from portage.dep import match_from_list
+
+from migration_fixtures import OVERLAY, releases, variable, version
 
 
 NEW_PACKAGES = {
@@ -19,10 +21,59 @@ NEW_PACKAGES = {
 
 def release(name, target='6.8.0'):
     category = 'sonicde-frameworks' if name.startswith('sonic-frameworks-') else 'sonicde-base'
-    return OVERLAY / category / name / f'{name}-{target}.ebuild'
+    matching = [path for path in releases(f'{category}/{name}')
+                if version(path).split('-r')[0] == target
+                or version(path).split('-r')[0].startswith(target + '.')]
+    return matching[-1] if matching else OVERLAY / category / name / f'{name}-{target}.ebuild'
 
 
 class MatrixReleasePackaging(unittest.TestCase):
+    def test_keyboard_is_packaged_only_at_the_working_release(self):
+        paths = releases('sonicde-base/sonic-keyboard')
+        self.assertEqual([version(path) for path in paths], ['6.8.1'])
+        text = paths[0].read_text()
+        self.assertIn('qtbase-${QTMIN}:6=', text)
+        self.assertIn('qtvirtualkeyboard-${QTMIN}:6=', text)
+        self.assertIn('>=sonicde-base/sonic-interface-libraries-6.8.0:6=', text)
+        self.assertNotRegex(text, r'(?:dev-libs/wayland|dev-util/wayland-scanner|dev-qt/qtwayland)')
+        self.assertTrue((paths[0].parent / 'Manifest').is_file())
+        stub = OVERLAY / 'kde-plasma/plasma-keyboard/plasma-keyboard-6.8.1.ebuild'
+        self.assertIn('LICENSE="metapackage"', stub.read_text())
+        self.assertIn('~sonicde-base/sonic-keyboard-${PV}:6', stub.read_text())
+
+    def test_keyboard_is_a_versioned_build_dependency_of_all_three_consumers(self):
+        dependency = '>=sonicde-base/sonic-keyboard-6.8.1:6'
+        for name in ('sonic-workspace', 'sonic-screenlocker', 'sonic-login-manager'):
+            with self.subTest(package=name):
+                text = release(name).read_text()
+                build_dependencies = re.findall(r'^DEPEND\+?="([^\"]*)"', text, re.M)
+                self.assertTrue(any(dependency in value for value in build_dependencies))
+                self.assertNotIn('sonic-keyboard', variable(text, 'RDEPEND'))
+                if name == 'sonic-login-manager':
+                    # RDEPEND expands DEPEND earlier; append afterward so this
+                    # remains a build-only dependency as requested.
+                    self.assertGreater(text.index('DEPEND+=" ' + dependency), text.index('RDEPEND='))
+
+    def test_login_patch_release_dependencies_are_declared(self):
+        text = release('sonic-login-manager').read_text()
+        self.assertIn('>=virtual/zlib-1.2.9:=', text)
+        self.assertIn('sonic-frameworks-icon-themes-${KFMIN}:6', text)
+
+    def test_compatibility_aliases_accept_sonic_patch_versions(self):
+        for name, original, target in (
+            ('sonic-dr-robotnik', 'kde-plasma/drkonqi', '6.8.0'),
+            ('sonic-frameworks-icon-themes', 'kde-frameworks/kiconthemes', '6.31.0'),
+            ('sonic-frameworks-windowsystem', 'kde-frameworks/kwindowsystem', '6.31.0'),
+        ):
+            with self.subTest(package=name):
+                owner = release(name, target)
+                stub = OVERLAY / original / f'{original.split("/")[-1]}-{target}.ebuild'
+                text = stub.read_text().replace('${PV}', target)
+                dependency = re.search(r'[=~]sonicde-[^/]+/' + re.escape(name) + r'-[^\s:\[]+', text)
+                self.assertIsNotNone(dependency)
+                cpv = f'{owner.parent.parent.name}/{name}-{version(owner)}'
+                self.assertTrue(match_from_list(dependency.group(), [cpv]))
+
     def test_framework_ecm_minimum_tracks_the_framework_release(self):
         eclass = (OVERLAY / 'eclass/ecm.eclass').read_text()
         block = re.search(
@@ -84,7 +135,7 @@ class MatrixReleasePackaging(unittest.TestCase):
 
     def test_removed_wayland_build_stack_is_not_reintroduced(self):
         for path in OVERLAY.glob('sonicde-*/*/*.ebuild'):
-            if not (version(path).startswith('6.8.') or version(path) == '6.31.0'):
+            if not (version(path).startswith('6.8.') or version(path).startswith('6.31.0')):
                 continue
             with self.subTest(ebuild=path):
                 self.assertNotRegex(path.read_text(), r'(?:dev-libs/wayland|dev-util/wayland-scanner|plasma-wayland-protocols|dev-qt/qtwayland|\[wayland)')
@@ -104,7 +155,7 @@ class MatrixReleasePackaging(unittest.TestCase):
 
     def test_new_direct_dependencies_and_upstreamed_patch(self):
         self.assertIn('sonic-polkit:0', release('sonic-desktop-interface', '6.8.0.1').read_text())
-        self.assertIn('qtvirtualkeyboard-${QTMIN}:6', release('sonic-workspace', '6.8.0.1').read_text())
+        self.assertIn('qtvirtualkeyboard-${QTMIN}:6', release('sonic-workspace').read_text())
         self.assertIn('sonic-frameworks-settings-${KFMIN}', release('sonic-ssh-password-prompt').read_text())
         self.assertNotIn('optional-nm.patch', release('sonic-system-stats').read_text())
         self.assertNotIn('KWIN_BUILD_GLOBALSHORTCUTS', release('sonic-win').read_text())

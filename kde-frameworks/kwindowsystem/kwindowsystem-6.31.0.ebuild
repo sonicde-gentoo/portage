@@ -11,4 +11,4 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="+X"
 REQUIRED_USE="X"
 
-RDEPEND="~sonicde-frameworks/sonic-frameworks-windowsystem-${PV}:6"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-windowsystem-${PV}*:6"

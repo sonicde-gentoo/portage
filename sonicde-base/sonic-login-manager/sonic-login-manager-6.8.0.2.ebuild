@@ -18,6 +18,8 @@ REQUIRED_USE="?? ( s6 systemd )"
 RESTRICT="!test? ( test )"
 
 DEPEND="
+	>=virtual/zlib-1.2.9:=
+	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	x11-libs/libXfixes
 	x11-libs/libXcursor
@@ -56,6 +58,7 @@ RDEPEND="
 	systemd? ( sys-apps/systemd )
 	!s6? ( !systemd? ( sys-auth/elogind ) )
 "
+DEPEND+=" >=sonicde-base/sonic-keyboard-6.8.1:6"
 BDEPEND="
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	x11-libs/libXfixes

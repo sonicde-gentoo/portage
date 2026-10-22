@@ -15,5 +15,5 @@ IUSE+=" systemd debug test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 RDEPEND="${PYTHON_DEPS}
-	~sonicde-base/sonic-dr-robotnik-${PV}:6[${PYTHON_SINGLE_USEDEP},systemd=,debug=,test=]
+	=sonicde-base/sonic-dr-robotnik-${PV}*:6[${PYTHON_SINGLE_USEDEP},systemd=,debug=,test=]
 "

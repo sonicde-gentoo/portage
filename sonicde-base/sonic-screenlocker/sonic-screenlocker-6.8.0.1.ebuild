@@ -44,6 +44,7 @@ COMMON_DEPEND="
 	x11-libs/xcb-util-keysyms
 "
 DEPEND="${COMMON_DEPEND}
+	>=sonicde-base/sonic-keyboard-6.8.1:6
 	x11-base/xorg-proto
 "
 RDEPEND="${COMMON_DEPEND}
