@@ -7,7 +7,8 @@ ECM_HANDBOOK="optional"
 ECM_TEST="forceoptional"
 KFMIN=6.30.0
 QTMIN=6.11.0
-inherit ecm plasma.sonic xdg
+PYTHON_COMPAT=( python3_{11..15} )
+inherit ecm plasma.sonic python-any-r1 xdg
 
 DESCRIPTION="Screenshot capture utility"
 HOMEPAGE="https://apps.kde.org/spectacle/"
@@ -58,15 +59,25 @@ RDEPEND="${COMMON_DEPEND}
 	>=sonicde-frameworks/sonic-frameworks-image-formats-${KFMIN}:6
 "
 BDEPEND="
+	test? ( ${PYTHON_DEPS} )
 	>=dev-qt/qtbase-${QTMIN}:6
 	virtual/pkgconfig
 "
 RDEPEND+=" !<kde-plasma/spectacle-6.8.0 !kde-plasma/spectacle:6/6"
 PDEPEND+=" ~kde-plasma/spectacle-6.8.0:6/6-sonicde"
 
+pkg_setup() {
+	if use test; then
+		python-any-r1_pkg_setup
+	fi
+}
+
 src_configure() {
 	local mycmakeargs=(
 		$(cmake_use_find_package share KF6Purpose)
 	)
+	if use test; then
+		mycmakeargs+=( -DPython3_EXECUTABLE="${PYTHON}" )
+	fi
 	ecm_src_configure
 }

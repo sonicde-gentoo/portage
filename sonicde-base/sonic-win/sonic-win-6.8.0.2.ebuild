@@ -7,7 +7,8 @@ ECM_HANDBOOK="optional"
 ECM_TEST="true"
 KFMIN=6.26.0
 QTMIN=6.11.0
-inherit ecm plasma.sonic xdg
+PYTHON_COMPAT=( python3_{11..15} )
+inherit ecm plasma.sonic python-any-r1 xdg
 
 DESCRIPTION="Flexible, composited X window manager"
 LICENSE="GPL-2+"
@@ -87,6 +88,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-libs/xcb-util-image
 "
 BDEPEND="
+	test? ( ${PYTHON_DEPS} )
 	>=dev-qt/qtbase-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 "
@@ -94,6 +96,12 @@ RDEPEND+=" !<kde-plasma/kwin-x11-6.8.0 !kde-plasma/kwin-x11:6/6"
 PDEPEND+=" ~kde-plasma/kwin-x11-6.8.0:6/6-sonicde"
 RDEPEND+=" !<kde-plasma/kwin-6.8.0 !kde-plasma/kwin:6/6"
 PDEPEND+=" ~kde-plasma/kwin-6.8.0:6/6-sonicde"
+
+pkg_setup() {
+	if use test; then
+		python-any-r1_pkg_setup
+	fi
+}
 
 src_prepare() {
 	ecm_src_prepare
@@ -112,5 +120,8 @@ src_configure() {
 		-DKWIN_BUILD_NIGHTLIGHT=$(usex nightlight)
 	)
 
+	if use test; then
+		mycmakeargs+=( -DPython3_EXECUTABLE="${PYTHON}" )
+	fi
 	ecm_src_configure
 }

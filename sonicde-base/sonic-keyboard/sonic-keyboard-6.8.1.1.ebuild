@@ -48,4 +48,4 @@ BDEPEND="
 		x11-misc/xvfb-run
 	)
 "
-PDEPEND="~kde-plasma/plasma-keyboard-${PV}:6/6-sonicde"
+PDEPEND="~kde-plasma/plasma-keyboard-6.8.1:6/6-sonicde"

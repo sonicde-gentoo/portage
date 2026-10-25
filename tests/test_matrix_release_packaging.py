@@ -6,7 +6,7 @@ import unittest
 
 from portage.dep import match_from_list
 
-from migration_fixtures import OVERLAY, releases, variable, version
+from migration_fixtures import OVERLAY, post_atoms, releases, variable, version
 
 
 NEW_PACKAGES = {
@@ -28,26 +28,70 @@ def release(name, target='6.8.0'):
 
 
 class MatrixReleasePackaging(unittest.TestCase):
-    def test_keyboard_is_packaged_only_at_the_working_release(self):
+    def test_gear_packages_have_all_three_matching_compatibility_versions(self):
+        packages = {
+            'sonicde-base/sonic-accounts-integration': 'kde-apps/kaccounts-integration',
+            'sonicde-base/sonic-ecco': 'kde-apps/dolphin',
+            'sonicde-base/sonic-exiv2-library': 'kde-apps/libkexiv2',
+            'sonicde-base/sonic-partition-manager': 'sys-block/partitionmanager',
+            'sonicde-base/sonic-system-log': 'kde-apps/ksystemlog',
+            'sonicde-base/sonic-terminal': 'kde-apps/konsole',
+            'sonicde-frameworks/sonic-frameworks-io-extras': 'kde-apps/kio-extras',
+        }
+        for source, original in packages.items():
+            with self.subTest(package=source):
+                for package in (source, original):
+                    branch = [path for path in releases(package) if version(path).startswith('26.08.')]
+                    self.assertEqual([version(path) for path in branch], ['26.08.0', '26.08.1', '26.08.2'])
+                for release_version in ('26.08.0', '26.08.1', '26.08.2'):
+                    owner = OVERLAY / source / f'{source.split("/")[-1]}-{release_version}.ebuild'
+                    stub = OVERLAY / original / f'{original.split("/")[-1]}-{release_version}.ebuild'
+                    posts = [atom for atom in post_atoms(owner) if atom.cp == original]
+                    self.assertEqual([atom.version for atom in posts], [release_version])
+                    self.assertIn('LICENSE="metapackage"', stub.read_text())
+                    dependency = variable(stub.read_text(), 'RDEPEND').replace('${PV}', release_version)
+                    atom = re.search(r'[=~]' + re.escape(source) + r'-[^\s:\[]+', dependency)
+                    self.assertIsNotNone(atom)
+                    self.assertTrue(match_from_list(atom.group(), [source + '-' + release_version]))
+                    if release_version == '26.08.1':
+                        self.assertIn('KFMIN=6.27.0', owner.read_text())
+                        self.assertIn('QTMIN=6.11.2', owner.read_text())
+                        self.assertIn('SONIC_SOURCE_VERSION=26.08.0', owner.read_text())
+
+    def test_keyboard_has_matching_6_8_0_and_6_8_1_releases(self):
         paths = releases('sonicde-base/sonic-keyboard')
-        self.assertEqual([version(path) for path in paths], ['6.8.1'])
-        text = paths[0].read_text()
-        self.assertIn('qtbase-${QTMIN}:6=', text)
-        self.assertIn('qtvirtualkeyboard-${QTMIN}:6=', text)
-        self.assertIn('>=sonicde-base/sonic-interface-libraries-6.8.0:6=', text)
-        self.assertNotRegex(text, r'(?:dev-libs/wayland|dev-util/wayland-scanner|dev-qt/qtwayland)')
-        self.assertTrue((paths[0].parent / 'Manifest').is_file())
-        stub = OVERLAY / 'kde-plasma/plasma-keyboard/plasma-keyboard-6.8.1.ebuild'
-        self.assertIn('LICENSE="metapackage"', stub.read_text())
-        self.assertIn('~sonicde-base/sonic-keyboard-${PV}:6', stub.read_text())
+        self.assertCountEqual(['.'.join(version(path).split('.')[:3]) for path in paths], ['6.8.0', '6.8.1'])
+        for path in paths:
+            with self.subTest(version=version(path)):
+                text = path.read_text()
+                self.assertIn('qtbase-${QTMIN}:6=', text)
+                self.assertIn('qtvirtualkeyboard-${QTMIN}:6=', text)
+                self.assertIn('>=sonicde-base/sonic-interface-libraries-6.8.0:6=', text)
+                self.assertNotRegex(text, r'(?:dev-libs/wayland|dev-util/wayland-scanner|dev-qt/qtwayland)')
+                self.assertTrue((path.parent / 'Manifest').is_file())
+                posts = [atom for atom in post_atoms(path) if atom.cp == 'kde-plasma/plasma-keyboard']
+                self.assertEqual(len(posts), 1)
+                stub = OVERLAY / f'kde-plasma/plasma-keyboard/plasma-keyboard-{posts[0].version}.ebuild'
+                stub_text = stub.read_text()
+                self.assertIn('LICENSE="metapackage"', stub_text)
+                atom = re.search(r'[=~]sonicde-base/sonic-keyboard-[^\s:\[]+', stub_text)
+                self.assertIsNotNone(atom)
+                dependency = atom.group().replace('${PV}', version(stub))
+                self.assertTrue(match_from_list(dependency, ['sonicde-base/sonic-keyboard-' + version(path)]))
 
     def test_keyboard_is_a_versioned_build_dependency_of_all_three_consumers(self):
-        dependency = '>=sonicde-base/sonic-keyboard-6.8.1:6'
+        dependency = '=sonicde-base/sonic-keyboard-${KDE_CATV}*:6'
         for name in ('sonic-workspace', 'sonic-screenlocker', 'sonic-login-manager'):
             with self.subTest(package=name):
                 text = release(name).read_text()
                 build_dependencies = re.findall(r'^DEPEND\+?="([^\"]*)"', text, re.M)
                 self.assertTrue(any(dependency in value for value in build_dependencies))
+                series = '.'.join(version(release(name)).split('.')[:3])
+                atom = dependency.replace('${KDE_CATV}', series)
+                for candidate in ('6.8.0', '6.8.0-r1', '6.8.0.1', '6.8.0.10'):
+                    self.assertTrue(match_from_list(atom, ['sonicde-base/sonic-keyboard-' + candidate]))
+                for candidate in ('6.7.5', '6.8.1', '6.8.1.1', '6.9.0', '9999'):
+                    self.assertFalse(match_from_list(atom, ['sonicde-base/sonic-keyboard-' + candidate]))
                 self.assertNotIn('sonic-keyboard', variable(text, 'RDEPEND'))
                 if name == 'sonic-login-manager':
                     # RDEPEND expands DEPEND earlier; append afterward so this
@@ -58,6 +102,24 @@ class MatrixReleasePackaging(unittest.TestCase):
         text = release('sonic-login-manager').read_text()
         self.assertIn('>=virtual/zlib-1.2.9:=', text)
         self.assertIn('sonic-frameworks-icon-themes-${KFMIN}:6', text)
+
+    def test_latest_login_and_locker_declare_color_scheme(self):
+        for name in ('sonic-login-manager', 'sonic-screenlocker'):
+            with self.subTest(package=name):
+                self.assertIn('sonic-frameworks-color-scheme-${KFMIN}:6', release(name).read_text())
+        login = release('sonic-login-manager').read_text()
+        self.assertIn('qtbase-${QTMIN}:6=[concurrent,dbus,gui,network]', login)
+        self.assertIn('test? ( x11-libs/libxcb )', login)
+
+    def test_python_is_a_conditional_build_dependency_for_new_tests(self):
+        for name in ('sonic-win', 'sonic-screenies'):
+            with self.subTest(package=name):
+                text = release(name).read_text()
+                self.assertIn('python-any-r1', text)
+                self.assertIn('test? ( ${PYTHON_DEPS} )', variable(text, 'BDEPEND'))
+                self.assertIn('-DPython3_EXECUTABLE="${PYTHON}"', text)
+                self.assertIn('if use test; then\n\t\tpython-any-r1_pkg_setup', text)
+                self.assertNotIn('${PYTHON_DEPS}', variable(text, 'RDEPEND'))
 
     def test_compatibility_aliases_accept_sonic_patch_versions(self):
         for name, original, target in (
@@ -103,7 +165,10 @@ class MatrixReleasePackaging(unittest.TestCase):
                 self.assertTrue((owner.parent / 'Manifest').is_file())
                 stub = OVERLAY / 'kde-plasma' / original / f'{original}-6.8.0.ebuild'
                 self.assertIn('LICENSE="metapackage"', stub.read_text())
-                self.assertIn(f'sonicde-base/{name}-${{PV}}:6', stub.read_text())
+                dependency = re.search(r'[=~]sonicde-base/' + re.escape(name) + r'-[^\s:\[]+', stub.read_text())
+                self.assertIsNotNone(dependency)
+                atom = dependency.group().replace('${PV}', version(stub))
+                self.assertTrue(match_from_list(atom, [f'sonicde-base/{name}-{version(owner)}']))
                 self.assertIn(f'~kde-plasma/{original}-6.8.0:6/6-sonicde', owner.read_text())
 
     def test_only_one_6_7_release_is_retained_per_package(self):
@@ -154,7 +219,7 @@ class MatrixReleasePackaging(unittest.TestCase):
         self.assertNotIn('x11-libs/libXrandr', capture)
 
     def test_new_direct_dependencies_and_upstreamed_patch(self):
-        self.assertIn('sonic-polkit:0', release('sonic-desktop-interface', '6.8.0.1').read_text())
+        self.assertIn('sonic-polkit:0', release('sonic-desktop-interface').read_text())
         self.assertIn('qtvirtualkeyboard-${QTMIN}:6', release('sonic-workspace').read_text())
         self.assertIn('sonic-frameworks-settings-${KFMIN}', release('sonic-ssh-password-prompt').read_text())
         self.assertNotIn('optional-nm.patch', release('sonic-system-stats').read_text())

@@ -11,4 +11,4 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="debug test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="~sonicde-base/sonic-keyboard-${PV}:6[debug=,test=]"
+RDEPEND="=sonicde-base/sonic-keyboard-${PV}*:6[debug=,test=]"

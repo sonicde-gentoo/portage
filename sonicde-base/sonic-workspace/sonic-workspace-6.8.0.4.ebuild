@@ -120,7 +120,7 @@ COMMON_DEPEND="
 	)
 "
 DEPEND="${COMMON_DEPEND}
-	>=sonicde-base/sonic-keyboard-6.8.1:6
+	=sonicde-base/sonic-keyboard-${KDE_CATV}*:6
 	>=dev-qt/qtbase-${QTMIN}:6[concurrent]
 	fontconfig? ( x11-libs/libXrender )
 	x11-base/xorg-proto

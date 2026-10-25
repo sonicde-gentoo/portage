@@ -10,4 +10,4 @@ SLOT="6/6-sonicde"
 KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="brightness-control filecaps"
 
-RDEPEND="~sonicde-base/sonic-power-management-${PV}:6[brightness-control=,filecaps=]"
+RDEPEND="=sonicde-base/sonic-power-management-${PV}*:6[brightness-control=,filecaps=]"

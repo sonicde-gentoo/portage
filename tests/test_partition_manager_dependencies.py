@@ -31,21 +31,22 @@ def kpmcore_dependency(version):
 
 class PartitionManagerDependencies(unittest.TestCase):
     def test_source_minimums_and_subslot_tracking(self):
-        # 26.08.0 CMake accepts the release branch beginning with 26.07 RCs.
-        for version, minimum in (('26.08.0', '26.07'), ('9999', '26.07')):
+        # These sources accept the release branch beginning with 26.07 RCs.
+        for version, minimum in (('26.08.0', '26.07'), ('26.08.1', '26.07'),
+                                 ('26.08.2', '26.07'), ('9999', '26.07')):
             with self.subTest(version=version):
                 atom = Atom(kpmcore_dependency(version))
                 self.assertEqual(str(atom), f'>=sys-libs/kpmcore-{minimum}:6=')
                 self.assertEqual(atom.slot_operator, '=')
                 self.assertTrue(match_from_list(atom.without_slot, ['sys-libs/kpmcore-26.08.1']))
                 self.assertFalse(match_from_list(atom.without_slot, ['sys-libs/kpmcore-25.12.3']))
-        atom = Atom(kpmcore_dependency('26.08.0')).without_slot
+        atom = Atom(kpmcore_dependency('26.08.2')).without_slot
         self.assertFalse(match_from_list(atom, ['sys-libs/kpmcore-26.04.3']))
         self.assertTrue(match_from_list(atom, ['sys-libs/kpmcore-26.07.90']))
 
     def test_resolver_installs_or_upgrades_kpmcore_before_partition_manager(self):
-        manager = 'sonicde-base/sonic-partition-manager-26.08.0'
-        dependency = kpmcore_dependency('26.08.0')
+        manager = 'sonicde-base/sonic-partition-manager-26.08.2'
+        dependency = kpmcore_dependency('26.08.2')
         ebuilds = {
             manager: {'EAPI': '8', 'SLOT': '6', 'DEPEND': dependency, 'RDEPEND': dependency},
             'sys-libs/kpmcore-26.04.3': {'EAPI': '8', 'SLOT': '6/10'},

@@ -20,12 +20,13 @@ RESTRICT="!test? ( test )"
 DEPEND="
 	>=virtual/zlib-1.2.9:=
 	>=sonicde-frameworks/sonic-frameworks-icon-themes-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-color-scheme-${KFMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	x11-libs/libXfixes
 	x11-libs/libXcursor
 	x11-libs/libX11
 	sys-libs/libcap
-	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,network]
+	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,network]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-auth-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
@@ -58,7 +59,8 @@ RDEPEND="
 	systemd? ( sys-apps/systemd )
 	!s6? ( !systemd? ( sys-auth/elogind ) )
 "
-DEPEND+=" >=sonicde-base/sonic-keyboard-6.8.1:6"
+DEPEND+=" =sonicde-base/sonic-keyboard-${KDE_CATV}*:6"
+DEPEND+=" test? ( x11-libs/libxcb )"
 BDEPEND="
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	x11-libs/libXfixes

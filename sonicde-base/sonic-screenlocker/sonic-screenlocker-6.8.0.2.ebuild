@@ -18,6 +18,7 @@ RESTRICT="test"
 
 # qtbase slot op: GuiPrivate use in greeter
 COMMON_DEPEND="
+	>=sonicde-frameworks/sonic-frameworks-color-scheme-${KFMIN}:6
 	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,network,widgets]
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
@@ -44,7 +45,7 @@ COMMON_DEPEND="
 	x11-libs/xcb-util-keysyms
 "
 DEPEND="${COMMON_DEPEND}
-	>=sonicde-base/sonic-keyboard-6.8.1:6
+	=sonicde-base/sonic-keyboard-${KDE_CATV}*:6
 	x11-base/xorg-proto
 "
 RDEPEND="${COMMON_DEPEND}

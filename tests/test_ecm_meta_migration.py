@@ -29,6 +29,106 @@ META = 'app-misc/sonic-migration-meta-1'  # Synthetic orchestration, not an over
 
 
 class ECMMetaMigration(unittest.TestCase):
+    def test_gear_same_version_replacers_support_all_three_versions(self):
+        for original, sonic in (
+            ('kde-apps/konsole', 'sonicde-base/sonic-terminal'),
+            ('kde-apps/kio-extras', 'sonicde-frameworks/sonic-frameworks-io-extras'),
+            ('kde-apps/dolphin', 'sonicde-base/sonic-ecco'),
+        ):
+            for release_version in ('26.08.0', '26.08.1', '26.08.2'):
+                with self.subTest(package=original, version=release_version), tempfile.TemporaryDirectory(dir='/tmp/kilo') as prefix:
+                    owner = OVERLAY / sonic / f'{sonic.split("/")[-1]}-{release_version}.ebuild'
+                    stub = OVERLAY / original / f'{original.split("/")[-1]}-{release_version}.ebuild'
+                    source_slot, previous_slot = slots(owner, stub)
+                    dependency = re.sub(r'\[[^]]+\]', '', variable(stub.read_text(), 'RDEPEND'))
+                    dependency = dependency.replace('${PV}', release_version)
+                    posts = [str(atom.without_use) for atom in post_atoms(owner) if atom.cp == original]
+                    blockers = [token for value in re.findall(r'^RDEPEND\+?="([^"]*)"', owner.read_text(), re.M)
+                                for token in value.split() if token.startswith('!') and original in token]
+                    ebuilds = {
+                        original + '-' + release_version + '::gentoo': {'EAPI': '8', 'SLOT': previous_slot},
+                        original + '-' + release_version + '::sonicde': {
+                            'EAPI': '8', 'SLOT': variable(stub.read_text(), 'SLOT'), 'RDEPEND': dependency,
+                        },
+                        sonic + '-' + release_version + '::sonicde': {
+                            'EAPI': '8', 'SLOT': source_slot,
+                            'RDEPEND': ' '.join(blockers), 'PDEPEND': posts[0],
+                        },
+                    }
+                    installed = {original + '-' + release_version: {
+                        'EAPI': '8', 'SLOT': previous_slot, 'repository': 'gentoo'}}
+                    with patch.dict(os.environ, {'PKGDIR': str(Path(prefix) / 'pkgdir'),
+                                                 'PORTAGE_GNUPGHOME': str(Path(prefix) / 'gnupg')}):
+                        playground = ResolverPlayground(ebuilds=ebuilds, installed=installed, eprefix=prefix,
+                            user_config={'make.conf': ['BINPKG_FORMAT="xpak"',
+                                                      'FEATURES="-binpkg-signing -gpg-keepalive"']})
+                    try:
+                        result = playground.run(['=' + original + '-' + release_version + '::sonicde'],
+                                                options={'--newrepo': True})
+                        self.assertTrue(result.success, str(result.mergelist))
+                        merged = [str(package).split('::')[0] for package in result.mergelist
+                                  if not str(package).startswith('!')]
+                        self.assertCountEqual(merged, [sonic + '-' + release_version, original + '-' + release_version])
+                    finally:
+                        playground.cleanup()
+
+    def test_gear_world_upgrade_moves_old_sonic_owners_and_aliases_to_26_08_2(self):
+        for original, sonic in (
+            ('kde-apps/konsole', 'sonicde-base/sonic-terminal'),
+            ('kde-apps/kio-extras', 'sonicde-frameworks/sonic-frameworks-io-extras'),
+            ('kde-apps/dolphin', 'sonicde-base/sonic-ecco'),
+        ):
+            with self.subTest(package=original), tempfile.TemporaryDirectory(dir='/tmp/kilo') as prefix:
+                owner, stub = transition_pair(original, sonic)
+                self.assertEqual(ebuild_version(owner), '26.08.2')
+                self.assertEqual(ebuild_version(stub), '26.08.2')
+                source_slot, previous_slot = slots(owner, stub)
+                stub_slot = variable(stub.read_text(), 'SLOT')
+                dependency = re.sub(r'\[[^]]+\]', '', variable(stub.read_text(), 'RDEPEND'))
+                dependency = dependency.replace('${PV}', '26.08.2')
+                posts = [str(atom.without_use) for atom in post_atoms(owner) if atom.cp == original]
+                self.assertEqual(len(posts), 1)
+                blockers = [token for value in re.findall(r'^RDEPEND\+?="([^"]*)"', owner.read_text(), re.M)
+                            for token in value.split() if token.startswith('!') and original in token]
+                ebuilds = {
+                    original + '-26.08.1::gentoo': {'EAPI': '8', 'SLOT': previous_slot},
+                    original + '-26.08.2::sonicde': {
+                        'EAPI': '8', 'SLOT': stub_slot, 'RDEPEND': dependency,
+                    },
+                    sonic + '-26.08.2::sonicde': {
+                        'EAPI': '8', 'SLOT': source_slot,
+                        'RDEPEND': ' '.join(blockers), 'PDEPEND': posts[0],
+                    },
+                }
+                installed = {
+                    original + '-26.08.0': {
+                        'EAPI': '8', 'SLOT': stub_slot, 'repository': 'sonicde',
+                        'RDEPEND': '~' + sonic + '-26.08.0:' + source_slot.split('/')[0],
+                    },
+                    sonic + '-26.08.0': {
+                        'EAPI': '8', 'SLOT': source_slot, 'repository': 'sonicde',
+                        'PDEPEND': '~' + original + '-26.08.0:' + stub_slot,
+                    },
+                }
+                with patch.dict(os.environ, {'PKGDIR': str(Path(prefix) / 'pkgdir'),
+                                             'PORTAGE_GNUPGHOME': str(Path(prefix) / 'gnupg')}):
+                    playground = ResolverPlayground(
+                        ebuilds=ebuilds, installed=installed, eprefix=prefix,
+                        world=[original + '::sonicde'],
+                        user_config={'make.conf': ['BINPKG_FORMAT="xpak"',
+                                                  'FEATURES="-binpkg-signing -gpg-keepalive"']})
+                try:
+                    result = playground.run(['@world'], options={
+                        '--update': True, '--deep': True, '--newrepo': True,
+                        '--changed-deps': True, '--with-bdeps': 'y',
+                    })
+                    self.assertTrue(result.success, str(result.mergelist))
+                    merged = [str(package).split('::')[0] for package in result.mergelist
+                              if not str(package).startswith('!')]
+                    self.assertCountEqual(merged, [sonic + '-26.08.2', original + '-26.08.2'])
+                finally:
+                    playground.cleanup()
+
     def test_release_discovery_follows_new_versions_and_ignores_live(self):
         # These are disposable fixture versions, not required overlay releases.
         original = 'kde-plasma/example'
