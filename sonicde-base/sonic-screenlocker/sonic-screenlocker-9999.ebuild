@@ -18,6 +18,8 @@ RESTRICT="test"
 # qtbase slot op: GuiPrivate use in greeter
 COMMON_DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6=[dbus,gui,network,widgets]
+	>=sonicde-frameworks/sonic-frameworks-ipc-6.31.0:6
+	>=sonicde-frameworks/sonic-frameworks-logging-6.31.0:6
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6[qml]

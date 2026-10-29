@@ -26,6 +26,7 @@ RDEPEND="
 	!kde-plasma/khotkeys:5
 	>=sonicde-base/sonic-activity-manager-daemon-${BASE_MIN}:${SLOT}
 	>=sonicde-base/sonic-terminal-tools-${BASE_MIN}:${SLOT}
+	>=sonicde-base/sonic-terminal-26.04.3.1:${SLOT}
 	>=sonicde-base/sonic-decoration-${BASE_MIN}:${SLOT}
 	>=sonicde-base/sonic-workspace-addons-${BASE_MIN}:${SLOT}
 	>=sonicde-frameworks/sonic-frameworks-root-shell-${FRAMEWORKS_MIN}

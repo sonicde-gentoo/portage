@@ -17,6 +17,7 @@ RESTRICT="test" # bug 727846, +missing selenium-webdriver-at-spi
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,widgets]
+	>=sonicde-frameworks/sonic-frameworks-logging-6.31.0:6
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
@@ -51,6 +52,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	!<sonicde-base/sonic-workspace-6.4.80
+	sonicde-base/sonic-workspace:6
 	sonicde-frameworks/sonic-frameworks-quick-ui-addons:6
 	>=dev-qt/qtquick3d-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6

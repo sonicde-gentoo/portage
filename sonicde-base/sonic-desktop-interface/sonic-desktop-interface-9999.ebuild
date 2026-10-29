@@ -23,6 +23,8 @@ RESTRICT="test" # missing selenium-webdriver-at-spi
 COMMON_DEPEND="
 	>=dev-qt/qt5compat-${QTMIN}:6[qml]
 	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,network,sql,widgets,xml]
+	>=sonicde-frameworks/sonic-frameworks-ipc-6.31.0:6
+	>=sonicde-frameworks/sonic-frameworks-logging-6.31.0:6
 	>=dev-qt/qtdeclarative-${QTMIN}:6
 	>=dev-qt/qtshadertools-${QTMIN}:6
 	>=dev-qt/qtsvg-${QTMIN}:6

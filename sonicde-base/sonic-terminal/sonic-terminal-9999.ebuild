@@ -26,6 +26,7 @@ SLOT="6"
 DEPEND="
 	dev-libs/icu:=
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,widgets,xml]
+	>=sonicde-frameworks/sonic-frameworks-logging-6.31.0:6
 	>=dev-qt/qtmultimedia-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-bookmarks-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
