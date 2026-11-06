@@ -62,6 +62,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 
+	sonicde-base/sonic-terminal:6
 	sonicde-frameworks/sonic-frameworks-io-extras:6
 "
 

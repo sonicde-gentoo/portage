@@ -52,6 +52,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	!<sonicde-base/sonic-workspace-6.4.80
+	sonicde-base/sonic-terminal:6
 	sonicde-base/sonic-workspace:6
 	sonicde-frameworks/sonic-frameworks-quick-ui-addons:6
 	>=dev-qt/qtquick3d-${QTMIN}:6
