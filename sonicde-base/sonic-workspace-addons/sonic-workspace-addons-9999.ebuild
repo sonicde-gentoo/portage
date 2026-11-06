@@ -13,7 +13,7 @@ LICENSE="GPL-2 LGPL-2"
 SLOT="6"
 IUSE="+alternate-calendar led share webengine"
 
-RESTRICT="test" # bug 727846, +missing selenium-webdriver-at-spi
+RESTRICT="test" # bug 727846
 
 DEPEND="
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,widgets]

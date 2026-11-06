@@ -15,8 +15,6 @@ LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 IUSE="ibus input_devices_wacom scim screencast sdl +semantic-desktop webengine"
 
-RESTRICT="test" # missing selenium-webdriver-at-spi
-
 # slot op: Uses Qt6::GuiPrivate for qtx11extras_p.h
 # sonicde-frameworks/sonic-frameworks-windowsystem: Uses KX11Extras
 # sonicde-base/sonic-workspace: applets/pager/pagermodel.cpp includes xwindowtasksmodel.h

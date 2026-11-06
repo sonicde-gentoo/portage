@@ -13,8 +13,6 @@ DESCRIPTION="Plasma applet for audio volume management using PulseAudio"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 
-RESTRICT="test" # missing selenium-webdriver-at-spi
-
 DEPEND="
 	dev-libs/glib:2
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,widgets]
