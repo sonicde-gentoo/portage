@@ -19,12 +19,23 @@ NEW_PACKAGES = {
 }
 
 
-def release(name, target='6.8.0'):
+# These follow their own upstream version scheme, outside the Plasma,
+# Frameworks and Gear release groups, so several releases may coexist.
+INDEPENDENT_VERSIONS = {'sonic-crypto-library', 'sonic-pyside'}
+
+
+def release(name, target='6.8'):
+    """Return the newest release in the target series (e.g. '6.8' or '6.31.0')."""
     category = 'sonicde-frameworks' if name.startswith('sonic-frameworks-') else 'sonicde-base'
     matching = [path for path in releases(f'{category}/{name}')
                 if version(path).split('-r')[0] == target
                 or version(path).split('-r')[0].startswith(target + '.')]
     return matching[-1] if matching else OVERLAY / category / name / f'{name}-{target}.ebuild'
+
+
+def series(path):
+    """The Plasma-style X.Y.Z release a (possibly patch-versioned) ebuild belongs to."""
+    return '.'.join(version(path).split('-r')[0].split('.')[:3])
 
 
 class MatrixReleasePackaging(unittest.TestCase):
@@ -56,9 +67,9 @@ class MatrixReleasePackaging(unittest.TestCase):
                 self.assertIsNotNone(atom)
                 self.assertTrue(match_from_list(atom.group(), [source + '-' + release_version]))
 
-    def test_keyboard_has_matching_6_8_0_and_6_8_1_releases(self):
+    def test_keyboard_releases_have_matching_aliases(self):
         paths = releases('sonicde-base/sonic-keyboard')
-        self.assertCountEqual(['.'.join(version(path).split('.')[:3]) for path in paths], ['6.8.0', '6.8.1'])
+        self.assertTrue(paths)
         for path in paths:
             with self.subTest(version=version(path)):
                 text = path.read_text()
@@ -84,11 +95,13 @@ class MatrixReleasePackaging(unittest.TestCase):
                 text = release(name).read_text()
                 build_dependencies = re.findall(r'^DEPEND\+?="([^\"]*)"', text, re.M)
                 self.assertTrue(any(dependency in value for value in build_dependencies))
-                series = '.'.join(version(release(name)).split('.')[:3])
-                atom = dependency.replace('${KDE_CATV}', series)
-                for candidate in ('6.8.0', '6.8.0-r1', '6.8.0.1', '6.8.0.10'):
+                current = series(release(name))
+                atom = dependency.replace('${KDE_CATV}', current)
+                major, minor, micro = current.split('.')
+                following = f'{major}.{minor}.{int(micro) + 1}'
+                for candidate in (current, current + '-r1', current + '.1', current + '.10'):
                     self.assertTrue(match_from_list(atom, ['sonicde-base/sonic-keyboard-' + candidate]))
-                for candidate in ('6.7.5', '6.8.1', '6.8.1.1', '6.9.0', '9999'):
+                for candidate in ('6.7.5', following, following + '.1', f'{major}.{int(minor) + 1}.0', '9999'):
                     self.assertFalse(match_from_list(atom, ['sonicde-base/sonic-keyboard-' + candidate]))
                 self.assertNotIn('sonic-keyboard', variable(text, 'RDEPEND'))
                 if name == 'sonic-login-manager':
@@ -121,14 +134,15 @@ class MatrixReleasePackaging(unittest.TestCase):
 
     def test_compatibility_aliases_accept_sonic_patch_versions(self):
         for name, original, target in (
-            ('sonic-dr-robotnik', 'kde-plasma/drkonqi', '6.8.0'),
+            ('sonic-dr-robotnik', 'kde-plasma/drkonqi', '6.8'),
             ('sonic-frameworks-icon-themes', 'kde-frameworks/kiconthemes', '6.31.0'),
             ('sonic-frameworks-windowsystem', 'kde-frameworks/kwindowsystem', '6.31.0'),
         ):
             with self.subTest(package=name):
                 owner = release(name, target)
-                stub = OVERLAY / original / f'{original.split("/")[-1]}-{target}.ebuild'
-                text = stub.read_text().replace('${PV}', target)
+                stub_version = series(owner)
+                stub = OVERLAY / original / f'{original.split("/")[-1]}-{stub_version}.ebuild'
+                text = stub.read_text().replace('${PV}', stub_version)
                 dependency = re.search(r'[=~]sonicde-[^/]+/' + re.escape(name) + r'-[^\s:\[]+', text)
                 self.assertIsNotNone(dependency)
                 cpv = f'{owner.parent.parent.name}/{name}-{version(owner)}'
@@ -161,31 +175,38 @@ class MatrixReleasePackaging(unittest.TestCase):
                 self.assertTrue(owner.is_file())
                 self.assertTrue((owner.parent / 'metadata.xml').is_file())
                 self.assertTrue((owner.parent / 'Manifest').is_file())
-                stub = OVERLAY / 'kde-plasma' / original / f'{original}-6.8.0.ebuild'
+                current = series(owner)
+                stub = OVERLAY / 'kde-plasma' / original / f'{original}-{current}.ebuild'
                 self.assertIn('LICENSE="metapackage"', stub.read_text())
                 dependency = re.search(r'[=~]sonicde-base/' + re.escape(name) + r'-[^\s:\[]+', stub.read_text())
                 self.assertIsNotNone(dependency)
                 atom = dependency.group().replace('${PV}', version(stub))
                 self.assertTrue(match_from_list(atom, [f'sonicde-base/{name}-{version(owner)}']))
-                self.assertIn(f'~kde-plasma/{original}-6.8.0:6/6-sonicde', owner.read_text())
+                self.assertIn(f'~kde-plasma/{original}-{current}:6/6-sonicde', owner.read_text())
 
-    def test_only_one_6_7_release_is_retained_per_package(self):
+    def test_newer_point_release_replaces_older_ones_in_its_series(self):
         for directory in {p.parent for p in OVERLAY.glob('*/*/*.ebuild')}:
-            files = list(directory.glob('*.ebuild'))
+            files = [p for p in directory.glob('*.ebuild') if version(p) != '9999']
             is_sonic = directory.parent.name.startswith('sonicde-')
             is_alias = any('LICENSE="metapackage"' in p.read_text()
                            and 'sonicde-' in p.read_text() for p in files)
-            if not (is_sonic or is_alias):
+            independent = directory.name in INDEPENDENT_VERSIONS or any(
+                '/' + name + '-' in p.read_text() for p in files for name in INDEPENDENT_VERSIONS)
+            if not (is_sonic or is_alias) or independent:
                 continue
-            old = [p for p in files if version(p).startswith('6.7.')]
+            by_series = {}
+            for path in files:
+                by_series.setdefault('.'.join(version(path).split('.')[:2]), []).append(version(path))
             with self.subTest(package=directory):
-                self.assertLessEqual(len(old), 1)
+                for versions in by_series.values():
+                    self.assertEqual(len(versions), 1, versions)
+                old = by_series.get('6.7', [])
                 if old:
-                    self.assertTrue(version(old[0]).startswith('6.7.5'))
+                    self.assertTrue(old[0].startswith('6.7.5'))
 
     def test_rdp_is_not_added_to_the_new_release(self):
         self.assertFalse(release('sonic-rdp-server').exists())
-        self.assertFalse((OVERLAY / 'kde-plasma/krdp/krdp-6.8.0.ebuild').exists())
+        self.assertFalse(list((OVERLAY / 'kde-plasma/krdp').glob('krdp-6.8*.ebuild')))
         self.assertNotIn('sonic-rdp-server', release('sonicde-meta').read_text())
 
     def test_metapackage_uses_the_new_sonic_providers(self):
