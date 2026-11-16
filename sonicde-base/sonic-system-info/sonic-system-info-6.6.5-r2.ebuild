@@ -38,7 +38,6 @@ RDEPEND="${DEPEND}
 	>=dev-qt/qttools-${QTMIN}:6[qdbus]
 	>=kde-frameworks/kirigami-${KFMIN}:6
 	>=kde-plasma/systemsettings-${KDE_CATV}:6
-	x11-themes/gentoo-artwork[pixmaps]
 "
 BDEPEND="
 	>=kde-frameworks/kcmutils-${KFMIN}:6
@@ -65,6 +64,9 @@ src_install() {
 
 	insinto /etc/xdg
 	doins "${FILESDIR}"/scm-about-distrorc
+
+	insinto /usr/share/${PN}
+	doins "${FILESDIR}"/gentoo_logo.svg
 }
 
 pkg_postinst() {

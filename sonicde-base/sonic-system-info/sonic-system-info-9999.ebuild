@@ -46,7 +46,6 @@ RDEPEND="${DEPEND}
 	>=dev-qt/qttools-${QTMIN}:6[qdbus]
 	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	>=sonicde-base/sonic-desktop-interface-${KDE_CATV}:6
-	x11-themes/gentoo-artwork[pixmaps]
 "
 BDEPEND="
 	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
@@ -73,6 +72,9 @@ src_install() {
 
 	insinto /etc/xdg
 	doins "${FILESDIR}"/scm-about-distrorc
+
+	insinto /usr/share/${PN}
+	doins "${FILESDIR}"/gentoo_logo.svg
 }
 
 pkg_postinst() {
