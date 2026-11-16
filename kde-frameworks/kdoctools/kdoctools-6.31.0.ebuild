@@ -10,4 +10,4 @@ SLOT="6/6.31-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="debug nls"
 
-RDEPEND="~sonicde-frameworks/sonic-frameworks-doctools-${PV}:6[debug=,nls=]"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-doctools-${PV}*:6[debug=,nls=]"

@@ -11,4 +11,4 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="debug examples openmp test"
 
 RESTRICT="!test? ( test )"
-RDEPEND="~sonicde-frameworks/sonic-frameworks-quick-ui-${PV}:6[debug=,examples=,openmp=,test=]"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-quick-ui-${PV}*:6[debug=,examples=,openmp=,test=]"

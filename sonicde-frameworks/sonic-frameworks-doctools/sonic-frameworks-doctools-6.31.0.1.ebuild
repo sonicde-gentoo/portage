@@ -19,6 +19,7 @@ DEPEND="
 	dev-libs/libxml2:2=
 	dev-libs/libxslt
 	=sonicde-frameworks/sonic-frameworks-archive-${KDE_CATV}*:6
+	=sonicde-frameworks/sonic-frameworks-logging-${KDE_CATV}*:6
 "
 RDEPEND="${DEPEND}"
 BDEPEND="

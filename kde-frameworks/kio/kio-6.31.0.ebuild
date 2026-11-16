@@ -10,4 +10,4 @@ SLOT="6/6.31-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="acl +kwallet"
 
-RDEPEND="~sonicde-frameworks/sonic-frameworks-io-${PV}:6[acl=,kwallet=]"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-io-${PV}*:6[acl=,kwallet=]"

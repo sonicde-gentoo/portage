@@ -10,4 +10,4 @@ SLOT="6/6.31-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="aspell +hunspell qml debug designer"
 
-RDEPEND="~sonicde-frameworks/sonic-frameworks-spell-check-${PV}:6[aspell=,hunspell=,qml=,debug=,designer=]"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-spell-check-${PV}*:6[aspell=,hunspell=,qml=,debug=,designer=]"

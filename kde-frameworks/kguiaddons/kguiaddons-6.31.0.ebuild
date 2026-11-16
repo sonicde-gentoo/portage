@@ -10,4 +10,4 @@ SLOT="6/6.31-sonicde"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="dbus debug"
 
-RDEPEND="~sonicde-frameworks/sonic-frameworks-gui-addons-${PV}:6[dbus=,debug=]"
+RDEPEND="=sonicde-frameworks/sonic-frameworks-gui-addons-${PV}*:6[dbus=,debug=]"

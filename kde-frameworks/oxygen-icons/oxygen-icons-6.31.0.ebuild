@@ -11,4 +11,4 @@ KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 IUSE="test"
 
 RESTRICT="!test? ( test )"
-RDEPEND="~sonicde-base/sonic-oxygen-icons-${PV}:6[test=]"
+RDEPEND="=sonicde-base/sonic-oxygen-icons-${PV}*:6[test=]"
