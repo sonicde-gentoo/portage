@@ -7,7 +7,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from functools import cmp_to_key
+
 from portage.dep import Atom, match_from_list
+from portage.versions import vercmp
 from portage.tests.resolver.ResolverPlayground import (
     ResolverPlayground,
     ResolverPlaygroundTestCase,
@@ -16,6 +19,16 @@ from portage.tests.resolver.ResolverPlayground import (
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / 'sonicde-base/sonic-partition-manager'
+
+
+def release_versions():
+    return [path.stem.removeprefix('sonic-partition-manager-')
+            for path in PACKAGE.glob('sonic-partition-manager-*.ebuild')]
+
+
+def latest_release():
+    versions = [v for v in release_versions() if v != '9999']
+    return sorted(versions, key=cmp_to_key(vercmp))[-1]
 
 
 def kpmcore_dependency(version):
@@ -32,21 +45,20 @@ def kpmcore_dependency(version):
 class PartitionManagerDependencies(unittest.TestCase):
     def test_source_minimums_and_subslot_tracking(self):
         # These sources accept the release branch beginning with 26.07 RCs.
-        for version, minimum in (('26.08.0', '26.07'), ('26.08.1', '26.07'),
-                                 ('26.08.2', '26.07'), ('9999', '26.07')):
+        for version in release_versions():
             with self.subTest(version=version):
                 atom = Atom(kpmcore_dependency(version))
-                self.assertEqual(str(atom), f'>=sys-libs/kpmcore-{minimum}:6=')
+                self.assertEqual(str(atom), '>=sys-libs/kpmcore-26.07:6=')
                 self.assertEqual(atom.slot_operator, '=')
                 self.assertTrue(match_from_list(atom.without_slot, ['sys-libs/kpmcore-26.08.1']))
                 self.assertFalse(match_from_list(atom.without_slot, ['sys-libs/kpmcore-25.12.3']))
-        atom = Atom(kpmcore_dependency('26.08.2')).without_slot
+        atom = Atom(kpmcore_dependency(latest_release())).without_slot
         self.assertFalse(match_from_list(atom, ['sys-libs/kpmcore-26.04.3']))
         self.assertTrue(match_from_list(atom, ['sys-libs/kpmcore-26.07.90']))
 
     def test_resolver_installs_or_upgrades_kpmcore_before_partition_manager(self):
-        manager = 'sonicde-base/sonic-partition-manager-26.08.2'
-        dependency = kpmcore_dependency('26.08.2')
+        manager = 'sonicde-base/sonic-partition-manager-' + latest_release()
+        dependency = kpmcore_dependency(latest_release())
         ebuilds = {
             manager: {'EAPI': '8', 'SLOT': '6', 'DEPEND': dependency, 'RDEPEND': dependency},
             'sys-libs/kpmcore-26.04.3': {'EAPI': '8', 'SLOT': '6/10'},

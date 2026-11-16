@@ -4,19 +4,17 @@
 EAPI=8
 
 ECM_TEST="forceoptional"
-KFMIN=6.27.0
+KFMIN=6.22.0
 PVCUT=$(ver_cut 1-3)
-QTMIN=6.11.2
+QTMIN=6.11.0
 VIRTUALDBUS_TEST="true"
-# This compatibility version uses the published SonicDE 26.08.0 source.
-SONIC_SOURCE_VERSION=26.08.0
 inherit ecm sonic
 
 DESCRIPTION="Administer web accounts for the sites and services across the Plasma desktop"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-accounts-integration"
-SRC_URI="https://github.com/Sonic-DE/sonic-accounts-integration/archive/refs/tags/${SONIC_SOURCE_VERSION}.tar.gz -> ${PN}-${SONIC_SOURCE_VERSION}.tar.gz"
+SRC_URI="https://github.com/Sonic-DE/sonic-accounts-integration/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
-S="${WORKDIR}/sonic-accounts-integration-${SONIC_SOURCE_VERSION}"
+S="${WORKDIR}/sonic-accounts-integration-${PV}"
 LICENSE="LGPL-2.1"
 SLOT="6"
 KEYWORDS="~amd64 ~arm64"
@@ -46,8 +44,8 @@ RDEPEND="${COMMON_DEPEND}
 	sonicde-base/sonic-qt-accounts-library
 "
 BDEPEND="sys-devel/gettext"
-RDEPEND+=" !<kde-apps/kaccounts-integration-26.08.1 !kde-apps/kaccounts-integration:6/6"
-PDEPEND+=" ~kde-apps/kaccounts-integration-26.08.1:6/6-sonicde"
+RDEPEND+=" !<kde-apps/kaccounts-integration-26.08.3 !kde-apps/kaccounts-integration:6/6"
+PDEPEND+=" ~kde-apps/kaccounts-integration-26.08.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=( -DKF6_COMPAT_BUILD=OFF )

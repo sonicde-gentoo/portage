@@ -78,8 +78,8 @@ RDEPEND="${DEPEND}
 	>=sonicde-base/sonic-daemon-${KFMIN}:6
 "
 BDEPEND="man? ( dev-util/gperf )"
-RDEPEND+=" !<kde-apps/kio-extras-26.08.2 !kde-apps/kio-extras:6/6"
-PDEPEND+=" ~kde-apps/kio-extras-26.08.2:6/6-sonicde"
+RDEPEND+=" !<kde-apps/kio-extras-26.08.3 !kde-apps/kio-extras:6/6"
+PDEPEND+=" ~kde-apps/kio-extras-26.08.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

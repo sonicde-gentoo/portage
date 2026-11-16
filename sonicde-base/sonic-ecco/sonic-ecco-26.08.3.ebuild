@@ -5,18 +5,16 @@ EAPI=8
 
 ECM_HANDBOOK="optional"
 ECM_TEST="true"
-KFMIN=6.27.0
-QTMIN=6.11.2
-# This compatibility version uses the published SonicDE 26.08.0 source.
-SONIC_SOURCE_VERSION=26.08.0
+KFMIN=6.23.0
+QTMIN=6.11.0
 inherit ecm xdg
 
 if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/Sonic-DE/sonic-ecco.git"
 else
-	SRC_URI="https://github.com/Sonic-DE/sonic-ecco/archive/refs/tags/${SONIC_SOURCE_VERSION}.tar.gz -> ${PN}-${SONIC_SOURCE_VERSION}.tar.gz"
-	S="${WORKDIR}/sonic-ecco-${SONIC_SOURCE_VERSION}"
+	SRC_URI="https://github.com/Sonic-DE/sonic-ecco/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+	S="${WORKDIR}/sonic-ecco-${PV}"
 	KEYWORDS="~amd64 ~arm64 ~x86"
 fi
 
@@ -29,6 +27,7 @@ IUSE="semantic-desktop telemetry"
 
 # slot op: Uses Qt::GuiPrivate for qtx11extras_p.h
 DEPEND="
+	>=sonicde-frameworks/sonic-frameworks-settings-utils-${KFMIN}:6
 	>=dev-qt/qtbase-${QTMIN}:6=[concurrent,dbus,gui,widgets,xml]
 	>=dev-qt/qtmultimedia-${QTMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-bookmarks-${KFMIN}:6
@@ -65,6 +64,7 @@ DEPEND="
 RDEPEND="${DEPEND}
 
 	sonicde-frameworks/sonic-frameworks-io-extras:6
+	>=sonicde-base/sonic-terminal-26.08.3:6
 "
 
 CMAKE_SKIP_TESTS=(
@@ -75,8 +75,8 @@ CMAKE_SKIP_TESTS=(
 	kitemlistcontrollerexpandtest
 	placesitemmodeltest
 )
-RDEPEND+=" !<kde-apps/dolphin-26.08.1 !kde-apps/dolphin:6/6"
-PDEPEND+=" ~kde-apps/dolphin-26.08.1:6/6-sonicde"
+RDEPEND+=" !<kde-apps/dolphin-26.08.3 !kde-apps/dolphin:6/6"
+PDEPEND+=" ~kde-apps/dolphin-26.08.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(
@@ -84,9 +84,6 @@ src_configure() {
 		$(cmake_use_find_package semantic-desktop KF6Baloo)
 		$(cmake_use_find_package semantic-desktop KF6BalooWidgets)
 		$(cmake_use_find_package telemetry KF6UserFeedback)
-	)
-	use test && mycmakeargs+=(
-		-DCMAKE_DISABLE_FIND_PACKAGE_SeleniumWebDriverATSPI=ON
 	)
 	ecm_src_configure
 }

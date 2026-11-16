@@ -6,7 +6,7 @@ EAPI=8
 ECM_HANDBOOK="optional"
 KFMIN=6.22.0
 PVCUT=$(ver_cut 1-3)
-QTMIN=6.10.1
+QTMIN=6.11.0
 inherit ecm sonic xdg
 
 DESCRIPTION="Utility for management of disks, partitions and file systems"
@@ -38,5 +38,5 @@ RDEPEND="${DEPEND}
 
 	sonicde-base/sonic-polkit
 "
-RDEPEND+=" !<sys-block/partitionmanager-26.08.0 !sys-block/partitionmanager:6/6"
-PDEPEND+=" ~sys-block/partitionmanager-26.08.0:6/6-sonicde"
+RDEPEND+=" !<sys-block/partitionmanager-26.08.3 !sys-block/partitionmanager:6/6"
+PDEPEND+=" ~sys-block/partitionmanager-26.08.3:6/6-sonicde"

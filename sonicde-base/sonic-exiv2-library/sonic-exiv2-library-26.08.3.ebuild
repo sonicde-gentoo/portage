@@ -24,5 +24,5 @@ DEPEND="
 RDEPEND="${DEPEND}
 
 "
-RDEPEND+=" !<kde-apps/libkexiv2-26.08.2 !kde-apps/libkexiv2:6/6"
-PDEPEND+=" ~kde-apps/libkexiv2-26.08.2:6/6-sonicde"
+RDEPEND+=" !<kde-apps/libkexiv2-26.08.3 !kde-apps/libkexiv2:6/6"
+PDEPEND+=" ~kde-apps/libkexiv2-26.08.3:6/6-sonicde"

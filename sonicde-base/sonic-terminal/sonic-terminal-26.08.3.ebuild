@@ -5,25 +5,30 @@ EAPI=8
 
 ECM_HANDBOOK="optional"
 ECM_TEST="true"
-KFMIN=6.27.0
-QTMIN=6.11.2
-# This compatibility version uses the published SonicDE 26.08.0 source.
-SONIC_SOURCE_VERSION=26.08.0
+KFMIN=6.22.0
+QTMIN=6.11.0
 inherit ecm sonic
 
 DESCRIPTION="KDE's terminal emulator"
 HOMEPAGE="https://github.com/Sonic-DE/sonic-terminal"
-SRC_URI="https://github.com/Sonic-DE/sonic-terminal/archive/refs/tags/${SONIC_SOURCE_VERSION}.tar.gz -> ${PN}-${SONIC_SOURCE_VERSION}.tar.gz"
+SRC_URI="https://github.com/Sonic-DE/sonic-terminal/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
-S="${WORKDIR}/sonic-terminal-${SONIC_SOURCE_VERSION}"
+S="${WORKDIR}/sonic-terminal-${PV}"
 LICENSE="GPL-2" # TODO: CHECK
 SLOT="6"
 KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 DEPEND="
+	x11-libs/libxkbcommon
 	dev-libs/icu:=
 	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network,widgets,xml]
 	>=dev-qt/qtmultimedia-${QTMIN}:6
+	>=dev-qt/qtdeclarative-${QTMIN}:6[widgets]
+	>=sonicde-frameworks/sonic-frameworks-ipc-6.31.0:6
+	>=sonicde-frameworks/sonic-frameworks-logging-6.31.0:6
+	>=sonicde-frameworks/sonic-frameworks-qml-bridge-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-quick-desktop-style-${KFMIN}:6
+	>=sonicde-frameworks/sonic-frameworks-quick-ui-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-bookmarks-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-${KFMIN}:6
 	>=sonicde-frameworks/sonic-frameworks-settings-ui-${KFMIN}:6
@@ -51,8 +56,8 @@ RDEPEND="${DEPEND}
 
 	sonicde-frameworks/sonic-frameworks-doctools
 "
-RDEPEND+=" !<kde-apps/konsole-26.08.1 !kde-apps/konsole:6/6"
-PDEPEND+=" ~kde-apps/konsole-26.08.1:6/6-sonicde"
+RDEPEND+=" !<kde-apps/konsole-26.08.3 !kde-apps/konsole:6/6"
+PDEPEND+=" ~kde-apps/konsole-26.08.3:6/6-sonicde"
 
 src_configure() {
 	local mycmakeargs=(

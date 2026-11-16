@@ -28,7 +28,7 @@ def release(name, target='6.8.0'):
 
 
 class MatrixReleasePackaging(unittest.TestCase):
-    def test_gear_packages_have_all_three_matching_compatibility_versions(self):
+    def test_gear_packages_keep_one_matching_26_08_release(self):
         packages = {
             'sonicde-base/sonic-accounts-integration': 'kde-apps/kaccounts-integration',
             'sonicde-base/sonic-ecco': 'kde-apps/dolphin',
@@ -40,23 +40,21 @@ class MatrixReleasePackaging(unittest.TestCase):
         }
         for source, original in packages.items():
             with self.subTest(package=source):
-                for package in (source, original):
-                    branch = [path for path in releases(package) if version(path).startswith('26.08.')]
-                    self.assertEqual([version(path) for path in branch], ['26.08.0', '26.08.1', '26.08.2'])
-                for release_version in ('26.08.0', '26.08.1', '26.08.2'):
-                    owner = OVERLAY / source / f'{source.split("/")[-1]}-{release_version}.ebuild'
-                    stub = OVERLAY / original / f'{original.split("/")[-1]}-{release_version}.ebuild'
-                    posts = [atom for atom in post_atoms(owner) if atom.cp == original]
-                    self.assertEqual([atom.version for atom in posts], [release_version])
-                    self.assertIn('LICENSE="metapackage"', stub.read_text())
-                    dependency = variable(stub.read_text(), 'RDEPEND').replace('${PV}', release_version)
-                    atom = re.search(r'[=~]' + re.escape(source) + r'-[^\s:\[]+', dependency)
-                    self.assertIsNotNone(atom)
-                    self.assertTrue(match_from_list(atom.group(), [source + '-' + release_version]))
-                    if release_version == '26.08.1':
-                        self.assertIn('KFMIN=6.27.0', owner.read_text())
-                        self.assertIn('QTMIN=6.11.2', owner.read_text())
-                        self.assertIn('SONIC_SOURCE_VERSION=26.08.0', owner.read_text())
+                # A newer 26.08 point release replaces the older ones.
+                branches = [[version(path) for path in releases(package) if version(path).startswith('26.08.')]
+                            for package in (source, original)]
+                self.assertEqual(len(branches[0]), 1)
+                self.assertEqual(branches[0], branches[1])
+                release_version = branches[0][0]
+                owner = OVERLAY / source / f'{source.split("/")[-1]}-{release_version}.ebuild'
+                stub = OVERLAY / original / f'{original.split("/")[-1]}-{release_version}.ebuild'
+                posts = [atom for atom in post_atoms(owner) if atom.cp == original]
+                self.assertEqual([atom.version for atom in posts], [release_version])
+                self.assertIn('LICENSE="metapackage"', stub.read_text())
+                dependency = variable(stub.read_text(), 'RDEPEND').replace('${PV}', release_version)
+                atom = re.search(r'[=~]' + re.escape(source) + r'-[^\s:\[]+', dependency)
+                self.assertIsNotNone(atom)
+                self.assertTrue(match_from_list(atom.group(), [source + '-' + release_version]))
 
     def test_keyboard_has_matching_6_8_0_and_6_8_1_releases(self):
         paths = releases('sonicde-base/sonic-keyboard')
