@@ -1,7 +1,7 @@
 """Check that KDE compatibility ebuilds are file-free SonicDE dependencies.
 
 Run with: python3 -m unittest discover -s tests -v
-Portage integration fixtures run only under /tmp/kilo, not in the host root.
+Portage integration fixtures run only under scratch_dir(), not in the host root.
 """
 
 import os
@@ -16,7 +16,7 @@ from unittest.mock import patch
 import portage
 from portage.const import PORTAGE_PYM_PATH, USER_CONFIG_PATH
 from portage.tests.resolver.ResolverPlayground import ResolverPlayground
-from migration_fixtures import slots, transition_pair, variable, version
+from migration_fixtures import scratch_dir, slots, transition_pair, variable, version
 
 
 OVERLAY = Path(__file__).resolve().parents[1]
@@ -62,9 +62,7 @@ src_install() {
     doins "${T}/sonic-owner.txt"
 }
 '''
-        scratch = Path('/tmp/kilo')
-        self.assertTrue(scratch.is_dir())
-        prefix = Path(tempfile.mkdtemp(prefix='sonic-clean-stub-', dir=scratch))
+        prefix = Path(tempfile.mkdtemp(prefix='sonic-clean-stub-', dir=scratch_dir()))
         features = ('collision-protect protect-owned -userpriv -usersandbox '
                     '-sandbox -ipc-sandbox -network-sandbox -binpkg-signing -gpg-keepalive')
         ebuilds = {

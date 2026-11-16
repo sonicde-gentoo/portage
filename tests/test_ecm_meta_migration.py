@@ -1,7 +1,7 @@
 """Exercise representative SonicDE owner migrations with real Portage.
 
 The ebuild relationship is read from the overlay. Only the expensive source
-build is replaced with a small payload in an isolated /tmp/kilo prefix.
+build is replaced with a small payload in an isolated prefix under scratch_dir().
 This distinguishes upgrading an older KDE version from switching repositories
 at the identical version; the latter uses emerge's standard --newrepo option.
 """
@@ -20,7 +20,8 @@ from portage.const import PORTAGE_PYM_PATH, USER_CONFIG_PATH
 from portage.dep import Atom, use_reduce
 from portage.tests.resolver.ResolverPlayground import ResolverPlayground
 from portage.versions import vercmp
-from migration_fixtures import post_atoms, releases, slots, transition_pair, variable, version as ebuild_version
+from migration_fixtures import (post_atoms, releases, scratch_dir, slots, transition_pair, variable,
+                                version as ebuild_version)
 
 
 OVERLAY = Path(__file__).resolve().parents[1]
@@ -40,7 +41,7 @@ class ECMMetaMigration(unittest.TestCase):
                       if ebuild_version(path).startswith('26.08.')]
             self.assertTrue(branch)
             for release_version in branch:
-                with self.subTest(package=original, version=release_version), tempfile.TemporaryDirectory(dir='/tmp/kilo') as prefix:
+                with self.subTest(package=original, version=release_version), tempfile.TemporaryDirectory(dir=scratch_dir()) as prefix:
                     owner = OVERLAY / sonic / f'{sonic.split("/")[-1]}-{release_version}.ebuild'
                     stub = OVERLAY / original / f'{original.split("/")[-1]}-{release_version}.ebuild'
                     source_slot, previous_slot = slots(owner, stub)
@@ -82,7 +83,7 @@ class ECMMetaMigration(unittest.TestCase):
             ('kde-apps/kio-extras', 'sonicde-frameworks/sonic-frameworks-io-extras'),
             ('kde-apps/dolphin', 'sonicde-base/sonic-ecco'),
         ):
-            with self.subTest(package=original), tempfile.TemporaryDirectory(dir='/tmp/kilo') as prefix:
+            with self.subTest(package=original), tempfile.TemporaryDirectory(dir=scratch_dir()) as prefix:
                 owner, stub = transition_pair(original, sonic)
                 latest = ebuild_version(owner)
                 self.assertEqual(ebuild_version(stub), latest)
@@ -140,7 +141,7 @@ class ECMMetaMigration(unittest.TestCase):
         # These are disposable fixture versions, not required overlay releases.
         original = 'kde-plasma/example'
         sonic = 'sonicde-base/sonic-example'
-        with tempfile.TemporaryDirectory(dir='/tmp/kilo') as directory:
+        with tempfile.TemporaryDirectory(dir=scratch_dir()) as directory:
             root = Path(directory)
             for atom in (original, sonic):
                 (root / atom).mkdir(parents=True)
@@ -163,7 +164,7 @@ class ECMMetaMigration(unittest.TestCase):
     def test_latest_provider_missing_alias_is_not_silently_skipped(self):
         original = 'kde-plasma/example'
         sonic = 'sonicde-base/sonic-example'
-        with tempfile.TemporaryDirectory(dir='/tmp/kilo') as directory:
+        with tempfile.TemporaryDirectory(dir=scratch_dir()) as directory:
             root = Path(directory)
             (root / original).mkdir(parents=True)
             (root / sonic).mkdir(parents=True)
@@ -238,7 +239,7 @@ src_install() {
                 'EAPI': '8', 'RDEPEND': original + ':' + previous_slot.split('/')[0],
             },
         }
-        with tempfile.TemporaryDirectory(prefix='ecm-meta-', dir='/tmp/kilo') as directory:
+        with tempfile.TemporaryDirectory(prefix='ecm-meta-', dir=scratch_dir()) as directory:
             prefix = Path(directory)
             features = ('collision-protect protect-owned -userpriv -usersandbox '
                         '-sandbox -ipc-sandbox -network-sandbox -binpkg-signing -gpg-keepalive')
@@ -411,7 +412,7 @@ src_install() {
         ebuilds['app-misc/external-consumer-1::gentoo'] = {
             'EAPI': '8', 'RDEPEND': ' '.join(consumer_deps),
         }
-        with tempfile.TemporaryDirectory(dir='/tmp/kilo') as directory:
+        with tempfile.TemporaryDirectory(dir=scratch_dir()) as directory:
             with patch.dict(os.environ, {'PKGDIR': str(Path(directory) / 'pkgdir'),
                                          'PORTAGE_GNUPGHOME': str(Path(directory) / 'gnupg')}):
                 playground = ResolverPlayground(ebuilds=ebuilds, eprefix=directory,

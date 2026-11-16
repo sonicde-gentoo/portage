@@ -1,13 +1,22 @@
 """Discover the real overlay releases used by migration integration tests."""
 
 from functools import cmp_to_key
+import os
 from pathlib import Path
 import re
+import tempfile
 
 from portage.dep import Atom, use_reduce
 from portage.versions import vercmp
 
 OVERLAY = Path(__file__).resolve().parents[1]
+
+
+def scratch_dir():
+    """Parent directory for disposable Portage fixtures (SONIC_TEST_TMPDIR moves it)."""
+    path = Path(os.environ.get('SONIC_TEST_TMPDIR') or tempfile.gettempdir()) / 'sonic-overlay-tests'
+    path.mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def variable(text, name):

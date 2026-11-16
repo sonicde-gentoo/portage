@@ -11,6 +11,8 @@ from functools import cmp_to_key
 
 from portage.dep import Atom, match_from_list
 from portage.versions import vercmp
+
+from migration_fixtures import scratch_dir
 from portage.tests.resolver.ResolverPlayground import (
     ResolverPlayground,
     ResolverPlaygroundTestCase,
@@ -65,7 +67,7 @@ class PartitionManagerDependencies(unittest.TestCase):
             'sys-libs/kpmcore-26.08.1': {'EAPI': '8', 'SLOT': '6/10'},
         }
         for installed_version in (None, '26.04.3', '26.08.1'):
-            with self.subTest(installed=installed_version), tempfile.TemporaryDirectory(dir='/tmp/kilo') as prefix:
+            with self.subTest(installed=installed_version), tempfile.TemporaryDirectory(dir=scratch_dir()) as prefix:
                 installed = {}
                 if installed_version:
                     installed[f'sys-libs/kpmcore-{installed_version}'] = {'EAPI': '8', 'SLOT': '6/10'}

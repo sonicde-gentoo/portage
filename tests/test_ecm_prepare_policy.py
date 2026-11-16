@@ -7,6 +7,8 @@ import subprocess
 import tempfile
 import unittest
 
+from migration_fixtures import scratch_dir
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TEST_DIRS = {'appiumtests', 'autotests', 'test', 'tests'}
@@ -44,7 +46,7 @@ _ecm_strip_handbook_translations() { :; }
                    IUSE='test' if policy != 'false' else '',
                    USE='test' if enabled else '', CATEGORY='sonicde-frameworks',
                    ECM_HANDBOOK='false', ECM_HANDBOOK_DIR='doc')
-        with tempfile.TemporaryDirectory(dir='/tmp/kilo') as directory:
+        with tempfile.TemporaryDirectory(dir=scratch_dir()) as directory:
             result = subprocess.run(['bash', '-c', helpers + self.prepare + '\necm_src_prepare\n'],
                                     cwd=directory, env=env, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)

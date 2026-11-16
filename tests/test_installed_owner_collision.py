@@ -1,6 +1,6 @@
 """Test file ownership during an explicit same-version KDE stub transition.
 
-This uses Portage in an isolated /tmp/kilo root. It does not modify host packages.
+This uses Portage in an isolated root under scratch_dir(). It does not modify host packages.
 The single-command --newrepo transition is tested separately in
 ``test_ecm_meta_migration.py``.
 """
@@ -16,7 +16,7 @@ from unittest.mock import patch
 import portage
 from portage.const import PORTAGE_PYM_PATH, USER_CONFIG_PATH
 from portage.tests.resolver.ResolverPlayground import ResolverPlayground
-from migration_fixtures import slots, transition_pair, variable, version
+from migration_fixtures import scratch_dir, slots, transition_pair, variable, version
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +41,7 @@ class InstalledOwnerTransition(unittest.TestCase):
         sonic = sonic_package + '-' + version(source)
         source_slot, original_slot = slots(source, stub)
 
-        prefix = Path(tempfile.mkdtemp(prefix='sonic-owner-transition-', dir='/tmp/kilo'))
+        prefix = Path(tempfile.mkdtemp(prefix='sonic-owner-transition-', dir=scratch_dir()))
         with patch.dict(os.environ, {'PKGDIR': str(prefix / 'pkgdir'),
                                      'PORTAGE_GNUPGHOME': str(prefix / 'gnupg')}):
             playground = ResolverPlayground(
